@@ -1,0 +1,125 @@
+\documentclass[10pt,oneside]{book}
+
+\usepackage[ExarTheme]{ExarWB}
+
+
+
+%% ----------------------------------------
+%%   Document Properties
+%% ----------------------------------------
+\renewcommand{\ProductName}{CPU Subsystem}
+\renewcommand{\ProductDescription}{\pii{} RTL Design Workbook}
+\renewcommand{\DocID}{ID-00XX-A}
+\renewcommand{\DocType}{Internal Document}
+\renewcommand{\DocVersion}{0.0}
+\renewcommand{\DocAuthor}{xin.meng@exar.com}
+
+
+%% Document specific defintions
+\usepackage{p2_cpu_wb}
+
+
+%% Glossaries
+\usepackage[toc, numberedsection=autolabel]{glossaries}
+\newglossary[reglog]{register}{reggls}{regglo}{Control/Status Registers}
+\newglossary[signal]{signal}{iogls}{ioglo}{Signals}
+\makeglossaries
+
+\loadglsentries[main]{p2glossary.sty}
+\loadglsentries[register]{regs.sty}
+\loadglsentries[signal]{signal.sty}
+
+
+
+%% ------------------------------
+%%   Document
+%% ------------------------------
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+\input{d:/template/latex/ExarFrontCover.tex}
+\input{d:/template/latex/ExarLegalDisclaimer.tex}
+
+%% ****************************************
+\frontmatter
+\chapter{Preface}\input{chpt_preface.tex}
+\tableofcontents
+\listoftables
+\listoffigures
+%\lstlistoflistings
+
+%% ****************************************
+\mainmatter
+
+\part{Functional Description}\label{part:func desc}
+\chapter{Overview}\label{sec:overview}\input{chpt_overview.tex}
+\chapter{Clock}\label{sec:clock}\input{chpt_clock.tex}
+\chapter{Power Management}\label{sec:power management}\input{chpt_pwrmng.tex}
+\chapter{Address Map}\label{sec:address}\input{chpt_addrmap.tex}
+\chapter{Interrupt}\label{sec:interrupt}\input{chpt_interrupt.tex}
+
+
+\part{Implementation}\label{part:implementation}
+\chapter{Clock and Reset}\label{sec:clkrst}\input{chpt_clkrst.tex}
+\chapter{Clock and Power Gating}\label{sec:cpg}\input{chpt_cpg.tex}
+
+
+\part{IP Configuration}\label{part:ip config}
+\chapter{Cortex-A9 MPCore}\label{sec:a9mp config}\input{chpt_cfg_a9mp.tex}
+\chapter{L2 Cache}\label{sec:pl310 config}\input{chpt_cfg_pl310.tex}
+\chapter{Cross Triggering}
+\chapter{SATA AHCI}
+\chapter{AXI Interconnection}
+\chapter{AXI to APB Bridge}
+\chapter{APB Interconnection}\label{sec:apb config}
+
+
+\part{Application Note}\label{part:app note}
+\chapter{System Boot}
+
+
+%% ****************************************
+\part{Appendix}\label{part:appendix}
+\appendix
+
+\printglossary[nonumberlist=true, style=altlist, type=main]
+\renewcommand{\glossarypreamble}{This chapter contains selective register 
+descriptions of different components of \gls{cpu subsys}.}
+\printglossary[nonumberlist=true, style=altlist, type=register]
+\renewcommand{\glossarypreamble}{This chapter contains selective I/O port 
+descriptions of different components of \gls{cpu subsys}.}
+\printglossary[nonumberlist=true, style=altlist, type=signal]
+
+\chapter{Change Log}\label{sec:chg log}\input{chpt_chglog.tex}
+\chapter{Questions}\label{sec:question}\input{chpt_question.tex}
+\chapter{ARM Arch: System Level}\label{sec:arm arch part b}\input{rd_arm_arch_part_b.tex}
+\chapter{ARM Arch: Debug}\input{rd_arm_arch_part_c.tex}
+\chapter{GIC Arch}\input{rd_gic.tex}
+\chapter{CoreSight}\input{rd_coresight.tex}
+\chapter{ADIv5}\input{rd_adi.tex}
+\chapter{L2 cache (PL310)}\input{rd_pl310.tex}
+\chapter{Cortex-A9 (MPCore) TRM}\input{rd_a9mp.tex}
+\chapter{AXI Protocol}\input{rd_axi.tex}
+\chapter{TrustZone}\label{sec:rd tsz}\input{rd_tsz.tex}
+
+
+\clearpage
+\refstepcounter{chapter}
+\addcontentsline{toc}{chapter}{Bibliography}  
+\label{sec:bib}\bibliography{refdoc}
+\bibliographystyle{plain}
+
+\clearpage
+\refstepcounter{chapter}
+\addcontentsline{toc}{chapter}{Index}  
+\label{sec:index}\printindex
+
+
+
+\clearpage
+\input{d:/template/latex/ExarBackCover.tex}
+
+
+
+\end{CJK*}
+\end{document}

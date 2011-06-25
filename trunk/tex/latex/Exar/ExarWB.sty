@@ -1,0 +1,127 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ExarWB}[2010/07/20 Exar Workbook by Xin Meng]
+
+
+\RequirePackageWithOptions{MXCommon}
+
+%% ----------------------------------------
+%%   Use LaTeX+CJK to support Chinese
+%%   in ExarWB
+%%
+%%   specific packet setting
+%% ----------------------------------------
+\RequirePackage{CJK}
+\RequirePackage[pdfnewwindow,unicode,xetex,colorlinks,hyperindex]{hyperref}
+\hypersetup{
+  bookmarksnumbered,
+  linkcolor = LinkColor,
+  citecolor = CiteColor,
+  urlcolor  = URLColor,
+  filecolor = FileColor,
+  bookmarksopen={false}, 
+  pdfstartview={FitH},
+  CJKbookmarks=true
+}
+
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage[xetex]{graphicx}
+
+
+
+
+
+%% ----------------------------------------
+%%    Default font
+%% ----------------------------------------
+\renewcommand{\familydefault}{phv}
+\renewcommand{\DTstylecomment}{\fontfamily{phv}\selectfont\scriptsize} 
+
+%% ----------------------------------------
+%%   Layout adjustment
+%% ----------------------------------------
+\setlength{\hoffset}{0in}
+\setlength{\topmargin}{-2.7cm}
+\setlength{\headheight}{2.5cm}
+\setlength{\headsep}{.8cm}
+\setlength{\footskip}{1.3cm}
+\setlength{\oddsidemargin}{0in}
+\setlength{\marginparwidth}{.8in}
+\setlength{\marginparsep}{.1in}
+\setlength{\textheight}{8.7in}
+\setlength{\textwidth}{6.5in}
+
+
+
+%% ----------------------------------------
+%%   Header
+%% ----------------------------------------
+\newsavebox{\ExarLogo}
+\sbox{\ExarLogo}{\includegraphics[width=3.75cm]{exar_logo.jpg}}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhf[LH]{\usebox{\ExarLogo}}
+\fancyhf[LF]{\scriptsize\ProductName{}-\DocType{}, \DocID{}\\
+\textcolor{ThemeColor}{\textbf{Exar Confidential - Internal use only, not for customer or other use outside of Exar.}}}
+\fancyhf[RF]{\scriptsize\thepage}
+
+\renewcommand{\headrulewidth}{0.7pt}
+\renewcommand{\headrule}{{
+  \color{gray}
+  \hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+  
+\renewcommand{\footrulewidth}{\headrulewidth}
+\renewcommand{\footrule}{{
+  \color{gray}
+  \hrule width\headwidth height\footrulewidth \vspace{2mm}}}
+
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhf[LH]{\usebox{\ExarLogo}}
+  \fancyhf[LF]{\scriptsize\ProductName{}-\DocType{}, \DocID{}\\
+    \textcolor{ThemeColor}{\textbf{Exar Confidential - Internal use only, not for customer or other use outside of Exar.}}}
+  \fancyhf[RF]{\scriptsize\thepage}
+
+  \renewcommand{\headrulewidth}{0.7pt}
+  \renewcommand{\headrule}{{
+      \color{gray}
+      \hrule width\headwidth height\headrulewidth \vskip-\headrulewidth}}
+  
+  \renewcommand{\footrulewidth}{\headrulewidth}
+  \renewcommand{\footrule}{{
+      \color{gray}
+      \hrule width\headwidth height\footrulewidth \vspace{2mm}}}
+}
+
+
+
+%% ----------------------------------------
+%%   Heading
+%% ----------------------------------------
+\titleformat{\chapter}[hang]
+            {\color{ThemeColor}\fontseries{bx}\selectfont\huge}
+            {\thechapter}
+            {5mm}{}{\normalfont}
+\titlespacing{\chapter}{0mm}{-0.8cm}{.25in}
+
+
+%% ----------------------------------------
+%%   Water mark
+%% ----------------------------------------
+\RequirePackage{wallpaper}
+\CenterWallPaper{1}{wallpaper_internal_doc.pdf}
+
+
+
+%% ----------------------------------------
+%%   Document property needed by Exar
+%% ----------------------------------------
+\newcommand{\ProductName}{\DocTitle}
+\newcommand{\ProductDescription}{\DocDescription}
+\newcommand{\DocID}{ID-00XX-A}
+\newcommand{\DocType}{Internal Document}
+
+

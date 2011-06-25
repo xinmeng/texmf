@@ -1,0 +1,75 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{MXNote}[2010/08/12 MXNote package file by Xin Meng]
+
+\RequirePackageWithOptions{MXCommon}
+
+
+
+%% ----------------------------------------
+%%    Use xeLaTeX + xeCJK + fontspec
+%%    to support Chinese
+%% ----------------------------------------
+
+\RequirePackage[pdfnewwindow,xetex, unicode,colorlinks,hyperindex]{hyperref}
+\hypersetup{
+  bookmarksnumbered,
+  linkcolor = LinkColor,
+  citecolor = CiteColor,
+  urlcolor  = URLColor,
+  filecolor = FileColor,
+  bookmarksopen={false}, 
+  pdfstartview={FitH},
+  CJKbookmarks=true
+}
+
+
+\RequirePackage{graphicx}
+
+
+
+%% ----------------------------------------
+%%    Font setting.
+%%
+%%    Tested on
+%%      - Windows 7 
+%% ----------------------------------------
+%\renewcommand{\familydefault}{put}
+\usepackage[slantfont, boldfont, CJKnumber, CJKtextspaces,CJKmathspaces]{xeCJK}
+\usepackage[utopia]{mathdesign}
+\usepackage{xunicode, xltxtra} % seems conflict with `tipa' package
+\usepackage[EU1]{fontenc}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std}, 
+  ItalicFont={Adobe Kaiti Std}]{Adobe Song Std}
+\setCJKmonofont{Adobe Fangsong Std} 
+\setCJKsansfont[BoldFont={Adobe Heiti Std}]{Adobe Kaiti Std}
+\setCJKfamilyfont{fangsong}{Adobe Fangsong Std}
+ 
+
+\setmainfont[Mapping=tex-text]{Utopia}
+\setsansfont{Verdana} 
+%\setmonofont{Lucida Console}
+%\punctstyle{kaiming} 
+
+%% ----------------------------------------
+%%    Paragraph space
+%%    line space
+%% ----------------------------------------
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 1pt
+
+
+\setlength{\parskip}{0.5\baselineskip}    
+\linespread{1.1}
+
+
+
+%% ----------------------------------------
+%%   Math definitions
+%% ----------------------------------------
+\newtheorem{theorem}{定理}
+\theoremstyle{definition}\newtheorem{definition}{定义}
+\theoremstyle{definition}\newtheorem{example}{例}
+
+\newenvironment{zhm}{\begin{proof}[证明]}{\end{proof}}
+

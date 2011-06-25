@@ -1,0 +1,858 @@
+\newglossaryentry{token}
+                 {
+                   name={token},
+                   description={33-bit value that is inserted in data stream
+                     interpreted by engine delimit data segement for treatement}
+                 }
+
+\newglossaryentry{nic}
+                 {
+                   name={NIC, Network Interface Card}, 
+                   text={\textsc{nic}}, 
+                   description={Refers to Titan or Falcon chip}
+                 }
+
+
+\newglossaryentry{sec nic}
+                 {
+                   name={Secure NIC Card, Secure Network Interface Card},
+                   text={Secure \textsc{nic} card},
+                   description={A \textsc{nic} card with IPsec operation
+                     support, such as AES, IPComp, etc. 
+                     Here we refers to add IPsec offload support to 
+                     Titan or Falcon chip}
+                 }
+
+
+
+\newglossaryentry{enc}
+                 {
+                   name={ENC, AES Encryption Engine}, 
+                   text={\textsc{enc}}, 
+                   description={\dpk{} module that supports
+                     AES-GCM and AES-GMAC encryption algorithm}
+                 }
+
+\newglossaryentry{dec}
+                 {
+                   name={DEC, AES Decryption Engine}, 
+                   text={\textsc{dec}}, 
+                   description={\dpk{} module that supports
+                     AES-GCM and AES-GMAC decryption algorithm}
+                 }
+
+
+
+\newglossaryentry{oprpctl}
+                 {
+                   name={OPRPCTL, Outbound Preprocess Controller},
+                   text={\textsc{oprpctl}},
+                   description={\dpk{} module that preprocesses packet
+                     to insert \gls{token}s into source packets for outbound 
+                     IPsec offloading}
+                 }
+
+\newglossaryentry{src fifo}
+                 {
+                   name={SRC\_FIFO, Source Packet FIFO for \gls{oprpctl}},
+                   text={\textsc{src\_fifo}},
+                   description={Buffers source packet for outbound processing}
+                 }
+
+\newglossaryentry{cmd fifo}
+                 {
+                   name={CMD\_FIFO, Command FIFO for \gls{oprpctl}},
+                   text={\textsc{cmd\_fifo}},
+                   description={Stores command for outbound processing}
+                 }
+
+
+\newglossaryentry{iprpctl} 
+                 {
+                   name={IPRPCTL, Inbound Preprocess Controller},
+                   text={\textsc{iprpctl}},
+                   description={\dpk{} module that preprocesses packet
+                     to insert \gls{token}s into source packets for inbound 
+                     IPsec offloading}
+                 }
+
+\newglossaryentry{cmp}
+                 {
+                   name={CMP, Compress Engine},
+                   text={\textsc{cmp}},
+                   description={\dpk{} module that applies LZS compression 
+                     algorithm on outbound source packet}
+                 }
+
+\newglossaryentry{pad}
+                 {
+                   name={PAD, PAD engine},
+                   text={\textsc{pad}},
+                   description={\dpk{} module that pads byte in ESP trailer}
+                 }
+
+\newglossaryentry{dcmp}
+                 {
+                   name={DCMP, Decompress Engine},
+                   text={\textsc{dcmp}},
+                   description={\dpk{} module that applies LZS decompression 
+                     algorithm on inbound source packet}
+                 }
+
+\newglossaryentry{dpad}
+                 {
+                   name={DPAD, De-padding Engine},
+                   text={\textsc{dpad}},
+                   description={\dpk{} module that depadding the padding data 
+                     in ESP trailer}
+                 }
+
+
+\newglossaryentry{opstctl}
+                 {
+                   name={OPSTCTL, Outbound packet post process controller},
+                   text={\textsc{opstctl}},
+                   description={\dpk{} module that removes \gls{token} from data stream}
+                 }
+
+\newglossaryentry{opcp}
+                 {
+                   name={OPCP, Outbound packet post processor},
+                   text={\textsc{opcp}},
+                   description={\dpk{} module that updates packet header and buffer 
+                     the packet for output}
+                 }
+
+\newglossaryentry{ipstctl}
+                 {
+                   name={IPSTCTL, Inbound packet post process controller},
+                   text={\textsc{ipstctl}},
+                   description={\dpk{} module that removes \gls{token} from data stream}
+                 }
+
+\newglossaryentry{ipcp}
+                 {
+                   name={IPCP, Inbound packet post processor},
+                   text={\textsc{ipcp}},
+                   description={\dpk{} module that updates packet header and buffer 
+                     the packet for input}
+                 }
+
+
+\newglossaryentry{bps}
+                 {
+                   name={BPS, Bypass FIFO},
+                   text={\textsc{bps}},
+                   description={\dpk{} module that pass through packets 
+                     directly from input to output without and processing}
+                 }
+
+
+\newglossaryentry{cp}
+                 {
+                   name={CP, Control point},
+                   text={\textsc{cp}},
+                   description={\dpk{} module that contains configurations registers, 
+                     SA tables for inbound and outbound}
+                 }
+
+\newglossaryentry{ippci}
+                 {
+                   name={IPPCI, IPPCI FIFO},
+                   text={\textsc{ippci}},
+                   description={???}
+                 }
+
+\newglossaryentry{oppci}
+                 {
+                   name={OPPCI, OPPCI FIFO},
+                   text={\textsc{oppci}},
+                   description={???}
+                 }
+
+
+\newglossaryentry{olb}
+                 {
+                   name={OLB, Outbound Load Balancer},
+                   text={\textsc{olb}},
+                   description={\dpk{} module that parses packet header to 
+                     dispatch packets to engine pipeline or \gls{bps} in outbound 
+                     data flow}
+                 }
+
+
+\newglossaryentry{ilb}
+                 {
+                   name={ILB, Inbound Load Balancer},
+                   text={\textsc{ilb}},
+                   description={\dpk{} module that parses packet header to 
+                     dispatch packets to engine pipeline or \gls{bps} in inbound 
+                     data flow}
+                 }
+
+
+\newglossaryentry{oord}
+                 {
+                   name={OORD, Outbound Ordering Controller},
+                   text={\textsc{oord}},
+                   description={\dpk{} module that keeps ordering
+                     of the outbound packet and send out the packets through XAUI1}
+                 }
+
+\newglossaryentry{iord}
+                 {
+                   name={IORD, Inbound Ordering Controller},
+                   text={\textsc{iord}},
+                   description={\dpk{} module that keeps ordering
+                     of the outbound packet and send out the packets through XAUI0}
+                 }
+
+
+\newglossaryentry{oep}
+                 {
+                   name={OSC, Outbound Security Channel},
+                   text={\textsc{osc}},
+                   description={Consists of \gls{oprpctl}, \gls{cmp}, \gls{pad},
+                     \gls{enc}, \gls{opstctl}, and \gls{opcp}}
+                 }
+
+\newglossaryentry{iep}
+                 {
+                   name={ISC, Inbound Security Channel},
+                   text={\textsc{isc}},
+                   description={Consists of \gls{iprpctl}, \gls{dec}, \gls{dpad}, 
+                     \gls{dcmp}, \gls{ipstctl}, and \gls{ipcp}}
+                 }
+
+\newglossaryentry{if xs}
+                 {
+                   name={xfunc stream interface},
+                   text={xfunc stream},
+                   description={\See{ds:if xs}}
+                 }
+
+\newglossaryentry{if xi}
+                 {
+                   name={xfunc information interface},
+                   text={xfunc info},
+                   description={\See{ds:if xi}}
+                 }
+
+\newglossaryentry{bfm xs}
+                 {
+                   name={bfm\_xs, xfunc stream interface BFM},
+                   text={bfm\_xs},
+                   description={\See{ds:bfm xs}}
+                 }
+
+\newglossaryentry{bfm xi}
+                 {
+                   name={bfm\_xi, xfunc information interface BFM},
+                   text={bfm\_xi},
+                   description={\See{ds:bfm xi}}
+                 }
+
+\newglossaryentry{snp xi}
+                 {
+                   name={snp\_xi, xfunc information interface Snooper},
+                   text={snp\_xi},
+                   description={\See{ds:snp xi}}
+                 }
+
+
+\newglossaryentry{ref enc}
+                 {
+                   name={ref\_enc, Reference Model of Encryption Engine},
+                   text={ref\_enc}, 
+                   description={\See{ds:ref enc}}
+                 }
+
+\newglossaryentry{chk enc}
+                 {
+                   name={chk\_enc, Checker of Encryption Engine},
+                   text={chk\_enc},
+                   description={\See{ds:chk enc}}
+                 }
+
+\newglossaryentry{gen enc}
+                 {
+                   name={gen\_enc, Encryption Source Packet Generator},
+                   text={gen\_enc},
+                   description={\See{ds:gen enc}}
+                 }
+
+
+\newglossaryentry{ref dec}
+                 {
+                   name={ref\_dec, Reference Model of Decryption Engine},
+                   text={ref\_dec}, 
+                   description={\See{ds:ref dec}}
+                 }
+
+\newglossaryentry{chk dec}
+                 {
+                   name={chk\_dec, Checker of Decryption Engine},
+                   text={chk\_dec},
+                   description={\See{ds:chk dec}}
+                 }
+
+
+\newglossaryentry{gen dec}
+                 {
+                   name={gen\_dec, Decryption Source Packet Generator},
+                   text={gen\_dec},
+                   description={\See{ds:gen dec}}
+                 }
+
+\newglossaryentry{snp xs}
+                 {
+                   name={snp\_xs, xfunc strem interface snooper},
+                   text={snp\_xs},
+                   description={\See{ds:snp xs}}
+                 }
+
+
+\newglossaryentry{bfm iord}
+                 {
+                   name={bfm\_iord, IORD Stream Interface BFM},
+                   text={bfm\_iord},
+                   description={\See{ds:bfm iord}}
+                 }
+
+\newglossaryentry{bfm ilb}
+                 {
+                   name={bfm\_ilb, ILB Stream Interface BFM},
+                   text={bfm\_ilb},
+                   description={\See{ds:bfm ilb}}
+                 }
+
+\newglossaryentry{gen eth}
+                 {
+                   name={gen\_eth, Enternet packet generator},
+                   text={gen\_eth},
+                   description={\See{ds:gen eth}}
+                 }
+
+\newglossaryentry{ref iep}
+                 {
+                   name={ref\_iep, Inbound Engine Pipeline Reference Model},
+                   text={ref\_iep},
+                   description={\See{ds:ref iep}}
+                 }
+
+\newglossaryentry{chk iep}
+                 {
+                   name={chk\_iep, Inbound Engine Pipeline Checker},
+                   text={chk\_iep},
+                   description={\See{ds:chk iep}}
+                 }
+
+
+\newglossaryentry{bfm oord}
+                 {
+                   name={bfm\_oord, OORD Stream Interface BFM},
+                   text={bfm\_oord},
+                   description={\See{ds:bfm oord}}
+                 }
+
+\newglossaryentry{bfm olb}
+                 {
+                   name={bfm\_olb, OLB Stream Interface BFM},
+                   text={bfm\_olb},
+                   description={\See{ds:bfm olb}}
+                 }
+
+\newglossaryentry{gen d2h}
+                 {
+                   name={gen\_d2h, \gls{pkt d2h} generator},
+                   text={gen\_d2h},
+                   sort={pkt d2h geneerator},
+                   description={\See{ds:gen d2h}}
+                 }
+
+\newglossaryentry{ref oep}
+                 {
+                   name={ref\_oep, Outbound Engine Pipeline Reference Model},
+                   text={ref\_oep},
+                   description={\See{ds:ref oep}}
+                 }
+
+
+\newglossaryentry{chk oep}
+                 {
+                   name={chk\_oep, Outbound Engine Pipeline Checker},
+                   text={chk\_oep},
+                   description={\See{ds:chk oep}}
+                 }
+
+\newglossaryentry{ref cp}
+                 {
+                   name={ref\_cp, CP Reference Model},
+                   text={ref\_cp},
+                   description={\See{ds:ref cp}}
+                 }
+
+
+\newglossaryentry{pkt d2h}
+                 {
+                   name={pkt\_d2h, Packet from Driver to Hardware},
+                   text={pkt\_d2h},
+                   description={\See{ds:pkt d2h}}
+                 }
+
+\newglossaryentry{pkt h2d}
+                 {
+                   name={pkt\_h2d, Packet from Hardware to Driver},
+                   text={pkt\_h2d},
+                   description={\See{ds:pkt h2d}}
+                 }
+
+\newglossaryentry{pkt eth}
+                 {
+                   name={pkt\_eth, Standard Ethernet Pakcet},
+                   text={pkt\_eth},
+                   description={\See{ds:pkt eth}}
+                 }
+                 
+\newglossaryentry{if salk}
+                 {
+                   name={if\_salk, SA Lookup Interface},
+                   text={if\_salk},
+                   description={\See{ds:if salk}}
+                 }
+
+\newglossaryentry{snp salk}
+                 {
+                   name={Snooper on Inbound/Outbound \gls{if salk}},
+                   text={snp\_salk},
+                   description={\See{ds:snp salk}}
+                 }
+
+\newglossaryentry{bfm txsalk}
+                 {
+                   name={bfm\_txsalk, TX SA Lookup Interface BFM},
+                   text={bfm\_txsalk},
+                   description={\See{ds:bfm txsalk}}
+                 }
+
+\newglossaryentry{bfm rxsalk}
+                 {
+                   name={bfm\_rxsalk, RX SA Lookup Interface BFM},
+                   text={bfm\_rxsalk},
+                   description={\See{ds:bfm rxsalk}}
+                 }
+
+
+
+\newglossaryentry{snp oord}
+                 {
+                   name={snp\_oord, Snooper before \gls{oord}},
+                   text={snp\_oord},
+                   description={\See{ds:snp oord}}
+                 }
+
+\newglossaryentry{snp iord}
+                 {
+                   name={snp\_iord, Snooper before \gls{iord}},
+                   text={snp\_iord},
+                   description={\See{ds:snp iord}}
+                 }
+
+\newglossaryentry{xct oep}
+                 {
+                   name={xct\_oep, Output Engine Pipeline Transactor},
+                   text={xct\_oep},
+                   description={\See{ds:xct oep}}
+                 }
+
+\newglossaryentry{gen sa}
+                 {
+                   name={gen\_sa, Security Associtation Generator},
+                   text={gen\_sa}, 
+                   description={\See{ds:gen sa}}
+                 }
+
+\newglossaryentry{xct enc}
+                 {
+                   name={xct\_enc, Encryption Engine Transactor},
+                   text={xct\_enc},
+                   description={\See{ds:xct enc}}
+                 }
+
+\newglossaryentry{xct dec}
+                 {
+                   name={xct\_dec, Decryption Engine Transactor},
+                   text={xct\_dec},
+                   description={\See{ds:xct dec}}
+                 }
+
+\newglossaryentry{xct iep}
+                 {
+                   name={xct\_iep, Input Engine Pipeline Transactor},
+                   text={xct\_iep},
+                   description={\See{ds:xct iep}}
+                 }
+
+\newglossaryentry{xaui}
+                 {
+                   name={XAUI, Stardard for extending the XGMII},
+                   text={\textsc{xaui}},
+                   description={XAUI is a standard for extending the
+                     XGMII (10 Gigabit Media Independent Interface)
+                     between the MAC and PHY layer of 10 Gigabit
+                     Ethernet (10GbE)}
+                 }
+
+\newglossaryentry{bfm xaui}
+                 {
+                   name={bfm\_xaui, XAUI Logical core interface BFM},
+                   text={bfm\_xaui},
+                   description={\See{ds:bfm xaui}}
+                 }
+
+\newglossaryentry{bfm xaui phy}
+                 {
+                   name={bfm\_xaui\_phy, XAUI PHY interface BFM},
+                   text={bfm\_xaui\_phy},
+                   description={\See{ds:bfm xaui phy}}
+                 }
+
+\newglossaryentry{snp xaui}
+                 {
+                   name={snp\_xaui, XAUI Logical core interface Snooper},
+                   text={snp\_xaui},
+                   description={\See{ds:snp xaui}}
+                 }
+
+
+\newglossaryentry{snp xaui phy}
+                 {
+                   name={snp\_xaui\_phy, XAUI PHY interface Snooper},
+                   text={snp\_xaui\_phy},
+                   description={\See{ds:snp xaui phy}}
+                 }
+
+\newglossaryentry{if lb2ep}
+                 {
+                   name={if\_lb, Interface between \gls{ilb}/\gls{olb} to \gls{iep}/\gls{oep}},
+                   name={if\_lb2ep},
+                   description={\See{ds:if lb2ep}}
+                 }
+
+\newglossaryentry{if ep2odr}
+                 {
+                   name={if\_odr, \gls{oep}/\gls{oord} and \gls{iep}/\gls{iord} Interface},
+                   text={if\_ep2odr},
+                   description={\See{ds:if ep2odr}}
+                 }
+
+
+\newglossaryentry{chk host}
+                 {
+                   name={chk\_host, Host side (hardware to driver) packet Checker},
+                   text={chk\_host},
+                   description={\See{ds:chk host}}
+                 }
+
+\newglossaryentry{chk eth}
+                 {
+                   name={chk\_eth, Ehternet packet Checker},
+                   text={chk\_eth},
+                   description={\See{ds:chk eth}}
+                 }
+
+\newglossaryentry{xct d2h}
+                 {
+                   name={xct\_d2h, Driver to Hardware Transactor},
+                   text={xct\_d2h},
+                   description={\See{ds:xct d2h}}
+                 }
+
+\newglossaryentry{xct eth}
+                 {
+                   name={xct\_eth, Ethernet input Transactor},
+                   text={xct\_eth},
+                   description={\See{ds:xct eth}}
+                 }
+
+\newglossaryentry{snp ilb}
+                 {
+                   name={snp\_ilb, \gls{ilb} to \gls{iep} interface Snooper},
+                   text={snp\_ilb},
+                   description={\See{ds:snp ilb}}
+                 }
+
+\newglossaryentry{snp olb}
+                 {
+                   name={snp\_olb, \gls{olb} to \gls{iep} interface Snooper},
+                   text={snp\_olb},
+                   description={\See{ds:snp olb}}
+                 }
+
+\newglossaryentry{snp cpd}
+                 {
+                   name={snp\_cpd, \gls{cp} Input data packet Snooper},
+                   text={snp\_cpd},
+                   description={\See{ds:snp cpd}}
+                 }
+
+\newglossaryentry{pkt cp}
+                 {
+                   name={pkt\_cp, \gls{cp} control packet},
+                   text={pkt\_cp},
+                   description={\See{ds:pkt cp}}
+                 }
+
+\newglossaryentry{pkt sa}
+                 {
+                   name={pkt\_sa, Abstract packet containing \gls{sa}},
+                   text={pkt\_sa},
+                   description={\See{ds:pkt sa}}
+                 }
+
+\newglossaryentry{pkt err}
+                 {
+                   name={pkt\_err, Error logging packet},
+                   text={pkt\_err},
+                   description={\See{ds:pkt err}}
+                 }
+
+
+
+\newglossaryentry{c dis}
+                 {
+                   name={c\_dis, Packet Dispatcher class},
+                   text={c\_dis},
+                   description={\See{ds:c dis}}
+                 }
+
+\newglossaryentry{ref oerr}
+                 {
+                   name={ref\_oerr, Outbound Error Logger class},
+                   text={ref\_oerr},
+                   description={\See{ds:ref oerr}}
+                 }
+
+\newglossaryentry{ref ierr}
+                 {
+                   name={ref\_ierr, Inbound Error Logger class},
+                   text={ref\_ierr},
+                   description={\See{ds:ref ierr}}
+                 }
+
+\newglossaryentry{xct salk}
+                 {
+                   name={xct\_salk, SA Look Up Transactor},
+                   text={xct\_salk},
+                   description={\See{ds:xct salk}}
+                 }
+
+\newglossaryentry{pkt data}
+                 {
+                   name={Pkt\_data, Generic Packet Data Generator},
+                   text={Pkt\_data},
+                   description={\Mhdl{class} defined in UVE, which 
+                     can generate IP packet and Ethernet packet}
+                 }
+
+\newglossaryentry{pkt format}
+                 {
+                   name={Pkt\_format, Packet format class},
+                   text={Pkt\_format},
+                   description={Supportive class defined in UVE for generating
+                     \gls{pkt data} via \gls{pkt data gen}}
+                 }
+
+\newglossaryentry{pkt data gen}
+                 {
+                   name={Pkt\_data\_gen, \gls{pkt data} Generator},
+                   text={Pkt\_data\_gen},
+                   description={Proprietary Generator to produce
+                     \gls{pkt data} based on \gls{pkt format}}
+                 }
+
+
+\newglossaryentry{bfm base}
+                 {
+                   name={bfm\_base, BFM base class used in \dpk{}},
+                   text={bfm\_base},
+                   description={\See{ds:bfm base}}
+                 }
+
+\newglossaryentry{snp base}
+                 {
+                   name={snp\_base, Snopper base class used in \dpk{}},
+                   text={snp\_base},
+                   description={\See{ds:snp base}}
+                 }
+
+
+\newglossaryentry{xct sa}
+                 {
+                   name={xct\_sa, \gls{sa} transactor},
+                   text={xct\_sa},
+                   description={\See{ds:xct sa}}
+                 }
+
+\newglossaryentry{sa tab}
+                 {
+                   name={SA Table},
+                   description={Global \gls{sa} table in verification environment which is visible to 
+                     all \tb{} components. Both \gls{ref host} and \gls{ref eth} are rely on it to 
+                     command \gls{gen d2h} and \gls{gen eth} to generate stimulous, repectively. \glspar
+                     In Komodo, equavalent concept is called ``Record DB''}
+                 }
+
+\newglossaryentry{ref host}
+                 {
+                   name={ref\_host, Host software reference model},
+                   text={ref\_host},
+                   description={Simulate the host driver hehaviors, \See{ds:ref host}}
+                 }
+
+\newglossaryentry{ref eth}
+                 {
+                   name={ref\_eth, Ethernet component reference model},
+                   text={ref\_eth},
+                   description={Simulate the device at the other end 
+                     of \dpk{} in a connected network. \See{ds:ref eth}}
+                 }
+
+\newglossaryentry{ref top}
+                 {
+                   name={ref\_top, Chip-top Reference Model},
+                   text={ref\_top},
+                   description={\See{ds:ref top}}
+                 }
+
+\newglossaryentry{xct host}
+                 {
+                   name={xct\_host, Host Transactor},
+                   text={xct\_host},
+                   description={\See{ds:xct host}}
+                 }
+
+\newglossaryentry{ref olb}
+                 {
+                   name={ref\_olb, \gls{olb} Reference Model},
+                   text={ref\_olb},
+                   description={\See{ds:ref olb}}
+                 }
+
+\newglossaryentry{ref ilb}
+                 {
+                   name={ref\_ilb, \gls{ilb} Reference Model},
+                   text={ref\_ilb},
+                   description={\See{ds:ref ilb}}
+                 }
+
+\newglossaryentry{ref oord}
+                 {
+                   name={ref\_oord, \gls{oord} Reference Model},
+                   text={ref\_oord},
+                   description={\See{ds:ref oord}}
+                 }
+
+\newglossaryentry{ref iord}
+                 {
+                   name={ref\_iord, \gls{iord} Reference Model},
+                   text={ref\_iord},
+                   description={\See{ds:ref iord}}
+                 }
+
+\newglossaryentry{pkt enc}
+                 {
+                   name={pkt\_enc, Encryption Engine input packet},
+                   text={pkt\_enc},
+                   description={\See{ds:pkt enc}}
+                 }
+
+\newglossaryentry{pkt dec}
+                 {
+                   name={pkt\_dec, Decryption Engine input packet},
+                   text={pkt\_dec},
+                   description={\See{ds:pkt dec}}
+                 }
+
+\newglossaryentry{dp pkt format}
+                 {
+                   name={\dpk{} Packet Format Constraint Container},
+                   text={dp\_pkt\_format},
+                   description={\See{ds:dp pkt format}}
+                 }
+
+\newglossaryentry{ipsec hdr data}
+                 {
+                   name={Ipsec\_hdr\_data, class defined in UVE},
+                   text={Ipsec\_hdr\_data},
+                   description={Located at  UVE/trunk/pkt\_gen/. 
+                     It is class in ``pkt\_gen'' library
+                     for IPsec header generation}
+                 }
+
+\newglossaryentry{ref eth behavior}
+                 {
+                   name={ref\_eth\_behavior, \gls{ref eth} Behavior base class},
+                   text={ref\_eth\_behavior},
+                   description={\See{ds:ref eth behavior}}
+                 }
+
+\newglossaryentry{director}
+                 {
+                   name={Director},
+                   text={Director},
+                   description={Test director that is a class with \mhdl{rand} properties and
+                     constraits. It is randomized for \gls{exec dirct} to generate packet that
+                     will be pushed into DUT. \See{ds:director}}
+                 }
+
+\newglossaryentry{exec dirct}
+                 {
+                   name={exec\_dirct, Execution Director},
+                   text={exec\_dirct},
+                   description={A verification component that takes \gls{director} as input
+                     and produces packet which is further pushed into DUT as stimulus}
+                 }
+
+\newglossaryentry{gen dirct}
+                 {
+                   name={gen\_dirct, Director generator},
+                   text={gen\_dirct},
+                   description={ATT}
+                 }
+
+\newglossaryentry{kis}
+                 {
+                   name={kis, Key Index and SPI storage manager},
+                   text={\textsc{kis}},
+                   description={\See{src:kis}}
+                 }
+
+\newglossaryentry{ksc}
+                 {
+                   name={ksc, Key, Salt and Control storage manager},
+                   text={\textsc{ksc}},
+                   description={\See{src:ksc}}
+                 }
+
+\newglossaryentry{bse}
+                 {
+                   name={bse, Binary Search Engine},
+                   text={\textsc{ksc}},
+                   description={\See{src:bse}}
+                 }
+
+\newglossaryentry{salk}
+                 {
+                   name={salk, SA Lookup Controller},
+                   text={\textsc{salk}},
+                   description={\See{src:salk}}
+                 }
+                 
+
+\newglossaryentry{savld}
+                 {
+                   name={savld, SA Validation Controller},
+                   text={\textsc{savld}},
+                   description={\See{src:savld}}
+                 }

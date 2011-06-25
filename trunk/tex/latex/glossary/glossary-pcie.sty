@@ -1,0 +1,310 @@
+\newglossaryentry{pcie}
+                 {
+                   name={PCIe},
+                   text={PCIe},
+                   description={abbreviation of PCI Express Standard}
+                 }
+
+\newglossaryentry{vf}
+                 {
+                   name={VF, Virtual Function},
+                   text={VF},
+                   description={A light-weight PCIe Function that is
+                     directly accessible by an \gls{si}. It is associated with a
+                     Physical Function. A VF shares one or more
+                     physical resources, such as a Link, with the
+                     Physical Function and other VFs that are
+                     associated with the same PF. \See[cite]{sr-iov}}
+                 }
+
+\newglossaryentry{pf}
+                 {
+                   name={PF, Physical Function},
+                   text={PF}, 
+                   description={A PCI Function that
+                     supports the SR-IOV capabilities defined in this
+                     specification. A PF contains the SR-IOV
+                     capability structure. \See[cite]{sr-iov}} 
+                 }
+
+\newglossaryentry{vc}
+                 {
+                   name={VC, Virtual Channel},
+                   text={VC},
+                   description={VC mechanism provides support for
+                     carrying, throughout the fabric, traffic that is
+                     differentiated using TC labels. 
+                     \See[cite]{pcie-spec-3} 2.5}
+                 }
+
+\newglossaryentry{tc}
+                 {
+                   name={TC, Traffic Class},
+                   text={TC},
+                   description={A 3-bit field that allows
+                     differentiation of transactions into eight
+                     traffic classes. 
+                     \See[cite]{pcie-spec-3} 2.2.6.6}
+                 }
+
+\newglossaryentry{ep}
+                 {
+                   name={EP, PCI~Express Endpoint},
+                   text={EP}, 
+                   description={
+                     Endpoint refers to a type of Function that
+                     can be the Requester or Completer of a \gls{pcie}
+                     transaction either on its own behalf or on behalf of a
+                     distinct non-PCI Express device (other than a PCI device
+                     or Host CPU), e.g., a PCI Express attached graphics 
+                     controller or a PCI Express-USB host controller. 
+                     Endpoints are classified as either legacy, PCI Express, or 
+                     Root Complex Integrated Endpoints}
+                 }
+                 
+
+\newglossaryentry{rc}
+                 {
+                   name={RC, PCI~Express Root~Complex},
+                   text={RC},
+                   description={
+                     A Root Complex denotes the root of an I/O
+                     hierarchy that connects the CPU/memory subsystem
+                     to the I/O. Root Complex may support one or more
+                     PCI Express Ports. Each interface defines a
+                     separate hierarchy domain. Each hierarchy domain
+                     may be composed of a single Endpoint or a 
+                     sub-hierarchy containing one or more Switch 
+                     components and Endpoints. There is a RC in \pii{}
+                     architecture for application extension}
+                 }
+
+\newglossaryentry{dpa}
+                 {
+                   name={DPA, Dynamic Power Allocation},
+                   text={DPA},
+                   description={\See[cite]{pcie-spec-3} section 6.16}
+                 }
+
+
+
+\newglossaryentry{dstate}
+                 {
+                   name={D-State},
+                   text={\mbox{D-State}},
+                   description={\See[cite]{pcie-spec-3} 5.3.1}
+                 }
+
+\newglossaryentry{d0}
+                 {
+                   name={D0 State}, 
+                   text={D0},
+                   description={\See[cite]{pcie-spec-3} 5.3.1.1}
+                 }
+
+\newglossaryentry{d3}
+                 {
+                   name={D3 State},
+                   text={D3},
+                   description={\See[cite]{pcie-spec-3} 5.3.1.4}
+                 }
+
+
+\newglossaryentry{d3 hot}
+                 {
+                   name={D3 Hot State},
+                   text={\mbox{D3$_{\text{hot}}$}},
+                   description={\See[cite]{pcie-spec-3} 5.3.1.4.1}
+                 }
+
+\newglossaryentry{d3 cold}
+                 {
+                   name={D3 Cold State},
+                   text={\mbox{D3$_{\text{cold}}$}},
+                   description={\See[cite]{pcie-spec-3} 5.3.1.4.2}
+                 }
+
+\newglossaryentry{tlp}
+                 {
+                   name={TLP, Transaction Layer Packet},
+                   text={TLP},
+                   description={\See[cite]{pcie-spec-3}}
+                 }
+
+\newglossaryentry{pcie mps}
+                 {
+                   name={Max Payload Size},
+                   description={\See[cite]{pcie-spec-3}}
+                 }
+
+\newglossaryentry{mrd}
+                 {
+                   name={MRd, Memory Read Request},
+                   text={MRd},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{mwr}
+                 {
+                   name={MWr, Memory Write Request},
+                   text={MWr},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+
+\newglossaryentry{cpld}
+                 {
+                   name={CplD, Completion with Data},
+                   text={CplD},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{cpl}
+                 {
+                   name={Cpl, Completion without Data},
+                   text={Cpl},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{msg}
+                 {
+                   name={Msg, Message Requst},
+                   text={Msg}, 
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{msgd}
+                 {
+                   name={MsgD, Message Requst with data payload},
+                   text={MsgD}, 
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{cfgrd0}
+                 {
+                   name={CfgRd0, Configuration Read Type 0},
+                   text={CfgRd0},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{cfgrd1}
+                 {
+                   name={CfgRd1, Configuration Read Type 1},
+                   text={CfgRd1},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{cfgwr0}
+                 {
+                   name={CfgWr0, Configuration Write Type 0},
+                   text={CfgWr0},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{cfgwr1}
+                 {
+                   name={CfgWr1, Configuration Write Type 1},
+                   text={CfgWr1},
+                   description={A \gls{tlp} type, \See[cite]{pcie-spec-3}, Table 2-3, page 60}
+                 }
+
+\newglossaryentry{si}
+                 {
+                   name={SI, System Image},
+                   text={SI},
+                   description={An instance of a operating system over \gls{vi}, \See[cite]{sr-iov}}
+                 }
+
+\newglossaryentry{vm}
+                 {
+                   name={VM, Virtual Machine},
+                   text={VM},
+                   description={Another name for \gls{si}}
+                 }
+
+
+\newglossaryentry{vi}
+                 {
+                   name={VI, Virtualization Intermediary},
+                   text={VI},
+                   description={A system software in virtualization technology. It takes
+                     over control of all hardware and allocate resources to \gls{si}}
+                 }
+
+\newglossaryentry{sr pcim}
+                 {
+                   name={SR-PCIM, Single Root PCI Manager},
+                   text={SR-PCIM},
+                   description={System software that implement stardard method to control
+                     SR-IOV resource configuration and management}
+                 }
+
+\newglossaryentry{atc}
+                 {
+                   name={ATC, Address Translation Cache},
+                   text={ATC},
+                   description={\See[cite]{pcie-ats}}
+                 }
+
+\newglossaryentry{atpt}
+                 {
+                   name={ATPT, Address Translation and Protection Table},
+                   text={ATPT},
+                   description={\See[cite]{pcie-ats}}
+                 }
+
+\newglossaryentry{ta}
+                 {
+                   name={TA, Translation Agent},
+                   text={TA},
+                   description={\See[cite]{pcie-ats}}
+                 }
+
+\newglossaryentry{reg sr iov capa}
+                 {
+                   name={SR-IOV Extended Capability},
+                   description={A set of register for SR-IOV configuration, 
+                     \See[cite]{sr-iov} 3.3}
+                 }
+
+\newglossaryentry{reg total vf}
+                 {
+                   name={TotalVFs}, 
+                   description={\See[cite]{sr-iov} 3.3.6}
+                 }
+
+\newglossaryentry{reg num vf}
+                 {
+                   name={NumVFs},
+                   description={\See[cite]{sr-iov} 3.3.7}
+                 }
+
+\newglossaryentry{reg init vf}
+                 {
+                   name={InitialVFs},
+                   description={\See[cite]{sr-iov} 3.3.5}
+                 }
+
+\newglossaryentry{reg first vf offset}
+                 {
+                   name={First VF Offset},
+                   description={\See[cite]{sr-iov} 2.1.2 and 3.3.9}
+                 }
+
+\newglossaryentry{reg vf stride}
+                 {
+                   name={VF Stride},
+                   description={\See[cite]{sr-iov} 2.1.2 and 3.3.10}
+                 }
+
+\newglossaryentry{reg device control 2}
+                 {
+                   name={Device Control 2 register},
+                   description={\See[cite]{pcie-spec-3}  7.8.16}
+                 }
+
+\newglossaryentry{reg tph requester capa}
+                 {
+                   name={TPH Requester Capability},
+                   description={\See[cite]{pcie-spec-3} 7.26}
+                 }

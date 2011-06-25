@@ -1,0 +1,67 @@
+\newglossaryentry{update event}
+                 {
+                   name={Update Event},
+                   description={
+                     Every change in state of a net or variable in the
+                     system description being simulated is considered
+                     an update event. \glspar
+                     \See[cite]{vlog-ieee} 64}
+                 }
+
+\newglossaryentry{evaluation event}
+                 {
+                   name={Evaluation Event}, 
+                   description={When an update event is executed, all
+                     the processes that are sensitive to that event
+                     are evaluated in an arbitrary order. The
+                     evaluation of a process is also an event, known
+                     as an evaluation event.\glspar
+                   \See[cite]{vlog-ieee} 64}
+                 }
+                 
+
+\newglossaryentry{event queue}
+                 {
+                   name={Event Queue},
+                   description={Events can occur at different
+                     times. In order to keep track of the events and
+                     to make sure they are processed in the correct
+                     order, the events are kept on an event queue,
+                     ordered by simulation time}
+                 }
+
+\newglossaryentry{bfm}
+                 {
+                   name={Bus Functional Model (BFM)},
+                   text={BFM}, 
+                   description={总线功能模型, 直接驱动\rtl{}模型的端口信号, 
+                     并为上层验证环境组件提供\rtl{}的抽象端口. 从上层看来, 向
+                     \dut{}发送或接收数据的信号时序都已经被隐藏, 发送或接收被抽象
+                     为对BFM成员函数的调用}
+                 }
+
+\newglossaryentry{sv}
+                 {
+                   name={SystemVerilog (SV)}, 
+                   text={SV},
+                   description={可以用来设计和验证的语言}
+                 }
+
+\newglossaryentry{it}
+                 {
+                   name={Information Technology (IT)},
+                   text={IT},
+                   description={信息技术, 在本文中特指一切与计算机、网络相关的
+                     应用和开发技术. 比如Windows/Linux的使用, C/C++编程, 
+                     脚本语言(Perl, Python, sed)的应用, 数据库的使用和开发, 
+                     网络编程等. 这些技术的特点是没有太陡峭的学习曲线, 任何心智
+                     健全的人都可以在很短的时间内学会, 并且经过不太长的时间练习之
+                     后能够精通}
+                 }
+
+\newglossaryentry{dpi}
+                 {
+                   name={Direct Programming Interface (DPI)},
+                   text={DPI},
+                   description={\See[cite]{sv-ieee} chapter 26}
+                 }

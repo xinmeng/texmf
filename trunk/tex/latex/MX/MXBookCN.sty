@@ -1,0 +1,68 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{MXBookCN}[2010/06/01 MXBook class file by Xin Meng]
+
+
+\RequirePackageWithOptions{MXNote}
+
+%% ----------------------------------------
+%%   Layout adjustment
+%% ----------------------------------------
+\setlength{\hoffset}{0in}
+\setlength{\topmargin}{-2.7cm}
+\setlength{\headheight}{2.5cm}
+\setlength{\headsep}{.8cm}
+\setlength{\footskip}{1.3cm}
+\setlength{\oddsidemargin}{.4in}
+\setlength{\marginparwidth}{.8in}
+\setlength{\marginparsep}{.1in}
+\setlength{\textheight}{8.7in}
+\setlength{\textwidth}{5.7in}
+
+
+
+%% ----------------------------------------
+%%   Header
+%% ----------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection.\ #1}{}}
+\fancyhf[LH]{\leftmark}
+%\fancyhf[RH]{\fontfamily{phv}\fontseries{b}\selectfont\small Exar Confidential}
+\fancyhf[CF]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{}
+
+
+
+%% ----------------------------------------
+%%   Heading
+%% ----------------------------------------
+\titleformat{\chapter}[display]
+            {\flushright
+              \color{ThemeColor}
+              \fontfamily{put}\fontseries{bx}\fontsize{40}{40}\fontshape{sc}\selectfont\huge}
+            {\fontsize{70}{35}\selectfont\thechapter}
+            {0mm}{}{\normalfont}
+
+\titlespacing{\chapter}{0mm}{-.5in}{1in}
+
+
+%% ----------------------------------------
+%%  中文标题
+%% ----------------------------------------
+\renewcommand\contentsname{目录}
+
+\renewcommand\listfigurename{图} %TOC
+\renewcommand\figurename{图}
+\renewcommand\figureautorefname{图}
+
+\renewcommand\listtablename{表} % TOC
+\renewcommand\tablename{表}
+\renewcommand\tableautorefname{表}
+
+\renewcommand\lstlistlistingname{代码} % TOC
+\renewcommand\lstlistingname{代码}
+
+\renewcommand\bibname{参考文献}

@@ -1,0 +1,550 @@
+\newglossaryentry{dma}
+                 {
+                   name={DMA},
+                   text={\textbf{dma}},
+                   description={\pii{} submodule, 
+                     discussed in this document}
+                 }
+
+\newglossaryentry{regs}
+                 {
+                   name={REGS, DMA Register Module}, 
+                   text={\textbf{regs}},
+                   description={\See[cite]{regs-wb}}
+                 }
+
+\newglossaryentry{cf}
+                 {
+                   name={CF, Command Fetching controller}, 
+                   text={\textbf{cf}},
+                   description={\See{sec:mod cf}}
+                 }
+
+\newglossaryentry{wrc}
+                 {
+                   name={WRC, Write Request Controller},
+                   text={\textbf{wrc}},
+                   description={\See[cite]{rrcwrc-wb}}
+                 }
+
+\newglossaryentry{rrc}
+                 {
+                   name={RRC, Read Request Controller},
+                   text={\textbf{rrc}},
+                   description={\See[cite]{rrcwrc-wb}}
+                 }
+
+
+\newglossaryentry{int}
+                 {
+                   name={INT, Interrupt controller},
+                   text={\textbf{int}},
+                   description={\See[cite]{int-wb}}
+                 }
+
+\newglossaryentry{txcpl}
+                 {
+                   name={TXCPL, Transmit CplD},
+                   text={\textbf{txcpl}},
+                   description={\See{sec:mod txcpl}}
+                 }
+
+\newglossaryentry{rxrw}
+                 {
+                   name={RXRW, Received Read/Write TLP handler},
+                   text={\textbf{rxrw}},
+                   description={\See{sec:mod rxrw}}
+                 }
+
+\newglossaryentry{cc}
+                 {
+                   name={CC, Completion Controller},
+                   text={\textbf{cc}},
+                   description={\See{sec:mod cc}}
+                 }
+
+\newglossaryentry{pm}
+                 {
+                   name={pm, Power Management controller},
+                   text={\textbf{pm}},
+                   description={\See{sec:mod pm}}
+                 }
+
+\newglossaryentry{fpm}
+                 {
+                   name={FPM, Free Pool descriptor Manager},
+                   text={\textbf{fpm}},
+                   description={\See{sec:mod fpm}}
+                 }
+
+
+\newglossaryentry{cpr}
+            {
+              name={CPR, Command Pointer Ring},
+              text={CPR},
+              description={Command Pointer Ring, entry in this ring
+                is pointer to command structure}
+            }
+
+\newglossaryentry{rr}
+                 {
+                   name={RR, Result Ring},
+                   text={RR},
+                   description={Result ring, entry in this ring
+                     is the result descriptor}
+                 }
+
+\newglossaryentry{fpr}
+                 {
+                   name={FPR, Free Pool Ring},
+                   text={FPR},
+                   description={Free Pool Ring, entry in this ring 
+                     is free pool descriptor}
+                 }
+
+
+\newglossaryentry{cmd wr panther} 
+            {
+              name={W$_{\text{cp}}$, Command Write Pointer on \pii{}},
+              text={W$_{\text{cp}}$},
+              description={It points to an entry in \gls{cpr}.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own W$_{\text{cp}}$}
+            }
+
+\newglossaryentry{cmd rd panther} 
+            {
+              name={R$_{\text{cp}}$, Command Read Pointer on Panther},
+              text={R$_{\text{cp}}$},
+              description={It points to an entry in \gls{cpr}.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own R$_{\text{cp}}$}
+            }
+
+\newglossaryentry{result wr panther} 
+            {
+              name={W$_{\text{rp}}$, Result Ring Write Pointer on \pii{}},
+              text={W$_{\text{rp}}$},
+              description={It points to an entry in Result ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own W$_{\text{rp}}$}
+            }
+
+\newglossaryentry{result rd panther} 
+            {
+              name={R$_{\text{rp}}$, Result Ring Read Pointer on Panther},
+              text={R$_{\text{rp}}$},
+              description={It points to an entry in Result ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own R$_{\text{rp}}$}
+            }
+
+
+\newglossaryentry{fp wr panther} 
+            {
+              name={W$_{\text{fp}}$, Free Pool Ring Write Pointer on \pii{}},
+              text={W$_{\text{fp}}$},
+              description={It points to an entry in Fp ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own W$_{\text{fp}}$}
+            }
+
+\newglossaryentry{fp rd panther} 
+            {
+              name={R$_{\text{fp}}$, Free Pool Ring Read Pointer on Panther},
+              text={R$_{\text{fp}}$},
+              description={It points to an entry in Free Pool ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own R$_{\text{fp}}$}
+            }
+
+
+
+
+\newglossaryentry{cmd wr host} 
+            {
+              name={W$_{\text{ch}}$, Command Write Pointer on Host},
+              text={W$_{\text{ch}}$},
+              description={It points to an entry in \gls{cpr}.
+                It is maintained by host}
+            }
+
+\newglossaryentry{cmd rd host} 
+            {
+              name={R$_{\text{ch}}$, Command Read Pointer on Host},
+              text={R$_{\text{ch}}$},
+              description={It points to an entry in \gls{cpr}.
+                It is maintained by host}
+            }
+
+
+\newglossaryentry{result wr host} 
+            {
+              name={W$_{\text{rh}}$, Result Ring Write Pointer on \pii{}},
+              text={W$_{\text{rh}}$},
+              description={It points to an entry in Result ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own W$_{\text{rh}}$}
+            }
+
+\newglossaryentry{result rd host} 
+            {
+              name={R$_{\text{rh}}$, Result Ring Read Pointer on Host},
+              text={R$_{\text{rh}}$},
+              description={It points to an entry in Result ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own R$_{\text{rh}}$}
+            }
+
+
+\newglossaryentry{fp wr host} 
+            {
+              name={W$_{\text{fh}}$, Free Pool Ring Write Pointer on \pii{}},
+              text={W$_{\text{fh}}$},
+              description={It points to an entry in Fp ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own W$_{\text{fh}}$}
+            }
+
+\newglossaryentry{fp rd host} 
+            {
+              name={R$_{\text{fh}}$, Free Pool Ring Read Pointer on Host},
+              text={R$_{\text{fh}}$},
+              description={It points to an entry in Free Pool ring.
+                Since each \gls{vf} as a dedicated ring structure, 
+                each \gls{vf} maintains its own R$_{\text{fh}}$}
+            }
+ 
+
+
+\newglossaryentry{cdmgr}
+                 {
+                   name={CDMGR, Command Descriptor Manager},
+                   text={\textbf{cdmgr}},
+                   description={A \pii{} sub module,
+                     \See[cite]{p2-spec} chapter 5}
+                 }
+
+\newglossaryentry{eu}
+                 {
+                   name={EU, Execution Unit},
+                   text={\textbf{eu}},
+                   description={An overall notation for submodules 
+                     that are able to execute commands, including
+                     \gls{skcore}, \gls{pkp} and \gls{fpga eu}}
+                 }
+
+\newglossaryentry{skcore}
+                 {
+                   name={SKcore},
+                   text={\mbox{SKcore}},
+                   description={\See[cite]{p2-spec} chapter 6}
+                 }
+
+\newglossaryentry{pkp}
+                 {
+                   name={PKP, Public Key Processor},
+                   text={\textbf{pkp}},
+                   description={\See[cite]{p2-spec} chapter 9}
+                 }
+
+\newglossaryentry{fpga eu}
+                 {
+                   name={\mbox{FPGA-EU}},
+                   text={\textbf{fpga eu}},
+                   description={External execution unit in FPGA}
+                 }
+
+
+\newglossaryentry{cs}
+                 {
+                 name={CS, Completion Station},
+                 text={\textbf{cs}},
+                 description={Submodule of \gls{dma} that sends 
+                   command result to host}
+                 }
+
+\newglossaryentry{idc}
+                 {
+                   name={IDC, Input Data Controller},
+                   text={\textbf{idc}},
+                   description={Submodule of \gls{dma} that
+                     fetches source data for command}
+                 }
+
+\newglossaryentry{odc}
+                 {
+                   name={ODC, Output Data Controller},
+                   text={\textbf{odc}},
+                   description={Submodule of \gls{dma} that
+                     writes destination data to host}
+                 }
+
+
+
+\newglossaryentry{iov vmm}
+                 {
+                   name={VMM, Virtual Machine Monitor},
+                   text={VMM},
+                   description={Virtual machine monitor}
+                 }
+
+\newglossaryentry{iovm}
+                 {
+                   name={IOVM, I/O Virtual Machine},
+                   text={IOVM},
+                   description={I/O Virtual Machine: A special virtual
+                     machine that owns the physical device and is
+                     responsible for the configuration of the physical
+                     device.  Also Known As IOVI}
+                 }
+
+\newglossaryentry{pcie ip}
+                 {
+                   name={PCIe IP, Synopsys PCI Express 3.0 Endpoint Controller IP},
+                   text={PCIe IP},
+                   description={3rd party IP core, \See[cite]{synopsys-pcie-ep-ref}}
+                 }
+
+
+\newglossaryentry{rc reg}
+                 {
+                   name={RCfg Reg, Ring Configuration Registers},
+                   text={RCfg Reg},
+                   description={
+                     \See{sec:rc reg}
+                   }
+                 }
+
+\newglossaryentry{int reg}
+                 {
+                   name={IntCfg Reg, Interrupt Configuration Registers},
+                   text={IntCfg Reg},
+                   description={\See{sec:int reg}}
+                 }
+
+
+\newglossaryentry{gpie}
+                 {
+                   name={GPIE, General Purpose Interrupt Enable},
+                   text={GPIE}, 
+                   description={\See{sec:gpie}}
+                 }
+
+\newglossaryentry{icr}
+                 {
+                   name={ICR, Interrupt Cause Register},
+                   text={ICR},
+                   description={\See{sec:icr}}
+                 }
+
+\newglossaryentry{ics}
+                 {
+                   name={ICS, Interrupt Cause Set register},
+                   text={ICS},
+                   description={\See{sec:ics}}
+                 }
+
+
+\newglossaryentry{ims}
+                 {
+                   name={IMS, Interrupt Mask Set register},
+                   text={IMS},
+                   description={\See{sec:im}}
+                 }
+
+\newglossaryentry{imc}
+                 {
+                   name={IMC, Interrupt Mask Clear register},
+                   text={IMC},
+                   description={\See{sec:im}}
+                 }
+
+\newglossaryentry{iac}
+                 {
+                   name={IAC, Interrupt Auto Clear register},
+                   text={IAC},
+                   description={\See{sec:iac}}
+                 }
+
+\newglossaryentry{imen}
+                 {
+                   name={IMEN, Immediate Interrupt Enable},
+                   text={IMEN},
+                   description={\See{sec:imen}}
+                 }
+
+\newglossaryentry{iam}
+                 {
+                   name={IAM, Interrupt Auto Mask},
+                   text={IAM},
+                   description={\See{sec:iam}}
+                 }
+
+\newglossaryentry{bme}
+                 {
+                   name={BME, Bus Master Enable},
+                   text={BME},
+                   description={Control bit that gates function
+                     transmit \gls{mrd} and \gls{mwr}}
+                 }
+
+\newglossaryentry{cab}
+                 {
+                   name={CAB, Control Access Bus},
+                   text={CAB},
+                   description={\See{sec:cab}}
+                 }
+
+\newglossaryentry{fid}
+                 {
+                   name={FID, Function ID},
+                   text={FID},
+                   description={\See{sec:fid}}
+                 }
+
+\newglossaryentry{act}
+                 {
+                   name={AcT, Active Tag},
+                   text={AcT},
+                   description={\See{sec:act}}
+                 }
+
+\newglossaryentry{crid}
+                 {
+                   name={CRID, Compound Ring ID},
+                   text={CRID},
+                   description={\emph{See} 
+                     \autoref{reg:virtualized} 
+                     and \autoref{sec:compound ring id}}
+                 }
+
+\newglossaryentry{ctag}
+                 {
+                   name={CTAG, Command Tag}, 
+                   text={CTAG},
+                   description={The unique identity of a command 
+                     inside \pii{}}
+                 }
+
+
+
+\newglossaryentry{mod cpl}
+                 {
+                   name={CPL, Completion Handler},
+                   text={\textbf{cpl}},
+                   description={Submodule of \gls{cf}, \See{src:cpl}}
+                 }
+
+\newglossaryentry{pfarb}
+                 {
+                   name={PFARB, Prefetch Arbiter},
+                   text={\textbf{pfarb}},
+                   description={Submodule of \gls{cf}, \See{src:pfarb}}
+                 }
+
+\newglossaryentry{qos}
+                 {
+                   name={QOS, QoS Arbiter},
+                   text={\textbf{qos}},
+                   description={Submodule of \gls{cf}, \See{src:qos}}
+                 }
+
+\newglossaryentry{qe}
+                 {
+                   name={QE, QoS Entry},
+                   text={\textbf{qe}},
+                   description={Submodule of \gls{cf}, \See{src:qe}}
+                 }
+
+\newglossaryentry{cpf}
+                 {
+                   name={CPF, Command Pointer Fetcher},
+                   text={\textbf{cpf}},
+                   description={Submodule of \gls{cf}, \See{src:cpf}}
+                 }
+
+
+\newglossaryentry{cdf}
+                 {
+                   name={CDF, Command Descriptor Fetcher},
+                   text={\textbf{cdf}},
+                   description={Submodule of \gls{cf}, \See{src:cdf}}
+                 }
+
+
+\newglossaryentry{prs}
+                 {
+                   name={PRS, Prefetch Result Storage},
+                   text={\textbf{prs}},
+                   description={Submodule of \gls{prs}, \See{src:prs}}
+                 }
+
+
+\newglossaryentry{cfregs}
+                 {
+                   name={CFREGS, Command Fetcher Registers},
+                   text={\textbf{cfregs}},
+                   description={Submodule of \gls{cf}, \See{src:cfregs}}
+                 }
+
+
+\newglossaryentry{ctp}
+                 {
+                   name={CTP, Command Tag Pool},
+                   text={\textbf{ctp}},
+                   description={Submodule of \gls{cf}, \See{src:ctp}}
+                 }
+
+\newglossaryentry{wtim}
+                 {
+                   name={WTIM, Wait Timer},
+                   text={\textbf{wtim}},
+                   description={Submodule of \gls{cf}, \See{src:wtim}}
+                 }
+
+\newglossaryentry{slots}
+                 {
+                   name={Slots },
+                   text={\textbf{slots}},
+                   description={Submodule of \gls{cf}, \See{src:slots}}
+                 }
+
+\newglossaryentry{rem cmd}
+                 {
+                   name={REM\_CMD, Remaining Command Counter},
+                   text={\textbf{rem\_cmd}},
+                   description={Submodule of \gls{cf}, \See{src:rem cmd}}
+                 }
+
+
+\newglossaryentry{cmd fetch filter}
+                 {
+                   name={Command Fetch Filter},
+                   text={\textbf{cmd\_fetch\_fitler}},
+                   description={Submodule of \gls{cf}, 
+                     \See{src:cmd fetch fitler}}
+                 }
+
+\newglossaryentry{rparb}
+                 {
+                   name={RPARB, Round-Robin and Priority Arbiter},
+                   text={\textbf{rparb}},
+                   description={Submodule of \gls{cf}, 
+                     \See{src:rparb}}
+                 }
+
+\newglossaryentry{comb rrarb nto1}
+                 {
+                   name={Combinational N-to-1 Round-Robin Arbiter},
+                   text={\textbf{comb\_rrarb\_Nto1}},
+                   description={Submodule of \gls{cf}, 
+                     \See{src:comb rrarb nto1}}
+                 }
+
+\newglossaryentry{itr}
+                 {
+                   name={ITR, Interrupt Throttle Timer},
+                   text={ITR},
+                   description={\See{src:intc}}
+                 }

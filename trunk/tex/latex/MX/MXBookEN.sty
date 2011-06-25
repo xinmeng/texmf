@@ -1,0 +1,79 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{MXBookEN}[2010/06/01 MXBook class file by Xin Meng]
+
+
+\RequirePackageWithOptions{MXCommon}
+
+%% ----------------------------------------
+%%   Use LaTeX+CJK to support Chinese
+%%   in ExarWB
+%%
+%%   specific packet setting
+%% ----------------------------------------
+\RequirePackage{CJK}
+\RequirePackage[pdfnewwindow,unicode,colorlinks,pdftex,hyperindex]{hyperref}
+\hypersetup{
+  bookmarksnumbered,
+  linkcolor = LinkColor,
+  citecolor = CiteColor,
+  urlcolor  = URLColor,
+  filecolor = FileColor,
+  bookmarksopen={false}, 
+  pdfstartview={FitH},
+  CJKbookmarks=true
+}
+
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage[pdftex]{graphicx}
+
+
+%% ----------------------------------------
+%%    Default font
+%% ----------------------------------------
+\renewcommand{\familydefault}{put}
+
+
+%% ----------------------------------------
+%%   Layout adjustment
+%% ----------------------------------------
+\setlength{\hoffset}{0in}
+\setlength{\topmargin}{-2.7cm}
+\setlength{\headheight}{2.5cm}
+\setlength{\headsep}{.8cm}
+\setlength{\footskip}{1.3cm}
+\setlength{\oddsidemargin}{0in}
+\setlength{\marginparwidth}{.8in}
+\setlength{\marginparsep}{.1in}
+\setlength{\textheight}{8.7in}
+\setlength{\textwidth}{6.5in}
+
+
+
+%% ----------------------------------------
+%%   Header
+%% ----------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection.\ #1}{}}
+\fancyhf[LH]{\leftmark}
+%\fancyhf[RH]{\fontfamily{phv}\fontseries{b}\selectfont\small Exar Confidential}
+\fancyhf[CF]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%\fancypagestyle{plain}{}
+
+
+
+%% ----------------------------------------
+%%   Heading
+%% ----------------------------------------
+\titleformat{\chapter}[display]
+            {\flushright
+              \color{ThemeColor}
+              \fontfamily{put}\fontseries{bx}\fontsize{40}{40}\fontshape{sc}\selectfont\huge}
+            {\fontsize{70}{35}\selectfont\thechapter}
+            {0mm}{}{\normalfont}
+
+\titlespacing{\chapter}{0mm}{-.5in}{1in}

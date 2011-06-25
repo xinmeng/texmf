@@ -1,0 +1,362 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{MXCommon}[2010/08/12 MXCommon package file by Xin Meng]
+
+\RequirePackage{gensymb}
+\RequirePackage{multirow}
+
+\RequirePackage{xcolor}
+\definecolor{gray}{gray}{0.75}
+\definecolor{dark}{gray}{0.55}
+\definecolor{orange}{rgb}{1, 0.5, 0.14}
+\definecolor{darkorange}{RGB}{196, 105,14}
+\definecolor{darkslategray}{rgb}{0.16, 0.294, 0.294}
+\definecolor{lightgray}{rgb}{0.9, 0.941, 0.847}
+\definecolor{commentorange}{rgb}{1, 0.5, 0.141}
+\definecolor{lightblue}{rgb}{0, 1, 1}
+\definecolor{darkred}{rgb}{0.75, 0.14, 0.07}
+\definecolor{purple}{rgb}{0.521, 0.329, 0.545}
+\definecolor{urlblue}{rgb}{0.239, 0.239, 0.714}
+\definecolor{darkgreen}{RGB}{4,164,68}
+\definecolor{lightred}{rgb}{1,0.7,0.71}
+\definecolor{lightgreen}{rgb}{0.64,1,0.71}
+
+
+\DeclareOption{MXTheme}{
+  \definecolor{ThemeColor}{RGB}{41, 54, 121} 
+  \definecolor{LinkColor}{RGB}{41, 54, 121}%{27, 75, 229} %blue
+  \definecolor{CiteColor}{RGB}{41, 54, 121}%{255, 0, 0}   %red
+  \definecolor{URLColor}{RGB}{41, 54, 121}%{27, 75, 229}  %blue
+  \definecolor{FileColor}{RGB}{41, 54, 121}%{72, 201, 55} %green
+}
+
+\DeclareOption{ExarTheme}{
+  \definecolor{ThemeColor}{RGB}{47, 77, 135}
+  \definecolor{LinkColor}{RGB}{47, 77, 135} 
+  \definecolor{CiteColor}{RGB}{47, 77, 135} 
+  \definecolor{URLColor}{RGB}{47, 77, 135}  
+  \definecolor{FileColor}{RGB}{47, 77, 135} 
+}
+
+
+\DeclareOption{ForPrint}{       % all black
+  \definecolor{ThemeColor}{RGB}{0, 0, 0}
+  \definecolor{LinkColor}{RGB}{0, 0, 0} 
+  \definecolor{CiteColor}{RGB}{0, 0, 0} 
+  \definecolor{URLColor}{RGB}{0, 0, 0}  
+  \definecolor{FileColor}{RGB}{0, 0, 0} 
+}
+
+
+\DeclareOption*{%
+  \PackageWarning{MXCommon}{Unknown option `\CurrentOption'}%
+}
+
+\ProcessOptions\relax
+
+
+\RequirePackage[obeyspaces, spaces]{url}
+\RequirePackage{tabularx}
+
+\RequirePackage[size=footnotesize, skip=2pt]{caption}
+\DeclareCaptionFont{ColorCaption}{\color{ThemeColor}\fontseries{b}\selectfont}
+\captionsetup{font=ColorCaption}
+
+
+\RequirePackage{bytefield}
+\newenvironment{regdef}
+               {\setlength{\bitwidth}{.03125\textwidth}
+                 \setlength{\byteheight}{1cm}
+                 \begin{bytefield}{32}
+               }
+               { \end{bytefield}}
+
+\newcommand{\colorbitbox}[4][lrtb]{%
+  \rlap{\bitbox[#1]{#3}{\color{#2}\rule{\width}{\height}}}%
+  \bitbox[#1]{#3}{#4}}
+
+\newcommand{\colorwordbox}[4][lrtb]{%
+  \rlap{\wordbox[#1]{#3}{\color{#2}\rule{\width}{\height}}}%
+  \wordbox[#1]{#3}{#4}}
+ 
+
+
+
+\RequirePackage{ifthen}
+\RequirePackage{amsmath}
+%\RequirePackage{amsfonts}
+%\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+%\RequirePackage[pdftex]{graphicx}
+%\RequirePackage{graphicx}
+\RequirePackage{supertabular}
+\renewcommand{\arraystretch}{1.2}
+
+\RequirePackage{dirtree}
+\DTsetlength{.2em}{1em}{.2em}{.4pt}{.4pt}
+
+
+\RequirePackage{makeidx}
+
+
+\RequirePackage{textcomp}
+
+\RequirePackage{listings}
+\lstset{%
+  upquote=true,%
+  indexstyle={\vidx},%
+  indexstyle={[2]\pidx},%
+  basicstyle={\footnotesize\tt},%
+  stringstyle={\color{orange}},%
+  commentstyle={\color{dark}},%
+  numbers={left},%
+  numberstyle={\tt\color{gray}},%
+  columns={flexible},%
+  xleftmargin={0.05\textwidth},%
+  xrightmargin={0.05\textwidth},%
+  showstringspaces=false,%
+  frame=none, %
+  emphstyle={\color{red}\textsl},%
+  %identifierstyle={\color{darkslategray}},
+  keywordstyle={\color{blue}},
+  keywordstyle={[2]\color{darkred}},
+  keywordstyle={[3]\color{purple}},
+  keywordstyle={[4]\color{commentorange}},
+  escapeinside={/*-}{-*/}%
+}
+
+\lstdefinelanguage{metahdl}
+{
+  morekeywords={always,always_comb,always_ff,always_latch,and,assign,assume,automatic,before,begin,break,buf,bufif0,bufif1,case,casex,casez,cell,chandle,class,cmos,config,context,continue,cross,deassign,default,defparam,design,disable,dist,do,edge,else,end,endcase,endclass,endfunction,endgenerate,endgroup,endinterface,endmodule,endpackage,endprimitive,endprogram,endspecify,endtask,expect,export,final,for,force,forever,function,generate,genvar,highz0,highz1,if,iff,include,initial,inout,input,inside,instance,interface,integer,large,liblist,localparam,module,nand,negedge,net,nmos,nor,noshowcancelled,not,notif0,notif1,null,or,output,parameter,pmos,posedge,primitive,program,pull0,pull1,pulldown,pullup,pulsestyle_onevent,pulsestyle_ondetect,rcmos,realtime,release,return,rnmos,rpmos,rtran,rtranif0,rtranif1,scalared,shortint,shortreal,showcancelled,signed,small,solve,specify,specparam,strong0,strong1,supply0,supply1,task,timeprecision,timeunit,tran,tranif0,tranif1,tri,tri0,tri1,triand,trior,trireg,typedef,unsigned,use,var,vectored,virtual,void,wait,wait_order,wand,weak0,weak1,while,wor,xnor,xor},
+  keywordstyle={\bfseries\color{blue}},
+  morekeywords={[6]alias,assert,bind,bins,binsof,bit,byte,clocking,const,constraint,cover,covergroup,coverpoint,endclocking,endconfig,endproperty,endsequence,endtable,enum,event,extends,extern,first_match,foreach,fork,forkjoin,ifnone,ignore_bins,illegal_bins,import,incdir,intersect,join,join_any,join_none,library,local,longint,macromodule,matches,medium,modport,new,package,packed,priority,property,protected,pure,rand,randc,randcase,randsequence,ref,repeat,sequence,static,string,struct,super,table,tagged,this,throughout,type,union,unique,wildcard,with,within,},
+  keywordstyle={[6]\bfseries\color{darkorange}},
+  morekeywords={[7]logic,reg,wire,int,real,time},
+  keywordstyle={[7]\bfseries\color{darkgreen}},
+  %VP keywords
+  morekeywords={[2]\&CombBeg, \&CombEnd, \&Force, \&Regs, \&Wires, \&Ports, \&ModBeg, \&ModEnd, 
+    $monitor, $display, $strobe, $write, $cast,
+    $typename,
+    $left,$right, $low, $high, $increment, $size, $dimensions, $unpacked_dimensions}, %$
+  keywordstyle={[2]\bfseries\color{darkred}},
+  %MetaHDL keywords
+  morekeywords={[3]metahdl,nonport,ff,endff,fsm,endfsm,goto,rawcode,endrawcode},
+  keywordstyle={[3]\bfseries\color{purple}},
+  %SV directives
+  morekeywords={[4]`accelerate,`autoexpand_vectornets,`celldefine,`default_nettype,%
+    `define,`else,`elsif,`endcelldefine,`endif,`endprotect,%
+    `endprotected,`expand_vectornets,`ifdef,`ifndef,`include,%
+    `no_accelerate,`noexpand_vectornets,`noremove_gatenames,%
+    `nounconnected_drive,`protect,`protected,`remove_gatenames,%
+    `remove_netnames,`resetall,`timescale,`unconnected_drive, %
+    `uve_error, `uve_fatal},%
+  keywordstyle={[4]\bfseries\color{blue}},
+  %MetaHDL directives
+  morekeywords={[5]`let, `for, `endfor, `while, `switch, `case, `default, `if},
+  keywordstyle={[5]\bfseries\color{purple}},
+  alsoletter={\`, \&},%
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"  
+}
+
+\newcommand{\mhdl}[1]{\lstinline[basicstyle=\tt,language=metahdl]{#1}}
+\newcommand{\mhdls}[1]{\lstinline[basicstyle=\tt,language=metahdl]{$#1}} %$
+\newcommand{\Mhdl}[1]{\mhdl{#1}}
+\newcommand{\Mhdls}[1]{\mhdls{#1}}
+
+\lstnewenvironment{mhdle}[1][]
+        {\lstset{language=metahdl, #1}}
+        {}                      
+
+\lstnewenvironment{mhdlnle}[1][]
+        {\lstset{language=metahdl, numbers=none, frame=none, #1}}
+        {}
+
+\newcommand{\mhdlc}{\texttt{mhdlc}}
+
+
+
+
+
+
+\RequirePackage{colortbl}
+
+\RequirePackage{fancyhdr}
+
+\RequirePackage[us]{datetime}
+\RequirePackage{lscape}
+
+\RequirePackage{marginnote}
+\newcommand{\mnote}[1]{\marginnote{\tiny{\textsl{#1}}}}
+
+\newcommand{\insertfigure}[4][btph]{%
+  \begin{figure}[#1]
+    \centering
+%    \fbox{\includegraphics[width=#1\textwidth]{#3}}
+    \includegraphics[width=\textwidth]{#3}
+    \caption{#2}\label{#4}
+  \end{figure}
+}
+
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\vidx}[1]{\index{variable!#1@\texttt{#1}}}
+\newcommand{\pidx}[1]{\index{parameter!#1@\texttt{#1}}}
+\newcommand{\mycomment}[1]{\textcolor{blue}{\footnotesize{[Xin Meng] #1}}}
+\newcommand{\tableheader}[1]{{\cellcolor{ThemeColor}\color{white}\bfseries\small #1}}
+
+
+
+
+\RequirePackage{titlesec}
+\titleformat{\section}[hang]
+            {\color{ThemeColor}\fontseries{bx}\selectfont\Large}
+            {\thesection}
+            {5mm}{}{\normalfont}
+\titleformat{\subsection}[hang]
+            {\color{ThemeColor}\fontseries{bx}\selectfont\large}
+            {\thesubsection}
+            {5mm}{}{\normalfont}
+\titleformat{\subsubsection}[hang]
+            {\color{ThemeColor}\fontseries{bx}\selectfont}
+            {\thesubsubsection}
+            {5mm}{}{\normalfont}
+\titleformat{\paragraph}[runin]
+            {\color{ThemeColor}\fontseries{bx}\selectfont}
+            {\theparagraph}
+            {5mm}{}{\normalfont}
+\titleformat{\subparagraph}[runin]
+            {\color{ThemeColor}\fontseries{bx}\selectfont}
+            {\thesubparagraph}
+            {5mm}{}{\normalfont}
+
+
+
+
+%\setlength{\hoffset}{-.3in}
+%\setlength{\oddsidemargin}{0pt}
+\setlength{\marginparwidth}{100pt}
+\setlength{\marginparsep}{15pt}
+%\setlength{\textwidth}{1.3\textwidth}
+
+
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{2mm}
+
+%% \RequirePackage{layouts}
+%% \setlayoutscale{0.33}
+%% \setparametertextfont{\tiny}
+%% \setlabelfont{\tiny}
+
+
+
+\makeindex
+
+
+\newenvironment{portlist}
+               {\begin{list}{$\bullet$}{
+                     \setlength{\labelwidth}{3em}
+                     \setlength{\labelsep}{1em}
+                     \setlength{\leftmargin}{\itemindent}
+                     \addtolength{\leftmargin}{\labelwidth}
+                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\rightmargin}{2em}
+                     \setlength{\listparindent}{0em}
+                     \setlength{\topsep}{.8ex}
+                     \setlength{\partopsep}{0mm}
+                     \setlength{\parskip}{.8ex}
+                     \setlength{\itemsep}{1ex}
+                     \setlength{\parsep}{0ex}%{0.5ex plus0.2ex minus0.2ex}
+                     \renewcommand{\makelabel}[1]{##1\hfill}
+                   }}
+               {\end{list}}
+
+\newcommand{\pinput}[3][ ]{\begin{portlist}\item[Input] \mhdl{#2}\hfill{}#1\\#3\end{portlist}}
+\newcommand{\poutput}[3][ ]{\begin{portlist}\item[Output] \mhdl{#2}\hfill{}#1\\#3\end{portlist}}
+\newcommand{\pinout}[3][ ]{\begin{portlist}\item[Inout] \mhdl{#2}\hfill{}#1\\#3\end{portlist}}
+
+
+
+\newenvironment{reglist}
+               {\begin{list}{$\bullet$}{
+                     \setlength{\labelwidth}{8em}
+                     \setlength{\labelsep}{1ex}
+                     \setlength{\leftmargin}{\itemindent}
+                     \addtolength{\leftmargin}{\labelwidth}
+                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\rightmargin}{2em}
+                     \setlength{\listparindent}{0em}
+                     \setlength{\topsep}{.8ex}
+                     \setlength{\partopsep}{0mm}
+                     \setlength{\parskip}{.8ex}
+                     \setlength{\itemsep}{1ex}
+                     \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
+                     \renewcommand{\makelabel}[1]{##1\hfill}
+                   }}
+               {\end{list}}
+\newcommand{\regrw}[3][X:X]{
+  \begin{reglist}
+  \item[RW\hfill{[#1]}]    \textbf{#2}\hspace{2ex}#3
+  \end{reglist}
+}
+\newcommand{\regro}[3][X:X]{
+  \begin{reglist}
+  \item[RO\hfill{}{[#1]}]    \textbf{#2}\hspace{2ex}#3
+  \end{reglist}
+}
+\newcommand{\regrwc}[3][X:X]{
+  \begin{reglist}
+  \item[RW1C\hfill{[#1]}] \textbf{#2}\hspace{2ex}#3
+  \end{reglist}
+}
+\newcommand{\reghw}[3][X:X]{
+  \begin{reglist}
+  \item[HwInit\hfill{[#1]}]\textbf{#2}\hspace{2ex}#3
+  \end{reglist}
+}
+
+
+\newenvironment{bitslist}
+               {\begin{list}{$\bullet$}{
+                     \setlength{\labelwidth}{11ex}
+                     \setlength{\labelsep}{1ex}
+%                     \setlength{\leftmargin}{\itemindent}
+                     \setlength{\leftmargin}{2em}
+                     \addtolength{\leftmargin}{\labelwidth}
+                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\rightmargin}{0em}
+                     \setlength{\listparindent}{0em}
+                     \setlength{\topsep}{.8ex}
+                     \setlength{\partopsep}{0mm}
+                     \setlength{\parskip}{.8ex}
+                     \setlength{\itemsep}{1ex}
+                     \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
+                     \renewcommand{\makelabel}[1]{##1\hfill}
+                   }}
+               {\end{list}}
+
+\newcommand{\bits}[3][X:X]{
+  \begin{bitslist}
+    \item[{[#1]}\hfill] \mhdl{#2}\\#3
+  \end{bitslist}
+}
+
+
+
+%% ----------------------------------------
+%%    My commands
+%% ----------------------------------------
+\newcommand{\note}{\textbf{NOTE}}
+\newcommand{\See}[2][autoref]{\emph{See}
+  \ifthenelse{\equal{#1}{autoref}} 
+             {\autoref{#2}} 
+             {\cite{#2}}}
+
+%% ----------------------------------------
+%%   Document property
+%% ----------------------------------------
+\newcommand{\DocTitle}{Document Title}
+\newcommand{\DocDescription}{Document Description}
+\newcommand{\DocAuthor}{xin.meng@exar.com}
+\newcommand{\DocVersion}{0.0}
