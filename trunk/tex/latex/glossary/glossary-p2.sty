@@ -324,62 +324,6 @@
                  }
 
 
-\newglossaryentry{gpie}
-                 {
-                   name={GPIE, General Purpose Interrupt Enable},
-                   text={GPIE}, 
-                   description={\See{sec:gpie}}
-                 }
-
-\newglossaryentry{icr}
-                 {
-                   name={ICR, Interrupt Cause Register},
-                   text={ICR},
-                   description={\See{sec:icr}}
-                 }
-
-\newglossaryentry{ics}
-                 {
-                   name={ICS, Interrupt Cause Set register},
-                   text={ICS},
-                   description={\See{sec:ics}}
-                 }
-
-
-\newglossaryentry{ims}
-                 {
-                   name={IMS, Interrupt Mask Set register},
-                   text={IMS},
-                   description={\See{sec:im}}
-                 }
-
-\newglossaryentry{imc}
-                 {
-                   name={IMC, Interrupt Mask Clear register},
-                   text={IMC},
-                   description={\See{sec:im}}
-                 }
-
-\newglossaryentry{iac}
-                 {
-                   name={IAC, Interrupt Auto Clear register},
-                   text={IAC},
-                   description={\See{sec:iac}}
-                 }
-
-\newglossaryentry{imen}
-                 {
-                   name={IMEN, Immediate Interrupt Enable},
-                   text={IMEN},
-                   description={\See{sec:imen}}
-                 }
-
-\newglossaryentry{iam}
-                 {
-                   name={IAM, Interrupt Auto Mask},
-                   text={IAM},
-                   description={\See{sec:iam}}
-                 }
 
 \newglossaryentry{bme}
                  {
@@ -505,10 +449,32 @@
 
 \newglossaryentry{slots}
                  {
-                   name={Slots },
+                   name={SLOTS},
                    text={\textbf{slots}},
                    description={Submodule of \gls{cf}, \See{src:slots}}
                  }
+
+\newglossaryentry{dslots}
+                 {
+                   name={DSLOTS},
+                   text={\textbf{dslots}},
+                   description={Submodule of \gls{cf}, \See{src:dslots}}
+                 }
+
+\newglossaryentry{sslots}
+                 {
+                   name={SSLOTS, Shared Slots},
+                   text={\textbf{sslots}},
+                   description={Submodule of \gls{cf}, \See{src:sslots}}
+                 }
+
+\newglossaryentry{slot reg}
+                 {
+                   name={SLOT\_REG, Slot Registers},
+                   text={\textbf{slot\_reg}},
+                   description={Submodule of \gls{cf}, \See{src:slot reg}}
+                 }
+
 
 \newglossaryentry{rem cmd}
                  {
@@ -544,7 +510,8 @@
 
 \newglossaryentry{itr}
                  {
-                   name={ITR, Interrupt Throttle Timer},
+                   name={ITR, Interrupt Throttle Register},
                    text={ITR},
-                   description={\See{src:intc}}
+                   description={\See{sec:itr}}
                  }
+
