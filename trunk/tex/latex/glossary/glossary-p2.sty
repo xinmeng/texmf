@@ -103,117 +103,6 @@
                  }
 
 
-\newglossaryentry{cmd wr panther} 
-            {
-              name={W$_{\text{cp}}$, Command Write Pointer on \pii{}},
-              text={W$_{\text{cp}}$},
-              description={It points to an entry in \gls{cpr}.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own W$_{\text{cp}}$}
-            }
-
-\newglossaryentry{cmd rd panther} 
-            {
-              name={R$_{\text{cp}}$, Command Read Pointer on Panther},
-              text={R$_{\text{cp}}$},
-              description={It points to an entry in \gls{cpr}.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own R$_{\text{cp}}$}
-            }
-
-\newglossaryentry{result wr panther} 
-            {
-              name={W$_{\text{rp}}$, Result Ring Write Pointer on \pii{}},
-              text={W$_{\text{rp}}$},
-              description={It points to an entry in Result ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own W$_{\text{rp}}$}
-            }
-
-\newglossaryentry{result rd panther} 
-            {
-              name={R$_{\text{rp}}$, Result Ring Read Pointer on Panther},
-              text={R$_{\text{rp}}$},
-              description={It points to an entry in Result ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own R$_{\text{rp}}$}
-            }
-
-
-\newglossaryentry{fp wr panther} 
-            {
-              name={W$_{\text{fp}}$, Free Pool Ring Write Pointer on \pii{}},
-              text={W$_{\text{fp}}$},
-              description={It points to an entry in Fp ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own W$_{\text{fp}}$}
-            }
-
-\newglossaryentry{fp rd panther} 
-            {
-              name={R$_{\text{fp}}$, Free Pool Ring Read Pointer on Panther},
-              text={R$_{\text{fp}}$},
-              description={It points to an entry in Free Pool ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own R$_{\text{fp}}$}
-            }
-
-
-
-
-\newglossaryentry{cmd wr host} 
-            {
-              name={W$_{\text{ch}}$, Command Write Pointer on Host},
-              text={W$_{\text{ch}}$},
-              description={It points to an entry in \gls{cpr}.
-                It is maintained by host}
-            }
-
-\newglossaryentry{cmd rd host} 
-            {
-              name={R$_{\text{ch}}$, Command Read Pointer on Host},
-              text={R$_{\text{ch}}$},
-              description={It points to an entry in \gls{cpr}.
-                It is maintained by host}
-            }
-
-
-\newglossaryentry{result wr host} 
-            {
-              name={W$_{\text{rh}}$, Result Ring Write Pointer on \pii{}},
-              text={W$_{\text{rh}}$},
-              description={It points to an entry in Result ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own W$_{\text{rh}}$}
-            }
-
-\newglossaryentry{result rd host} 
-            {
-              name={R$_{\text{rh}}$, Result Ring Read Pointer on Host},
-              text={R$_{\text{rh}}$},
-              description={It points to an entry in Result ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own R$_{\text{rh}}$}
-            }
-
-
-\newglossaryentry{fp wr host} 
-            {
-              name={W$_{\text{fh}}$, Free Pool Ring Write Pointer on \pii{}},
-              text={W$_{\text{fh}}$},
-              description={It points to an entry in Fp ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own W$_{\text{fh}}$}
-            }
-
-\newglossaryentry{fp rd host} 
-            {
-              name={R$_{\text{fh}}$, Free Pool Ring Read Pointer on Host},
-              text={R$_{\text{fh}}$},
-              description={It points to an entry in Free Pool ring.
-                Since each \gls{vf} as a dedicated ring structure, 
-                each \gls{vf} maintains its own R$_{\text{fh}}$}
-            }
  
 
 
@@ -358,9 +247,7 @@
                  {
                    name={CRID, Compound Ring ID},
                    text={CRID},
-                   description={\emph{See} 
-                     \autoref{reg:virtualized} 
-                     and \autoref{sec:compound ring id}}
+                   description={\See{sec:compound ring id}}
                  }
 
 \newglossaryentry{ctag}
@@ -508,10 +395,4 @@
                      \See{src:comb rrarb nto1}}
                  }
 
-\newglossaryentry{itr}
-                 {
-                   name={ITR, Interrupt Throttle Register},
-                   text={ITR},
-                   description={\See{sec:itr}}
-                 }
 

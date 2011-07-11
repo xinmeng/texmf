@@ -4,6 +4,9 @@
 \RequirePackage{gensymb}
 \RequirePackage{multirow}
 
+\RequirePackage{graphicx}
+\RequirePackage{overpic}
+
 \RequirePackage{xcolor}
 \definecolor{gray}{gray}{0.75}
 \definecolor{dark}{gray}{0.55}
@@ -47,9 +50,42 @@
 }
 
 
+\newcommand{\insertfigure}[4][btph]{%
+  \begin{figure}[#1]
+    \centering
+%    \fbox{\includegraphics[width=#1\textwidth]{#3}}
+    \includegraphics[width=\textwidth]{#3}
+    \caption{#2}\label{#4}
+  \end{figure}
+}
+
+\newcommand{\pictext}[6][btph]{
+  \begin{figure}[#1]
+    \centering
+    \begin{overpic}[scale=#2]{#4}
+      #6
+    \end{overpic}
+    \caption{#3}\label{#5}
+\end{figure}}
+
+\DeclareOption{draft}{
+  \renewcommand{\pictext}[6][btph]{
+    \begin{figure}[#1]
+      \centering
+      \begin{overpic}[scale=#2,grid,tics=5]{#4}
+        #6
+      \end{overpic}
+      \caption{#3}\label{#5}
+  \end{figure}}
+}
+
+
 \DeclareOption*{%
   \PackageWarning{MXCommon}{Unknown option `\CurrentOption'}%
 }
+
+
+
 
 \ProcessOptions\relax
 
@@ -190,14 +226,6 @@
 \RequirePackage{marginnote}
 \newcommand{\mnote}[1]{\marginnote{\tiny{\textsl{#1}}}}
 
-\newcommand{\insertfigure}[4][btph]{%
-  \begin{figure}[#1]
-    \centering
-%    \fbox{\includegraphics[width=#1\textwidth]{#3}}
-    \includegraphics[width=\textwidth]{#3}
-    \caption{#2}\label{#4}
-  \end{figure}
-}
 
 
 \newcommand{\code}[1]{\texttt{#1}}
@@ -232,6 +260,18 @@
             {5mm}{}{\normalfont}
 
 
+
+
+\RequirePackage[pdfnewwindow,unicode,xetex,colorlinks,hyperindex]{hyperref}
+\hypersetup{
+  bookmarksnumbered,
+  linkcolor = LinkColor,
+  citecolor = CiteColor,
+  urlcolor  = URLColor,
+  filecolor = FileColor,
+  bookmarksopen={false}, 
+  pdfstartview={FitH},
+}
 
 
 %\setlength{\hoffset}{-.3in}
@@ -279,52 +319,58 @@
 
 
 \newenvironment{reglist}
-               {\begin{list}{$\bullet$}{
+               {\begin{list}{$\to$}{
                      \setlength{\labelwidth}{8em}
-                     \setlength{\labelsep}{1ex}
-                     \setlength{\leftmargin}{\itemindent}
-                     \addtolength{\leftmargin}{\labelwidth}
-                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\labelsep}{1em}
+                     \setlength{\itemindent}{0em}
+                     \setlength{\leftmargin}{9em}
                      \setlength{\rightmargin}{2em}
                      \setlength{\listparindent}{0em}
-                     \setlength{\topsep}{.8ex}
+                     \setlength{\topsep}{0ex}
                      \setlength{\partopsep}{0mm}
                      \setlength{\parskip}{.8ex}
                      \setlength{\itemsep}{1ex}
                      \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
-                     \renewcommand{\makelabel}[1]{##1\hfill}
+                     %\renewcommand{\makelabel}[1]{##1\hfill}
                    }}
                {\end{list}}
 \newcommand{\regrw}[3][X:X]{
   \begin{reglist}
-  \item[RW\hfill{[#1]}]    \textbf{#2}\hspace{2ex}#3
+  \item[RW\hspace{1em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
+  \end{reglist}
+}
+\newcommand{\regrc}[3][X:X]{
+  \begin{reglist}
+  \item[RC\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
   \end{reglist}
 }
 \newcommand{\regro}[3][X:X]{
   \begin{reglist}
-  \item[RO\hfill{}{[#1]}]    \textbf{#2}\hspace{2ex}#3
+  \item[RO\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
+  \end{reglist}
+}
+\newcommand{\regwo}[3][X:X]{
+  \begin{reglist}
+  \item[WO\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
   \end{reglist}
 }
 \newcommand{\regrwc}[3][X:X]{
   \begin{reglist}
-  \item[RW1C\hfill{[#1]}] \textbf{#2}\hspace{2ex}#3
+  \item[RW1C\hfill#1\hfill] \textbf{#2}\\{\small#3}
   \end{reglist}
 }
 \newcommand{\reghw}[3][X:X]{
   \begin{reglist}
-  \item[HwInit\hfill{[#1]}]\textbf{#2}\hspace{2ex}#3
+  \item[HwInit\hfill#1\hfill]\textbf{#2}\\{\small#3}
   \end{reglist}
 }
 
 
 \newenvironment{bitslist}
                {\begin{list}{$\bullet$}{
-                     \setlength{\labelwidth}{11ex}
-                     \setlength{\labelsep}{1ex}
-%                     \setlength{\leftmargin}{\itemindent}
-                     \setlength{\leftmargin}{2em}
-                     \addtolength{\leftmargin}{\labelwidth}
-                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\labelwidth}{5em}
+                     \setlength{\labelsep}{1em}
+                     \setlength{\leftmargin}{6em}
                      \setlength{\rightmargin}{0em}
                      \setlength{\listparindent}{0em}
                      \setlength{\topsep}{.8ex}
@@ -332,13 +378,12 @@
                      \setlength{\parskip}{.8ex}
                      \setlength{\itemsep}{1ex}
                      \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
-                     \renewcommand{\makelabel}[1]{##1\hfill}
                    }}
                {\end{list}}
 
 \newcommand{\bits}[3][X:X]{
   \begin{bitslist}
-    \item[{[#1]}\hfill] \mhdl{#2}\\#3
+    \item[{[#1]}\hfill] \textbf{#2}\\#3
   \end{bitslist}
 }
 
