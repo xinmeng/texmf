@@ -1,3 +1,45 @@
+bibtex     = "bibtex.exe"
+
+epstopdf   = "epstopdf.exe"
+makeindex  = "makeindex.exe"
+powershell = "powershell.exe"
+perl       = "perl.exe"
+dotexe     = "c:/tools/Graphviz2.26.3/bin/dot.exe"
+makeglossaries = perl "D:/texlive/2010/texmf-dist/scripts/glossaries/makeglossaries"
+
+vsd2pdf    = $(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1
+gencodetex = $(texmfhome)/scripts/gencodetex/gencodetex.pl
+chkmd5_enc = $(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl
+
+latex     = "xelatex.exe"
+latexopt  = -proctime
+
+gencodetexopt = -l metahdl -t chapter
+code = 
+
+dotopt = 
+
+bibtexopt = 
+
+dust = *.aux *.ilg *.ind *.idx *.toc		\
+       *.log *.out *.lot *.lol *.lof		\
+       *.tmp *.ist *.glg *.gls *.glo		\
+       *.blg *.bbl				\
+       *.reglog *.reggls *.regglo		\
+       *.iolog  *.iogls  *.ioglo		\
+       *.dslog  *.dsgls  *.dsglo		\
+       *~
+
+
+
+glossaryfile = 
+shortcutfile = 
+refdocfile   = 
+
+DRAFT =
+
+
+
 # $1: code file
 # $2: base dir
 define locate_code
@@ -84,13 +126,72 @@ endef
 
 
 define generate_codetex
-$1.tex : $(call locate_code,$1,..,)
+$1.codetex : $1
 	$(perl) $(gencodetex) -f $$< $(gencodetexopt) -o $$@
 endef
 
 
+# $1: source code file list 
 define code_rule
-codetex = $(addsuffix .tex,$1)
-
 $(foreach c,$1,$(eval $(call generate_codetex,$(c))))
+endef
+
+
+# $1: LaTeX doc top
+# $2: with or without glossary in compilation
+# $3: with or without bib
+define build_pdf
+
+.phony : all draft clean clean_all clean_top
+all : $1.pdf
+
+draft: DRAFT = 1
+draft: $1.pdf 
+
+
+$(eval codetex = $(addsuffix .codetex,$(code)))
+
+# tex building
+$1.pdf : $(my_tex) $(my_sty) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf) $(my_pdf) $(my_jpg) 	\
+             $(glossaryfile) $(shortcutfile) $(refdocfile) 					\
+             $(codetex) 									
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+	$(makeindex)        $1
+	$(if $2,$(makeglossaries)  $1)
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+	$(if $3,$(bibtex)           $(bibtexopt) $1)
+	$(if $2,$(makeglossaries)  $1)
+	$(makeindex)        $1
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+
+%.pdf : %.eps
+	$(epstopdf) $<
+
+%.pdf : %.dot
+	$(dotexe) $(dotopt) -Tpdf $< -o $@
+
+%.pdf : %.vsd
+	$(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $< $@
+
+$(foreach c,$(code),$(call generate_codetex,$(c)))
+
+
+
+
+
+.phony: clean clean_all clean_top
+
+
+clean: 
+	rm -f $(dust) 
+
+clean_top : clean
+	rm -f $1.pdf 
+
+clean_all: clean clean_top
+	rm -f $(foreach f,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),"$(f)")
+
+
+
 endef
