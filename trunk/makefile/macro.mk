@@ -7,9 +7,9 @@ perl       = "perl.exe"
 dotexe     = "c:/tools/Graphviz2.26.3/bin/dot.exe"
 makeglossaries = perl "D:/texlive/2010/texmf-dist/scripts/glossaries/makeglossaries"
 
-vsd2pdf    = $(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1
-gencodetex = $(texmfhome)/scripts/gencodetex/gencodetex.pl
-chkmd5_enc = $(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl
+vsd2pdf    = "$(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1"
+gencodetex = "$(texmfhome)/scripts/gencodetex/gencodetex.pl"
+chkmd5_enc = "$(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl"
 
 latex     = "xelatex.exe"
 latexopt  = -proctime
