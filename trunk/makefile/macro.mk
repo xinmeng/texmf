@@ -186,7 +186,6 @@ $(eval codetex = $(addsuffix .codetex,$(code)))
 $1.pdf : $(my_tex) $(my_sty) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf) $(my_pdf) $(my_jpg) 	\
              $(glossaryfile) $(shortcutfile) $(refdocfile) 					\
              $(codetex)  
-	echo $(OS)
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	$(makeindex)        $1
 	$(if $2,$(makeglossaries)  $1)

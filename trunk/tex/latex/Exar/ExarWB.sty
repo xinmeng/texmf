@@ -2,7 +2,13 @@
 \ProvidesPackage{ExarWB}[2010/07/20 Exar Workbook by Xin Meng]
 
 
-\RequirePackageWithOptions{MXCommon}
+\ifdefined\draftworkbook
+\usepackage[ExarTheme,draft]{MXCommon}
+\else
+\usepackage[ExarTheme]{MXCommon}
+\fi
+
+%% \RequirePackageWithOptions{MXCommon}
 
 \RequirePackage{amsfonts}
 \RequirePackage{amssymb}
