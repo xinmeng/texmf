@@ -13,14 +13,14 @@ powershell = powershell
 perl       = perl
 dot        = dot
 
-makeglossaries = perl D:/texlive/2010/texmf-dist/scripts/glossaries/makeglossaries
+makeglossaries = perl $(TEXLIVE)/2010/texmf-dist/scripts/glossaries/makeglossaries
 
-vsd2pdf    = $(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1
-gencodetex      = $(perl) $(texmfhome)/scripts/gencodetex/gencodetex.pl
-chkmd5_enc      = $(perl) $(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl
-genchangebar    = $(perl) $(texmfhome)/scripts/genchangebar/genchangebar.pl
-getdiffbaseinfo = $(perl) $(texmfhome)/scripts/genchangebar/getdiffbaseinfo.pl
-diff2cb         = $(perl) $(texmfhome)/scripts/genchangebar/diff2cb.pl
+vsd2pdf    = $(TEXMFHOME)/scripts/vsd2pdf/vsd2pdf.ps1
+gencodetex      = $(perl) $(TEXMFHOME)/scripts/gencodetex/gencodetex.pl
+chkmd5_enc      = $(perl) $(TEXMFHOME)/scripts/chkmd5_enc/chkmd5_enc.pl
+genchangebar    = $(perl) $(TEXMFHOME)/scripts/genchangebar/genchangebar.pl
+getdiffbaseinfo = $(perl) $(TEXMFHOME)/scripts/genchangebar/getdiffbaseinfo.pl
+diff2cb         = $(perl) $(TEXMFHOME)/scripts/genchangebar/diff2cb.pl
 
 
 
