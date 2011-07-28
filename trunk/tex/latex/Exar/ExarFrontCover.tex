@@ -23,10 +23,15 @@
 }
 
 \vspace{\stretch{10}}
-\hfill{\color{gray}\tiny\currenttime~\today{}~GMT~+08:00}\\
-{\color{gray}
-  \rule[1em]{\textwidth}{1pt}\\}
-\hfill{\color{ThemeColor}\bfseries\fontsize{22}{22}\selectfont{Exar Confidential}}
+\begin{flushright}
+{\color{gray}\tiny Built at \today~\currenttime~+0800\\
+\ifdefined\changebarworkbook
+ \DiffBaseVersion\\
+\fi
+}
+{\color{gray}\rule[1em]{\textwidth}{1pt}\\}
+{\color{ThemeColor}\bfseries\fontsize{22}{22}\selectfont{Exar Confidential}}
+\end{flushright}
 \pagebreak
 
 

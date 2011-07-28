@@ -1,33 +1,48 @@
-bibtex     = "bibtex.exe"
+ifeq ($(OS),Windows_NT)
+rm = del /F /Q
+else 
+rm = rm -f
+endif
 
-epstopdf   = "epstopdf.exe"
-makeindex  = "makeindex.exe"
-powershell = "powershell.exe"
-perl       = "perl.exe"
-dotexe     = "c:/tools/Graphviz2.26.3/bin/dot.exe"
-makeglossaries = perl "D:/texlive/2010/texmf-dist/scripts/glossaries/makeglossaries"
+latex      = xelatex
+bibtex     = bibtex
 
-vsd2pdf    = "$(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1"
-gencodetex = "$(texmfhome)/scripts/gencodetex/gencodetex.pl"
-chkmd5_enc = "$(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl"
+epstopdf   = epstopdf
+makeindex  = makeindex
+powershell = powershell
+perl       = perl
+dot        = dot
 
-latex     = "xelatex.exe"
-latexopt  = -proctime
+makeglossaries = perl D:/texlive/2010/texmf-dist/scripts/glossaries/makeglossaries
 
+vsd2pdf    = $(texmfhome)/scripts/vsd2pdf/vsd2pdf.ps1
+gencodetex      = $(perl) $(texmfhome)/scripts/gencodetex/gencodetex.pl
+chkmd5_enc      = $(perl) $(texmfhome)/scripts/chkmd5_enc/chkmd5_enc.pl
+genchangebar    = $(perl) $(texmfhome)/scripts/genchangebar/genchangebar.pl
+getdiffbaseinfo = $(perl) $(texmfhome)/scripts/genchangebar/getdiffbaseinfo.pl
+diff2cb         = $(perl) $(texmfhome)/scripts/genchangebar/diff2cb.pl
+
+
+
+latexopt      = -proctime
 gencodetexopt = -l metahdl -t chapter
+dotopt        = 
+bibtexopt     = 
+diffopt       = #--diff-cmd diff -x "-U 0" 
+
+
 code = 
 
-dotopt = 
-
-bibtexopt = 
 
 dust = *.aux *.ilg *.ind *.idx *.toc		\
+       *.xdy 					\
        *.log *.out *.lot *.lol *.lof		\
        *.tmp *.ist *.glg *.gls *.glo		\
        *.blg *.bbl				\
        *.reglog *.reggls *.regglo		\
        *.iolog  *.iogls  *.ioglo		\
        *.dslog  *.dsgls  *.dsglo		\
+       *.cbdiff *.changebar			\
        *~
 
 
@@ -37,7 +52,9 @@ shortcutfile =
 refdocfile   = 
 
 DRAFT =
+CHANGBAR =  
 
+revision = BASE
 
 
 # $1: code file
@@ -127,7 +144,7 @@ endef
 
 define generate_codetex
 $1.codetex : $1
-	$(perl) $(gencodetex) -f $$< $(gencodetexopt) -o $$@
+	$(gencodetex) -f $$< $(gencodetexopt) -o $$@
 endef
 
 
@@ -142,8 +159,22 @@ endef
 # $3: with or without bib
 define build_pdf
 
-.phony : all draft clean clean_all clean_top
+.phony : all draft clean clean-all clean-pdf create-changebar
 all : $1.pdf
+
+changebar : CHANGEBAR = 1
+changebar : create-changebar $1.pdf
+
+
+create-changebar :
+	$(rm) $1.pdf
+	$(foreach f,$(my_tex),svn diff -r $(revision) $(diffopt) $(f) > $(f).cbdiff
+	)
+	$(foreach f,$(my_tex),$(diff2cb) $(f)
+	)
+#	$(genchangebar) -r $(revision)
+
+
 
 draft: DRAFT = 1
 draft: $1.pdf 
@@ -154,25 +185,26 @@ $(eval codetex = $(addsuffix .codetex,$(code)))
 # tex building
 $1.pdf : $(my_tex) $(my_sty) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf) $(my_pdf) $(my_jpg) 	\
              $(glossaryfile) $(shortcutfile) $(refdocfile) 					\
-             $(codetex) 									
-	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+             $(codetex)  
+	echo $(OS)
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	$(makeindex)        $1
 	$(if $2,$(makeglossaries)  $1)
-	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	$(if $3,$(bibtex)           $(bibtexopt) $1)
 	$(if $2,$(makeglossaries)  $1)
 	$(makeindex)        $1
-	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
-	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$1)
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
 %.pdf : %.eps
-	$(epstopdf) $<
+	$(epstopdf) $$<
 
 %.pdf : %.dot
-	$(dotexe) $(dotopt) -Tpdf $< -o $@
+	$(dot) $(dotopt) -Tpdf $$< -o $$@
 
 %.pdf : %.vsd
-	$(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $< $@
+	$(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $$< $$@
 
 $(foreach c,$(code),$(call generate_codetex,$(c)))
 
@@ -180,17 +212,16 @@ $(foreach c,$(code),$(call generate_codetex,$(c)))
 
 
 
-.phony: clean clean_all clean_top
-
-
 clean: 
-	rm -f $(dust) 
+	$(foreach d,$(dust),$(rm) $(d)
+	)
 
-clean_top : clean
-	rm -f $1.pdf 
+clean-pdf : clean
+	$(rm) $1.pdf 
 
-clean_all: clean clean_top
-	rm -f $(foreach f,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),"$(f)")
+clean-all: clean clean-pdf
+	$(foreach d,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(rm) $(d)
+	)
 
 
 

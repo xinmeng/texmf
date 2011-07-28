@@ -262,7 +262,7 @@
 
 
 
-\RequirePackage[pdfnewwindow,unicode,xetex,colorlinks,hyperindex]{hyperref}
+\RequirePackage[pdfnewwindow,unicode,colorlinks,hyperindex]{hyperref}
 \hypersetup{
   bookmarksnumbered,
   linkcolor = LinkColor,
@@ -386,6 +386,19 @@
     \item[{[#1]}\hfill] \textbf{#2}\\#3
   \end{bitslist}
 }
+
+\ifdefined\changebarworkbook
+\newcommand{\cbinput}[1]{
+  \IfFileExists{#1.changebar}
+               {\input{#1.changebar}}
+               {\input{#1}}
+               }
+\else
+\newcommand{\cbinput}[1]{\input{#1}}
+\fi
+
+
+
 
 %% Glossaries
 \RequirePackage[xindy, toc, numberedsection=autolabel]{glossaries}
