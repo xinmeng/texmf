@@ -18,7 +18,7 @@ makeglossaries = perl $(TEXLIVE)/texmf-dist/scripts/glossaries/makeglossaries
 vsd2pdf    = $(TEXMFHOME)/scripts/vsd2pdf/vsd2pdf.ps1
 gencodetex      = $(perl) $(TEXMFHOME)/scripts/gencodetex/gencodetex.pl
 chkmd5_enc      = $(perl) $(TEXMFHOME)/scripts/chkmd5_enc/chkmd5_enc.pl
-genchangebar    = $(perl) $(TEXMFHOME)/scripts/genchangebar/genchangebar.pl
+gencbdiff       = $(perl) $(TEXMFHOME)/scripts/genchangebar/gencbdiff.pl
 getdiffbaseinfo = $(perl) $(TEXMFHOME)/scripts/genchangebar/getdiffbaseinfo.pl
 diff2cb         = $(perl) $(TEXMFHOME)/scripts/genchangebar/diff2cb.pl
 
@@ -28,7 +28,7 @@ latexopt      = -proctime
 gencodetexopt = -l metahdl -t chapter
 dotopt        = 
 bibtexopt     = 
-diffopt       = #--diff-cmd diff -x "-U 0" 
+diffopt       = #--diffopt 'diff -x "-U 0"' 
 
 
 code = 
@@ -168,9 +168,10 @@ changebar : create-changebar $1.pdf
 
 create-changebar :
 	$(rm) $1.pdf
-	$(foreach f,$(my_tex),svn diff -r $(revision) $(diffopt) $(f) > $(f).cbdiff
-	)
-	$(foreach f,$(my_tex),$(diff2cb) $(f)
+	$(gencbdiff) -r $(revision) $(diffopt) $(my_tex) $(my_sty)
+#	$(foreach f,$(my_tex),svn diff -r $(revision) $(diffopt) $(f) > $(f).cbdiff
+#	)
+	$(foreach f,$(my_tex) $(my_sty),$(diff2cb) $(f)
 	)
 #	$(genchangebar) -r $(revision)
 

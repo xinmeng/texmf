@@ -18,6 +18,9 @@ if (-r $diff) {
     @diff = <DIFF>;
     close DIFF;
 }
+else {
+    exit 0;
+}
 
 my $new_fh;
 my $changebar_file;
@@ -68,20 +71,30 @@ sub addcb {
 	    chomp;
 
 	    if ($current_pos >= $start && $current_pos <= $end) {
-		if ( /(^[ \t]+\\hline)|\\tableheader|\\begin|\\end|\\input|(^[ \t]*$)/) {
-		    print $cb_fh "$_\n";
-		}
-		elsif (/^(.*)(\\color(wordbox|bitbox)(\[.*\])?\{.*\}\{.*\}\{)(.*)/) {
-		    print $cb_fh "$1$2$bar$5\n";
-		}
-		elsif (/^(.*)(\\(wordbox|bitbox)(\[.*\])?\{.*\}\{)(.*)/) {
-		    print $cb_fh "$1$2$bar$5\n";
-		}
-		elsif (/(.*)\\\\[ \t]*$/) {
-		    print $cb_fh "$1$bar\\\\\n";
+		if (($new =~ /\.tex$/) || 
+		    ($new =~ /\.sty$/ && 
+		     !/^[ \t]*(name|parent|sort|text)=\{.*\},[ \t]*$/ && 
+		     !/^[ \t]*[{}][ \t]*$/                            && 
+		     !/newglossaryentry/ ) ) {
+		
+		    if ( /(^[ \t]+\\hline)|\\tableheader|\\begin|\\end|\\input|(^[ \t]*$)/) {
+			print $cb_fh "$_\n";
+		    }
+		    elsif (/^(.*)(\\color(wordbox|bitbox)(\[.*\])?\{.*\}\{.*\}\{)(.*)/) {
+			print $cb_fh "$1$2$bar$5\n";
+		    }
+		    elsif (/^(.*)(\\(wordbox|bitbox)(\[.*\])?\{.*\}\{)(.*)/) {
+			print $cb_fh "$1$2$bar$5\n";
+		    }
+		    elsif (/(.*)\\\\[ \t]*$/) {
+			print $cb_fh "$1$bar\\\\\n";
+		    }
+		    else {
+			print $cb_fh "$_$bar\n";
+		    }
 		}
 		else {
-		    print $cb_fh "$_$bar\n";
+		    print $cb_fh "$_\n";
 		}
 	    }
 	    else {
@@ -96,6 +109,7 @@ sub addcb {
 	    }
 	}
     }
+
     
     return 0;
     
