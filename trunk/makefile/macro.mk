@@ -13,7 +13,7 @@ powershell = powershell
 perl       = perl
 dot        = dot
 
-makeglossaries = perl $(TEXLIVE)/2010/texmf-dist/scripts/glossaries/makeglossaries
+makeglossaries = perl $(TEXLIVE)/texmf-dist/scripts/glossaries/makeglossaries
 
 vsd2pdf    = $(TEXMFHOME)/scripts/vsd2pdf/vsd2pdf.ps1
 gencodetex      = $(perl) $(TEXMFHOME)/scripts/gencodetex/gencodetex.pl
