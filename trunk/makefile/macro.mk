@@ -1,7 +1,9 @@
 ifeq ($(OS),Windows_NT)
 rm = del /F /Q
+cp = copy /Y 
 else 
 rm = rm -f
+cp = cp
 endif
 
 latex      = xelatex
