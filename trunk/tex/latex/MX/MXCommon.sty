@@ -63,7 +63,7 @@
   \newcommand{\pictext}[6][btph]{
     \begin{figure}[#1]
       \centering
-      \begin{overpic}[scale=#2,grid,tics=5]{#4}
+      \begin{overpic}[scale=#2,grid,tics=2]{#4}
         #6
       \end{overpic}
       \caption{#3}\label{#5}
@@ -420,6 +420,38 @@
 
 \fi
 
+
+
+%% algorithm2e
+\RequirePackage[algochapter,noline,linesnumbered,commentsnumbered,longend,boxed]{algorithm2e}
+\SetAlCapSkip{.5ex}
+
+\newcommand{\AlgoCaptionStyle}[1]{\color{ThemeColor}#1}
+\SetAlgoCaptionLayout{AlgoCaptionStyle}
+
+\SetAlCapNameFnt{\bf}
+
+\SetAlFnt{\footnotesize}
+
+\newcommand{\AlgoLineNumberStyle}[1]{\color{gray}#1}
+\SetNlSty{AlgoLineNumberStyle}{}{}
+
+\newcommand{\AlgoKeywordStyle}[1]{\color{blue}\textbf{#1}}
+\SetKwSty{AlgoKeywordStyle}
+
+\newcommand{\AlgoCommentStyle}[1]{\color{darkgray}\footnotesize#1}
+\SetCommentSty{AlgoCommentStyle}
+
+\newcommand{\AlgoArgStyle}[1]{#1}
+\SetArgSty{AlgoArgStyle}
+
+\newcommand{\AlgDataStyle}[1]{\color{darkorange}\textsf{#1}}
+\SetDataSty{AlgDataStyle}
+
+\newcommand{\AlgFunctionStyle}[1]{\color{darkred}\textsf{\textbf{#1}}}
+\SetFuncSty{AlgFunctionStyle}
+
+\DontPrintSemicolon
 
 
 
