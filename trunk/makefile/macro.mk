@@ -161,7 +161,7 @@ endef
 # $3: with or without bib
 define build_pdf
 
-.phony : all draft clean clean-all clean-pdf create-changebar
+.phony : all draft quick clean clean-all clean-pdf create-changebar
 all : $1.pdf
 
 changebar : CHANGEBAR = 1
@@ -197,6 +197,9 @@ $1.pdf : $(my_tex) $(my_sty) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf) $(my_pdf) $(
 	$(if $2,$(makeglossaries)  $1)
 	$(makeindex)        $1
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+
+quick : 
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
 %.pdf : %.eps
