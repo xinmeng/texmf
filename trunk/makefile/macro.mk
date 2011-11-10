@@ -37,7 +37,8 @@ code =
 
 
 dust = *.aux *.ilg *.ind *.idx *.toc		\
-       *.xdy 					\
+       *.xdy					\
+       *.loa					\
        *.log *.out *.lot *.lol *.lof		\
        *.tmp *.ist *.glg *.gls *.glo		\
        *.blg *.bbl				\
