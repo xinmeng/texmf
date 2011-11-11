@@ -4,25 +4,52 @@
 
 \RequirePackageWithOptions{MXNote}
 
+
 \reversemarginpar
+
+
 
 \setlength{\hoffset}{0cm}
 \setlength{\voffset}{-0.5in}
 \setlength{\textwidth}{12cm}
 \setlength{\textheight}{23.5cm}
-\setlength{\oddsidemargin}{3.5cm}
-\setlength{\marginparwidth}{3.5cm}
+\setlength{\oddsidemargin}{4.5cm}
+\setlength{\marginparwidth}{\oddsidemargin}
+\addtolength{\marginparwidth}{-1cm}
 \setlength{\marginparsep}{5mm}
 
 \setlength{\headheight}{0pt}
 \setlength{\headsep}{0pt}
 \setlength{\footskip}{1cm}
 
+\newlength{\totalresumewidth}
+\addtolength{\totalresumewidth}{\textwidth}
+\addtolength{\totalresumewidth}{\marginparwidth}
+\addtolength{\totalresumewidth}{\marginparsep}
+
+\newlength{\negtiveindent}
+\addtolength{\negtiveindent}{-\marginparwidth}
+\addtolength{\negtiveindent}{-\marginparsep}
+
 
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
 \rfoot{\thepage}
+
+
+
+\titleformat{\section}
+{\bf\huge} % format
+{} % label
+{0mm} % sep
+{} % before
+{\normalfont} % after
+
+\titlespacing{\section}
+{\negtiveindent}
+{1em}
+{.5ex}
 
 
 
@@ -47,13 +74,74 @@
                }
 
 
-\newcommand{\resumesection}[1]{
-  \setlength{\parindent}{-4cm}
-  {\LARGE\textbf{#1}}
-  
+\newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}}
+\newcommand{\project}[1]{\textbf{#1}}
+
+
+\newcommand{\myname}{MENG Xin}
+\newcommand{\displayname}{\textbf{\fontsize{28}{25}\selectfont{\myname}}\refstepcounter{chapter}
+    \addcontentsline{toc}{chapter}{\myname}\normalfont}
+\newlength{\namewidth}
+\settowidth{\namewidth}{\displayname}
+
+\newcommand{\myphoto}[1][dummy]{
+  \ifthenelse{\equal{#1}{dummy}}
+             {\rule{30mm}{40mm}}
+             {\includegraphics[width=30mm, height=40mm]{#1}}
+}
+\newcommand{\myemail}{xxxxxxxxxxxxxxxxxx}
+\newcommand{\myphone}{00000000000000000}
+\newcommand{\myaddress}{Line 1 \\ 
+  Line 2 \\
+  Line 3 \\
+  Line 4 
+}
+
+\newcommand{\photoandname}{
+  \setlength{\parindent}{\negtiveindent}
+  \begin{minipage}{\totalresumewidth}
+    \myphoto
+    \hspace{1em}
+    \begin{minipage}[b]{\namewidth}
+      \vspace{5pt}
+      \displayname{}
+      \vspace{10pt}
+
+      \begin{footnotesize}
+        \begin{tabular}{l@{ : }l}
+          Email  & \myemail\\
+          Phone  & \myphone \\
+          Address & 
+          \begin{minipage}[t]{\textwidth}
+            \myaddress
+          \end{minipage}\\
+        \end{tabular}
+      \end{footnotesize}
+    \end{minipage}
+  \end{minipage}
+
+  \vspace{1ex}
+
+  \hypersetup{%
+    pdftitle={\myname{} resume},
+    pdfauthor={\myemail}
+  }
+
+  \rule{\totalresumewidth}{1pt}\\
+  \vspace{2em}
   \setlength{\parindent}{0mm}
 }
 
-\newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}}
+
+
 
 \newcommand{\zju}{Zhejiang University}
+
+
+
+
+
+
+
+
+
