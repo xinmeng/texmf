@@ -75,16 +75,17 @@
 
 
 \newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}}
-\newcommand{\project}[1]{\textbf{#1}}
+\newcommand{\project}[1]{\textbf{#1}\refstepcounter{subsection}
+    \addcontentsline{toc}{subsection}{#1}\normalfont}
 
 
 \newcommand{\myname}{MENG Xin}
-\newcommand{\displayname}{\textbf{\fontsize{28}{25}\selectfont{\myname}}\refstepcounter{chapter}
-    \addcontentsline{toc}{chapter}{\myname}\normalfont}
+\newcommand{\displayname}{\textbf{\fontsize{28}{25}\selectfont{\myname}}}
 \newlength{\namewidth}
 \settowidth{\namewidth}{\displayname}
 
-\newcommand{\myphoto}[1][dummy]{
+\newcommand{\myphoto}{dummy}
+\newcommand{\displayphoto}[1]{
   \ifthenelse{\equal{#1}{dummy}}
              {\rule{30mm}{40mm}}
              {\includegraphics[width=30mm, height=40mm]{#1}}
@@ -100,11 +101,12 @@
 \newcommand{\photoandname}{
   \setlength{\parindent}{\negtiveindent}
   \begin{minipage}{\totalresumewidth}
-    \myphoto
+    \displayphoto{\myphoto}
     \hspace{1em}
     \begin{minipage}[b]{\namewidth}
       \vspace{5pt}
-      \displayname{}
+      \displayname{}\refstepcounter{chapter}
+    \addcontentsline{toc}{chapter}{\myname}\normalfont
       \vspace{10pt}
 
       \begin{footnotesize}
