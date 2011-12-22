@@ -60,6 +60,7 @@ CHANGBAR =
 revision = BASE
 
 
+
 # $1: code file
 # $2: base dir
 define locate_code
@@ -94,6 +95,7 @@ $1_code = $(foreach c,$(code),$(call locate_code,$(c),$2))
 endef
 
 
+# $1: top file
 define set_my_variable
 $(eval my_tex = $(wildcard *.tex))
 
@@ -106,7 +108,7 @@ $(eval my_vsdpdf = $(subst vsd,pdf,$(my_vsd)))
 $(eval my_eps = $(wildcard *.eps))
 $(eval my_epspdf = $(subst eps,pdf,$(my_eps)))
 
-$(eval my_pdf = $(filter-out %$(top).pdf $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(wildcard *.pdf)))
+$(eval my_pdf = $(filter-out $(foreach t,$(top),$(t).pdf) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(wildcard *.pdf)))
 
 
 $(eval my_jpg = $(wildcard *.jpg))
@@ -157,19 +159,27 @@ $(foreach c,$1,$(eval $(call generate_codetex,$(c))))
 endef
 
 
+.phony : all 
+
 # $1: LaTeX doc top
 # $2: with or without glossary in compilation
 # $3: with or without bib
 define build_pdf
 
-.phony : all draft quick clean clean-all clean-pdf create-changebar
-all : $1.pdf
+$(eval $(call set_my_variable,$1))
 
-changebar : CHANGEBAR = 1
-changebar : create-changebar $1.pdf
+.phony : $1 draft-$1 quick-$1 clean-$1 clean-all-$1 clean-pdf-$1 create-changebar-$1
+all : $1
+clean : clean-$1 
+clean-pdf : clean-pdf-$1
+clean-all : clean-all-$1
+$1 : $1.pdf
+
+changebar-$1 : CHANGEBAR = 1
+changebar-$1 : create-changebar-$1 $1.pdf
 
 
-create-changebar :
+create-changebar-$1 :
 	$(rm) $1.pdf
 	$(gencbdiff) -r $(revision) $(diffopt) $(my_tex) $(my_sty)
 #	$(foreach f,$(my_tex),svn diff -r $(revision) $(diffopt) $(f) > $(f).cbdiff
@@ -180,8 +190,8 @@ create-changebar :
 
 
 
-draft: DRAFT = 1
-draft: $1.pdf 
+draft-$1: DRAFT = 1
+draft-$1: $1.pdf 
 
 
 $(eval codetex = $(addsuffix .codetex,$(code)))
@@ -200,7 +210,7 @@ $1.pdf : $(my_tex) $(my_sty) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf) $(my_pdf) $(
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
-quick : 
+quick-$1 : 
 	$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
 %.pdf : %.eps
@@ -215,20 +225,15 @@ quick :
 $(foreach c,$(code),$(call generate_codetex,$(c)))
 
 
-
-
-
-clean: 
+clean-$1: 
 	$(foreach d,$(dust),$(rm) $(d)
 	)
 
-clean-pdf : clean
+clean-pdf-$1 : clean
 	$(rm) $1.pdf 
 
-clean-all: clean clean-pdf
+clean-all-$1: clean clean-pdf
 	$(foreach d,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(rm) $(d)
 	)
-
-
 
 endef
