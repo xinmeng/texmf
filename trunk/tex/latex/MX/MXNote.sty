@@ -14,7 +14,6 @@
 
 
 \usepackage[slantfont, boldfont, CJKnumber]{xeCJK}
-\usepackage{xunicode, xltxtra} % seems conflict with `tipa' package
 
 
 \setCJKmainfont[BoldFont={Adobe Heiti Std R}, 
@@ -27,6 +26,9 @@
 
 \usepackage{tipa}
 
+
+\usepackage{xunicode, xltxtra} % seems conflict with `tipa' package
+\DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
 
 %\setmainfont{}
 %\setsansfont{Verdana} 
