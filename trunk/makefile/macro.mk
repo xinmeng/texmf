@@ -1,4 +1,4 @@
-ifeq ($(OS),Windows_NT)
+ifeq ($(HOST),)
 rm = del /F /Q
 cp = copy /Y 
 else 
@@ -159,7 +159,23 @@ $(foreach c,$1,$(eval $(call generate_codetex,$(c))))
 endef
 
 
-.phony : all 
+define clean-rule
+clean: 
+	$(foreach d,$(dust),$(rm) $(d)
+	)
+
+clean-all: clean clean-pdf
+	$(foreach d,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(rm) $(d)
+	)
+endef
+
+
+.phony : all clean clean-pdf clean-all
+all : 
+
+$(eval $(call clean-rule))
+
+
 
 # $1: LaTeX doc top
 # $2: with or without glossary in compilation
@@ -168,11 +184,9 @@ define build_pdf
 
 $(eval $(call set_my_variable,$1))
 
-.phony : $1 draft-$1 quick-$1 clean-$1 clean-all-$1 clean-pdf-$1 create-changebar-$1
+.phony : $1 draft-$1 quick-$1 clean-pdf-$1 create-changebar-$1
 all : $1
-clean : clean-$1 
 clean-pdf : clean-pdf-$1
-clean-all : clean-all-$1
 $1 : $1.pdf
 
 changebar-$1 : CHANGEBAR = 1
@@ -225,15 +239,9 @@ quick-$1 :
 $(foreach c,$(code),$(call generate_codetex,$(c)))
 
 
-clean-$1: 
-	$(foreach d,$(dust),$(rm) $(d)
-	)
-
 clean-pdf-$1 : clean
 	$(rm) $1.pdf 
 
-clean-all-$1: clean clean-pdf
-	$(foreach d,$(codetex) $(my_epspdf) $(my_dotpdf) $(my_vsdpdf),$(rm) $(d)
-	)
 
 endef
+
