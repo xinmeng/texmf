@@ -10,7 +10,11 @@
 
 \includegraphics[width=6.75cm]{exar_logo.jpg}\\
 {\color{gray}\rule{\textwidth}{1pt}}\\
-{\hspace*{\fill}\footnotesize\color{ThemeColor}{\textbf{Revision \DocRevision}}}\\
+{\hspace*{\fill}\footnotesize\color{ThemeColor}{\textbf{Revision \DocRevision}}}\\[-1ex]
+{\hspace*{\fill}\color{gray}\tiny Built at \today~\currenttime~+0800\\
+\ifdefined\changebarworkbook
+ \DiffBaseVersion\\
+\fi}
 \vspace{\stretch{2}}
 
 {\color{ThemeColor}\bfseries
@@ -25,11 +29,7 @@
 
 \vspace{\stretch{10}}
 \begin{flushright}
-\noindent\footnotesize\href{mailto:\DocAuthor}{\textbf{\DocAuthor}}\hfill
-{\color{gray}\tiny Built at \today~\currenttime~+0800\\
-\ifdefined\changebarworkbook
- \DiffBaseVersion\\
-\fi}
+\noindent\footnotesize\href{mailto:\DocAuthor}{\textbf{\DocAuthor}}
 {\color{gray}\rule[1em]{\textwidth}{1pt}\\}
 {\color{ThemeColor}\bfseries\fontsize{22}{22}\selectfont{Exar Confidential}}
 \end{flushright}

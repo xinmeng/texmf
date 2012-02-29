@@ -173,7 +173,6 @@ endef
 .phony : all clean clean-pdf clean-all
 all : 
 
-$(eval $(call clean-rule))
 
 
 
