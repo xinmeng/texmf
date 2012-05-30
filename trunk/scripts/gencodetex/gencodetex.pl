@@ -89,16 +89,22 @@ while ( <SRC> ) {
 	else {
 	    $state = "src";
 	    $src_start = $lineno;
+	    print TEX "\\begin{lstlisting}[frame=none, language={$language}, firstnumber=$src_start, nolol]\n";
+	    print TEX $_;
 	}
     }
     else {
 	if ( /^[ \t]*$commentstart(.*)/ ) {
-	    $src_end = $lineno -1;
-	    print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$src_end}, nolol]{$dir_file}\n";
+	    print TEX "\\end{lstlisting}\n\n";
+# 	    $src_end = $lineno -1;
+# 	    print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$src_end}, nolol]{$dir_file}\n";
 	    print TEX &extractdoc($1);
 	    $src_start = 0;
 	    $src_end = 0;
 	    $state = "doc";
+	}
+	else {
+	    print TEX $_;
 	}
     }
 
@@ -106,7 +112,8 @@ while ( <SRC> ) {
 }
 
 if ( $src_start ) {
-    print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$lineno}, nolol]{$dir_file}\n";
+    # print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$lineno}, nolol]{$dir_file}\n";
+    print TEX "\\end{lstlisting}\n\n";
 }
 
 close SRC;
