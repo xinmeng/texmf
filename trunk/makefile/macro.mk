@@ -108,6 +108,7 @@ endif
 # $3: dependent sub LaTeX top list
 define register-doc
 $(if $(strip $(findstring $1,$(__latex_top__))),$(error LaTeX top '$1' has already been defined!))
+$(foreach s,$3,$(if $(strip $(findstring $s,$(__latex_top__))),,$(error Sub dependent LaTeX top '$s' is not defined!)))
 export TEXINPUTS = $(realpath $2):$(abspath $1_build):$(TEXINPUTS)
 $(eval __latex_top__ := $(__latex_top__) $1)
 $(eval __latex_top_dir_$1__ := $(realpath $2))
