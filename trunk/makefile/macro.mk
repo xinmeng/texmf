@@ -8,7 +8,7 @@ define clean-rule  # $1: LaTeX top
 texclean-$1 :
 	$(rm) $(foreach d,$(dust),$1_build/$d)
 
-texclean-pdf-$1 : clean-$1
+texclean-pdf-$1 : texclean-$1
 	$(rm) $1_build/$1.pdf 
 
 texclean-all-$1: 
@@ -25,7 +25,7 @@ texclean-$1:
 	$(foreach d,$(dust),$(rm) $1_build\$(d)
 	)
 
-texclean-pdf-$1 : clean-$1
+texclean-pdf-$1 : texclean-$1
 	$(rm) $1_build/$1.pdf
 
 texclean-all-$1: 
@@ -228,7 +228,7 @@ $(eval $(call aggregate-variable,$1,$(call get-all-submod,$1)))
 
 .phony : $1 draft-$1 quick-$1 changebar-$1 create-changebar-$1 texclean-$1 texclean-pdf-$1 texclean-all-$1
 all : $1
-texclean : texmclean-$1
+texclean : texclean-$1
 texclean-pdf : texclean-pdf-$1
 texclean-all : texclean-all-$1
 $1 : $1_build $1.pdf
