@@ -176,30 +176,33 @@
 
 \lstdefinelanguage{metahdl}
 {
-  %% V keywords
-  morekeywords={always,always_comb,always_ff,always_latch,and,assign,assume,automatic,before,begin,break,buf,bufif0,bufif1,case,casex,casez,cell,chandle,class,cmos,config,context,continue,cross,deassign,default,defparam,design,disable,dist,do,edge,else,end,endcase,endclass,endfunction,endgenerate,endgroup,endinterface,endmodule,endpackage,endprimitive,endprogram,endspecify,endtask,expect,export,final,for,force,forever,function,generate,genvar,highz0,highz1,if,iff,include,initial,inout,input,inside,instance,interface,integer,large,liblist,localparam,module,nand,negedge,net,nmos,nor,noshowcancelled,not,notif0,notif1,null,or,output,parameter,pmos,posedge,primitive,program,pull0,pull1,pulldown,pullup,pulsestyle_onevent,pulsestyle_ondetect,rcmos,realtime,release,return,rnmos,rpmos,rtran,rtranif0,rtranif1,scalared,shortint,shortreal,showcancelled,signed,small,solve,specify,specparam,strong0,strong1,supply0,supply1,task,timeprecision,timeunit,tran,tranif0,tranif1,tri,tri0,tri1,triand,trior,trireg,typedef,unsigned,use,var,vectored,virtual,void,wait,wait_order,wand,weak0,weak1,while,wor,xnor,xor,reg,wire,int,real,time},
+  morekeywords={always,always_comb,always_ff,always_latch,and,assign,assume,automatic,before,begin,break,buf,bufif0,bufif1,case,casex,casez,cell,chandle,class,cmos,config,context,continue,cross,deassign,default,defparam,design,disable,dist,do,edge,else,end,endcase,endclass,endfunction,endgenerate,endgroup,endinterface,endmodule,endpackage,endprimitive,endprogram,endspecify,endtask,expect,export,final,for,force,forever,function,generate,genvar,highz0,highz1,if,iff,include,initial,inout,input,inside,instance,interface,integer,large,liblist,localparam,module,nand,negedge,net,nmos,nor,noshowcancelled,not,notif0,notif1,null,or,output,parameter,pmos,posedge,primitive,program,pull0,pull1,pulldown,pullup,pulsestyle_onevent,pulsestyle_ondetect,rcmos,realtime,release,return,rnmos,rpmos,rtran,rtranif0,rtranif1,scalared,shortint,shortreal,showcancelled,signed,small,solve,specify,specparam,strong0,strong1,supply0,supply1,task,timeprecision,timeunit,tran,tranif0,tranif1,tri,tri0,tri1,triand,trior,trireg,typedef,unsigned,use,var,vectored,virtual,void,wait,wait_order,wand,weak0,weak1,while,wor,xnor,xor},
   keywordstyle={\bfseries\color{blue}},
-  %% SV keywords
-  morekeywords={[6]alias,assert,bind,bins,binsof,bit,byte,clocking,const,constraint,cover,covergroup,coverpoint,endclocking,endconfig,endproperty,endsequence,endtable,enum,event,extends,extern,first_match,foreach,fork,forkjoin,ifnone,ignore_bins,illegal_bins,import,incdir,intersect,join,join_any,join_none,library,local,longint,macromodule,matches,medium,modport,new,package,packed,priority,property,protected,pure,rand,randc,randcase,randsequence,ref,repeat,sequence,static,string,struct,super,table,tagged,this,throughout,type,union,unique,wildcard,with,within,logic},
+  morekeywords={[6]alias,assert,bind,bins,binsof,bit,byte,clocking,const,constraint,cover,covergroup,coverpoint,endclocking,endconfig,endproperty,endsequence,endtable,enum,event,extends,extern,first_match,foreach,fork,forkjoin,ifnone,ignore_bins,illegal_bins,import,incdir,intersect,join,join_any,join_none,library,local,longint,macromodule,matches,medium,modport,new,package,packed,priority,property,protected,pure,rand,randc,randcase,randsequence,ref,repeat,sequence,static,string,struct,super,table,tagged,this,throughout,type,union,unique,wildcard,with,within,},
   keywordstyle={[6]\bfseries\color{darkorange}},
-  %% System call
-  morekeywords={[7]$monitor, $display, $strobe, $write, $cast, $typename, $left,$right, $low, $high, $increment, $size, $dimensions, $unpacked_dimensions},
+  morekeywords={[7]logic,reg,wire,int,real,time},
   keywordstyle={[7]\bfseries\color{darkgreen}},
   %VP keywords
-  morekeywords={[2]\&CombBeg, \&CombEnd, \&Force, \&Regs, \&Wires, \&Ports, \&ModBeg, \&ModEnd, }, 
+  morekeywords={[2]\&CombBeg, \&CombEnd, \&Force, \&Regs, \&Wires, \&Ports, \&ModBeg, \&ModEnd, 
+    $monitor, $display, $strobe, $write, $cast,
+    $typename,
+    $left,$right, $low, $high, $increment, $size, $dimensions, $unpacked_dimensions}, %$
   keywordstyle={[2]\bfseries\color{darkred}},
   %MetaHDL keywords
   morekeywords={[3]metahdl,nonport,ff,endff,fsm,endfsm,goto,rawcode,endrawcode},
   keywordstyle={[3]\bfseries\color{purple}},
-  %% PP directives
+  %SV directives
   morekeywords={[4]`accelerate,`autoexpand_vectornets,`celldefine,`default_nettype,%
     `define,`else,`elsif,`endcelldefine,`endif,`endprotect,%
     `endprotected,`expand_vectornets,`ifdef,`ifndef,`include,%
     `no_accelerate,`noexpand_vectornets,`noremove_gatenames,%
     `nounconnected_drive,`protect,`protected,`remove_gatenames,%
     `remove_netnames,`resetall,`timescale,`unconnected_drive, %
-    `uve_error, `uve_fatal, `let, `for, `endfor, `while, `switch, `case, `default, `if},%
-  keywordstyle={[4]\bfseries\color{darkred}},
+    `uve_error, `uve_fatal},%
+  keywordstyle={[4]\bfseries\color{blue}},
+  %MetaHDL directives
+  morekeywords={[5]`let, `for, `endfor, `while, `switch, `case, `default, `if},
+  keywordstyle={[5]\bfseries\color{purple}},
   alsoletter={\`, \&},%
   sensitive=true,
   morecomment=[l]{//},
@@ -329,52 +332,6 @@
 
 
 
-\newenvironment{reglist}
-               {\begin{list}{$\to$}{
-                     \setlength{\labelwidth}{8em}
-                     \setlength{\labelsep}{1em}
-                     \setlength{\itemindent}{0em}
-                     \setlength{\leftmargin}{9em}
-                     \setlength{\rightmargin}{2em}
-                     \setlength{\listparindent}{0em}
-                     \setlength{\topsep}{0ex}
-                     \setlength{\partopsep}{0mm}
-                     \setlength{\parskip}{.8ex}
-                     \setlength{\itemsep}{1ex}
-                     \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
-                     %\renewcommand{\makelabel}[1]{##1\hfill}
-                   }}
-               {\end{list}}
-\newcommand{\regrw}[3][X:X]{
-  \begin{reglist}
-  \item[RW\hspace{1em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
-  \end{reglist}
-}
-\newcommand{\regrc}[3][X:X]{
-  \begin{reglist}
-  \item[RC\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
-  \end{reglist}
-}
-\newcommand{\regro}[3][X:X]{
-  \begin{reglist}
-  \item[RO\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
-  \end{reglist}
-}
-\newcommand{\regwo}[3][X:X]{
-  \begin{reglist}
-  \item[WO\hspace{1.2em}\hfill#1\hfill] \textbf{#2}\\{\small#3}
-  \end{reglist}
-}
-\newcommand{\regrwc}[3][X:X]{
-  \begin{reglist}
-  \item[RW1C\hfill#1\hfill] \textbf{#2}\\{\small#3}
-  \end{reglist}
-}
-\newcommand{\reghw}[3][X:X]{
-  \begin{reglist}
-  \item[HwInit\hfill#1\hfill]\textbf{#2}\\{\small#3}
-  \end{reglist}
-}
 
 
 \newenvironment{bitslist}
@@ -461,7 +418,7 @@
 %% For Math 
 \theoremstyle{definition}\newtheorem{definition}{Definition}
 
-\theoremstyle{theorem}\newtheorem{theorem}{Theorem}
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}
 
 
 
@@ -473,6 +430,115 @@
   \ifthenelse{\equal{#1}{autoref}} 
              {\autoref{#2}} 
              {\cite{#2}}}
+
+\newenvironment{reglist}
+               {\begin{list}{$\to$}{
+                     \setlength{\labelwidth}{8em}
+                     \setlength{\labelsep}{1em}
+                     \setlength{\itemindent}{0em}
+                     \setlength{\leftmargin}{9em}
+                     \setlength{\rightmargin}{2em}
+                     \setlength{\listparindent}{0em}
+                     \setlength{\topsep}{0ex}
+                     \setlength{\partopsep}{0mm}
+                     \setlength{\parskip}{.8ex}
+                     \setlength{\itemsep}{1ex}
+                     \setlength{\parsep}{0.5ex plus0.2ex minus0.2ex}
+                     %\renewcommand{\makelabel}[1]{##1\hfill}
+                   }}
+               {\end{list}}
+
+
+\newglossaryentry{register-type-read-write}{
+  name={RW, Read and Write},
+  text={RW},
+  description={
+    One of software register access type. 
+    Software can both read/write from/to register.
+  }
+}
+\newcommand{\regrw}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-read-write}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+\newglossaryentry{register-type-read-clear}{
+  name={RC, Read only and Clear},
+  text={RC},
+  description={
+    One of software register access type. 
+    Software can only read from register, 
+    upon read, register will be cleared to \mhdl{0}.
+    Software write to register has no effect. 
+  }
+}
+\newcommand{\regrc}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-read-clear}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+\newglossaryentry{register-type-read-only}{
+  name={RO, Read Only},
+  text={RO},
+  description={
+    One of software register access type. 
+    Software can only read from register,
+    write to register has no effect. 
+    Register contents are updated by hardware.
+  }
+}
+\newcommand{\regro}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-read-only}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+\newglossaryentry{register-type-read-write-1-clear}{
+  name={RW1C, Read only and Write 1 Clear },
+  text={RW1C},
+  description={
+    One of software register access type. 
+    Software can read from register,
+    write \mhdl{1} to register bit will clear corresponding bit to \mhdl{0}.
+    Write \mhdl{0} to register bit has no effect.
+  }
+}
+\newcommand{\regrwc}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-read-write-1-clear}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+
+\newglossaryentry{register-type-read-write-1-set}{
+  name={RW1S, Read only and Write 1 Set },
+  text={RW1S},
+  description={
+    One of software register access type. 
+    Software can read from register,
+    write \mhdl{1} to register bit will set corresponding bit to \mhdl{1}.
+    Write \mhdl{0} to register bit has no effect.
+  }
+}
+\newcommand{\regrws}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-read-write-1-set}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+
 
 %% ----------------------------------------
 %%   Document property

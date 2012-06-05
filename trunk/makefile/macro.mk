@@ -5,13 +5,13 @@ rm = rm -rf
 cp = cp
 
 define clean-rule  # $1: LaTeX top
-clean-$1 :
+texclean-$1 :
 	$(rm) $(foreach d,$(dust),$1_build/$d)
 
-clean-pdf-$1 : clean-$1
+texclean-pdf-$1 : clean-$1
 	$(rm) $1_build/$1.pdf 
 
-clean-all-$1: 
+texclean-all-$1: 
 	$(rm) $1_build $1.pdf
 endef
 
@@ -21,14 +21,14 @@ rm = del /F /Q
 cp = copy
 
 define clean-rule  # $1: LaTeX top
-clean-$1: 
+texclean-$1: 
 	$(foreach d,$(dust),$(rm) $1_build\$(d)
 	)
 
-clean-pdf-$1 : clean-$1
+texclean-pdf-$1 : clean-$1
 	$(rm) $1_build/$1.pdf
 
-clean-all-$1: 
+texclean-all-$1: 
 	$(rm) $1_build 
 	$(rm) $1.pdf
 endef
@@ -209,7 +209,7 @@ endef
 
 
 
-.phony : all clean clean-pdf clean-all
+.phony : all texclean texclean-pdf texclean-all
 
 # $1: LaTeX doc top. As a rule, the $(top).tex should be put in
 #     a directory named `$(top)'. e.g., lshort.tex should be put
@@ -226,11 +226,11 @@ $(foreach s,$5,$(if $(findstring $s,$(__latex_top__)),,$(error Dependent sub LaT
 $(if $5,$(eval $1 : $(foreach s,$(call get-all-submod,$1),$s_build)))
 $(eval $(call aggregate-variable,$1,$(call get-all-submod,$1)))
 
-.phony : $1 draft-$1 quick-$1 changebar-$1 create-changebar-$1 clean-$1 clean-pdf-$1 clean-all-$1
+.phony : $1 draft-$1 quick-$1 changebar-$1 create-changebar-$1 texclean-$1 texclean-pdf-$1 texclean-all-$1
 all : $1
-clean: clean-$1
-clean-pdf : clean-pdf-$1
-clean-all : clean-all-$1
+texclean : texmclean-$1
+texclean-pdf : texclean-pdf-$1
+texclean-all : texclean-all-$1
 $1 : $1_build $1.pdf
 
 changebar-$1 : CHANGEBAR = 1
@@ -266,7 +266,7 @@ $1_build/$1.pdf : $($1_tex) $($1_sty) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($
 	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
-quick-$1 : $1_build 
+quick-$1 : $1_build $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_codetex)
 	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
 $1_build/%.eps : $2/%.dia
