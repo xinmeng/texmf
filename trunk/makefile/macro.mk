@@ -60,7 +60,7 @@ diff2cb         = $(perl) $(TEXMFHOME)/scripts/genchangebar/diff2cb.pl
 
 
 
-latexopt      = -proctime
+latexopt      = 
 gencodetexopt = -l metahdl -t section
 dotopt        = 
 bibtexopt     = 
@@ -238,13 +238,11 @@ changebar-$1 : $1_build create-changebar-$1 $1.pdf
 
 
 create-changebar-$1 :
-	$(rm) $1.pdf
-	$(gencbdiff) -r $(revision) $(diffopt) $(my_tex) $(my_sty)
-#	$(foreach f,$(my_tex),svn diff -r $(revision) $(diffopt) $(f) > $(f).cbdiff
-#	)
-	$(foreach f,$(my_tex) $(my_sty),$(diff2cb) $(f)
+	$(rm) $1_build/$1.pdf $1.pdf
+	$(foreach f,$($1_tex) $($1_sty),svn diff -r $(revision) $(diffopt) $f > $1_build/$(notdir $f).cbdiff
 	)
-#	$(genchangebar) -r $(revision)
+	$(foreach f,$($1_tex) $($1_sty),$(diff2cb) -dirfile $f -cbdiff $1_build/$(notdir $f).cbdiff
+	)
 
 
 

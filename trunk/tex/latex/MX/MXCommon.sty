@@ -59,22 +59,53 @@
   \end{figure}
 }
 
+\newenvironment{mxoverpic}[2][]{%
+  \sbox{\z@}{\includegraphics[#1]{#2}}%
+  \settodepth{\@tempcnta}{\usebox{\z@}}%
+  \settoheight{\@tempcntb}{\usebox{\z@}}%
+  \advance\@tempcntb\@tempcnta%
+  \settowidth{\@tempcnta}{\usebox{\z@}}%
+  \setlength{\@tempdima}{\unitlength}%
+  \count@=\z@\Gin@gridfalse\setkeys{Gin}{#1}% 
+%
+  \OVP@calc%
+%  
+  \begin{picture}(\@tempcnta,\@tempcntb)%
+    \put(0,0){\makebox(0,0)[bl]{\usebox{\z@}}}%
+    \ifGin@grid%
+      \put(0,0){\color{gray}\normalfont\fontsize\@viipt\@viiipt\selectfont%
+        \grid(\@tempcnta,\@tempcntb)(\count@,\count@)[0,0]}%
+    \fi%  
+    % reset the graphics parameter
+    \let\Gin@outer@scalex\relax
+    \let\Gin@outer@scaley\relax
+    \let\Gin@angle\relax
+    \let\Gin@ewidth\Gin@exclamation
+    \let\Gin@eheight\Gin@ewidth
+    \def\Gin@scalex{1}
+    \let\Gin@scaley\Gin@exclamation
+}{% 
+  \end{picture}%
+}% 
+
+
+
 \ifdefined\draftworkbook
   \newcommand{\pictext}[6][btph]{
     \begin{figure}[#1]
       \centering
-      \begin{overpic}[scale=#2,grid,tics=2]{#4}
+      \begin{mxoverpic}[scale=#2,grid,tics=2]{#4}
         #6
-      \end{overpic}
+      \end{mxoverpic}
       \caption{#3}\label{#5}
   \end{figure}}
 \else
   \newcommand{\pictext}[6][btph]{
     \begin{figure}[#1]
       \centering
-      \begin{overpic}[scale=#2]{#4}
+      \begin{mxoverpic}[scale=#2]{#4}
         #6
-      \end{overpic}
+      \end{mxoverpic}
       \caption{#3}\label{#5}
   \end{figure}}
 \fi
@@ -83,9 +114,9 @@
 %%   \renewcommand{\pictext}[6][btph]{
 %%     \begin{figure}[#1]
 %%       \centering
-%%       \begin{overpic}[scale=#2,grid,tics=5]{#4}
+%%       \begin{mxoverpic}[scale=#2,grid,tics=5]{#4}
 %%         #6
-%%       \end{overpic}
+%%       \end{mxoverpic}
 %%       \caption{#3}\label{#5}
 %%   \end{figure}}
 %% }
@@ -238,7 +269,7 @@
 \RequirePackage{lscape}
 
 \RequirePackage{marginnote}
-\newcommand{\mnote}[1]{\marginnote{\tiny{\textsl{#1}}}}
+\newcommand{\mnote}[1]{\marginnote{\tiny{#1}}}
 
 
 

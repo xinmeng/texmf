@@ -4,17 +4,23 @@ use Getopt::Long;
 use IO::File;
 use strict;
 
+my $dirfile;
+my $cbdiff;
+
+GetOptions("dirfile=s"    => \$dirfile, 
+	   "cbdiff=s"     => \$cbdiff);
+
+
 my $bar = '{\marginnote{\color{red}\rule{3pt}{2.2ex}}}';
 
-my $new = shift;
-my $diff = $new . ".cbdiff";
+
 
 my $current_pos = 1;
 
 
 my @diff;
-if (-r $diff) {
-    open DIFF, "$diff" or die "Error:Cannot open $diff for read.\n";
+if (-r $cbdiff) {
+    open DIFF, "$cbdiff" or die "Error:Cannot open $cbdiff for read.\n";
     @diff = <DIFF>;
     close DIFF;
 }
@@ -28,10 +34,11 @@ my $cb_fh;
 
 if (@diff) {
     
-    $new_fh = new IO::File $new;
-    die "Error:Cannot open $new for read.\n" if !defined $new_fh;
+    $new_fh = new IO::File $dirfile;
+    die "Error:Cannot open $dirfile for read.\n" if !defined $new_fh;
 
-    $changebar_file = $new . ".changebar";
+    $changebar_file = $cbdiff;
+    $changebar_file =~ s/\.cbdiff$/.changebar/;
     $cb_fh = new IO::File "> $changebar_file";
     die "Error:Cannot open $cb_fh for write.\n" if !defined $cb_fh;
 
@@ -71,8 +78,8 @@ sub addcb {
 	    chomp;
 
 	    if ($current_pos >= $start && $current_pos <= $end) {
-		if (($new =~ /\.tex$/) || 
-		    ($new =~ /\.sty$/ && 
+		if (($dirfile =~ /\.tex$/) || 
+		    ($dirfile =~ /\.sty$/ && 
 		     !/^[ \t]*(name|parent|sort|text)=\{.*\},[ \t]*$/ && 
 		     !/^[ \t]*[{}][ \t]*$/                            && 
 		     !/newglossaryentry/ ) ) {

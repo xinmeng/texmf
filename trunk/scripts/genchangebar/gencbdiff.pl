@@ -3,16 +3,16 @@
 use Getopt::Long;
 my $revision;
 my $diffopt;
+my $builddir;
+my $file;
 
 GetOptions("revision|r=s" => \$revision,
-	   "diffopt=s"   => \$diffopt);
+	   "diffopt=s"    => \$diffopt,
+	   "builddir=s"   => \$builddir,
+	   "file=s"       => \$file);
 
-my $cmd;
+my $cmd = sprintf("svn diff -r $revision $diffopt $file > $builddir/$file.cbdiff");
 
-foreach (@ARGV) {
-    print "$_ ";
-    $cmd = sprintf("svn diff -r $revision $diffopt $_ > $_.cbdiff");
-    print "$cmd\n";
-    eval {system $cmd};
-}
+print "$file $cmd\n";
+system $cmd;
 
