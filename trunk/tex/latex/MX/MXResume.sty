@@ -82,7 +82,7 @@
 
 
 
-\newcommand{\myname}{Xin MENG}
+\newcommand{\myname}{Xin Meng}
 \newcommand{\displayname}{\textbf{\fontsize{28}{25}\selectfont{\myname}}}
 \newlength{\namewidth}
 \settowidth{\namewidth}{\displayname}
@@ -90,7 +90,7 @@
 \newcommand{\myphoto}{dummy}
 \newcommand{\displayphoto}[1]{
   \ifthenelse{\equal{#1}{dummy}}
-             {\rule{30mm}{40mm}}
+             {\fbox{\textcolor{white}{\rule{30mm}{40mm}}}}
              {\includegraphics[width=30mm, height=40mm]{#1}}
 }
 \newcommand{\myemail}{xxxxxxxxxxxxxxxxxx}
@@ -129,7 +129,9 @@
 
   \hypersetup{%
     pdftitle={\myname{} resume},
-    pdfauthor={\myemail}
+    pdfauthor={\myemail},
+    pdfsubject={\myname{} resume},
+    pdfkeywords={\myname{}, \myemail{}}
   }
 
   \rule{\totalresumewidth}{1pt}\\
