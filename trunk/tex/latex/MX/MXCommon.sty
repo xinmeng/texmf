@@ -91,22 +91,22 @@
 
 
 \ifdefined\draftworkbook
-  \newcommand{\pictext}[6][btph]{
+  \newcommand{\pictext}[5][btph]{
     \begin{figure}[#1]
       \centering
-      \begin{mxoverpic}[scale=#2,grid,tics=2]{#4}
-        #6
+      \begin{mxoverpic}[width=\textwidth,grid,tics=2]{#3}
+        #5
       \end{mxoverpic}
-      \caption{#3}\label{#5}
+      \caption{#2}\label{#4}
   \end{figure}}
 \else
   \newcommand{\pictext}[6][btph]{
     \begin{figure}[#1]
       \centering
-      \begin{mxoverpic}[scale=#2]{#4}
-        #6
+      \begin{mxoverpic}[width=\textwidth]{#3}
+        #5
       \end{mxoverpic}
-      \caption{#3}\label{#5}
+      \caption{#2}\label{#4}
   \end{figure}}
 \fi
 
