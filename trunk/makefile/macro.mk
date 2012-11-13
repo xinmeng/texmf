@@ -1,3 +1,5 @@
+build_dir = -texbuild
+
 # OS dependent part
 ifeq (,$(findstring Windows,$(OS)))
 
@@ -6,13 +8,13 @@ cp = cp
 
 define clean-rule  # $1: LaTeX top
 texclean-$1 :
-	$(rm) $(foreach d,$(dust),$1_build/$d)
+	$(rm) $(foreach d,$(dust),$1$(build_dir)/$d)
 
 texclean-pdf-$1 : texclean-$1
-	$(rm) $1_build/$1.pdf 
+	$(rm) $1$(build_dir)/$1.pdf 
 
 texclean-all-$1: 
-	$(rm) $1_build $1.pdf
+	$(rm) $1$(build_dir) $1.pdf
 endef
 
 else
@@ -22,14 +24,14 @@ cp = copy
 
 define clean-rule  # $1: LaTeX top
 texclean-$1: 
-	$(foreach d,$(dust),$(rm) $1_build\$(d)
+	$(foreach d,$(dust),$(rm) $1$(build_dir)\$(d)
 	)
 
 texclean-pdf-$1 : texclean-$1
-	$(rm) $1_build/$1.pdf
+	$(rm) $1$(build_dir)/$1.pdf
 
 texclean-all-$1: 
-	$(rm) $1_build 
+	$(rm) $1$(build_dir) 
 	$(rm) $1.pdf
 endef
 endif
@@ -39,7 +41,7 @@ endif
 
 mkdir = mkdir 
 
-latex      = xelatex
+latex      = pdflatex
 bibtex     = bibtex
 
 epstopdf   = epstopdf
@@ -96,7 +98,7 @@ echo_var =
 ifeq ($(echo_var),)
 dummy-rule:
 	@echo You can make following targets:
-	@echo -e " "$(foreach t,$(__latex_top__),$t : $(__latex_top_dir_$t__)"\n")
+	@echo " "$(foreach t,$(__latex_top__),$t : $(__latex_top_dir_$t__)"\n")
 else 
 dummy-rule :
 	@echo $($(echo_var))
@@ -109,7 +111,7 @@ endif
 define register-doc
 $(if $(strip $(findstring $1,$(__latex_top__))),$(error LaTeX top '$1' has already been defined!))
 $(foreach s,$3,$(if $(strip $(findstring $s,$(__latex_top__))),,$(error Sub dependent LaTeX top '$s' is not defined!)))
-export TEXINPUTS = $(realpath $2):$(abspath $1_build):$(TEXINPUTS)
+export TEXINPUTS = $(realpath $2):$(abspath $1$(build_dir)):$(TEXINPUTS)
 $(eval __latex_top__ := $(__latex_top__) $1)
 $(eval __latex_top_dir_$1__ := $(realpath $2))
 $(eval __latex_submod_$1__ := $3)
@@ -127,7 +129,7 @@ endef
 # $1: LaTeX top file
 # $2: code file
 define generate-codetex
-$1_build/$(notdir $2).codetex : $2
+$1$(build_dir)/$(notdir $2).codetex : $2
 	$(gencodetex) -f $$< $(gencodetexopt) -o $$@
 endef
 
@@ -143,7 +145,7 @@ endef
 # $2: code file list
 define use-code
 $(eval $1_code = $2)
-$(eval $1_codetex = $(addprefix $1_build/,$(addsuffix .codetex,$(notdir $2))))
+$(eval $1_codetex = $(addprefix $1$(build_dir)/,$(addsuffix .codetex,$(notdir $2))))
 $(eval $(call code-rule,$1,$2))
 endef
 
@@ -154,16 +156,16 @@ define set-variable
 $(eval $1_tex = $(wildcard $2/*.tex))
 
 $(eval $1_dot = $(wildcard $2/*.dot))
-$(eval $1_dotpdf = $(addprefix $1_build/,$(subst .dot,.pdf,$(notdir $($1_dot)))))
+$(eval $1_dotpdf = $(addprefix $1$(build_dir)/,$(subst .dot,.pdf,$(notdir $($1_dot)))))
 
 $(eval $1_dia = $(wildcard $2/*.dia))
-$(eval $1_diaeps = $(addprefix $1_build/,$(subst .dia,.eps,$(notdir $($1_dia)))))
+$(eval $1_diaeps = $(addprefix $1$(build_dir)/,$(subst .dia,.eps,$(notdir $($1_dia)))))
 
 $(eval $1_vsd = $(wildcard $2/*.vsd))
-$(eval $1_vsdpdf = $(addprefix $1_build/,$(subst .vsd,.pdf,$(notdir $($1_vsd)))))
+$(eval $1_vsdpdf = $(addprefix $1$(build_dir)/,$(subst .vsd,.pdf,$(notdir $($1_vsd)))))
 
 $(eval $1_eps = $(wildcard $2/*.eps) $($1_diaeps))
-$(eval $1_epspdf = $(addprefix $1_build/,$(subst .eps,.pdf,$(notdir $($1_eps)))))
+$(eval $1_epspdf = $(addprefix $1$(build_dir)/,$(subst .eps,.pdf,$(notdir $($1_eps)))))
 
 #$(eval $1_pdf = $(filter-out $1.pdf $($1_epspdf) $($1_dotpdf) $($1_vsdpdf),$(wildcard $2/*.pdf)))
 $(eval $1_pdf = $(wildcard $2/*.pdf))
@@ -211,6 +213,15 @@ endef
 
 .phony : all texclean texclean-pdf texclean-all
 
+define build-pdf-cn
+$(eval $(call build-pdf,$1,$2,$3,$4,$5))
+
+$1 : latex=xelatex
+endef
+
+
+
+
 # $1: LaTeX doc top. As a rule, the $(top).tex should be put in
 #     a directory named `$(top)'. e.g., lshort.tex should be put
 #     inside lshort/
@@ -223,7 +234,7 @@ $(eval $(call register-doc,$1,$2,$5))
 $(eval $(call set-variable,$1,$2))
 
 $(foreach s,$5,$(if $(findstring $s,$(__latex_top__)),,$(error Dependent sub LaTeX top '$s' is not defined!)))
-$(if $5,$(eval $1 : $(foreach s,$(call get-all-submod,$1),$s_build)))
+$(if $5,$(eval $1 : $(foreach s,$(call get-all-submod,$1),$s$(build_dir))))
 $(eval $(call aggregate-variable,$1,$(call get-all-submod,$1)))
 
 .phony : $1 draft-$1 quick-$1 changebar-$1 create-changebar-$1 texclean-$1 texclean-pdf-$1 texclean-all-$1
@@ -231,58 +242,60 @@ all : $1
 texclean : texclean-$1
 texclean-pdf : texclean-pdf-$1
 texclean-all : texclean-all-$1
-$1 : $1_build $1.pdf
 
-changebar-$1 : CHANGEBAR = 1
-changebar-$1 : $1_build create-changebar-$1 $1.pdf
+$1 : $1$(build_dir) $1.pdf 
+
+
+changebar-$1 : CHANGEBAR = 1 
+changebar-$1 : $1$(build_dir) create-changebar-$1 $1.pdf
 
 
 create-changebar-$1 :
-	$(rm) $1_build/$1.pdf $1.pdf
-	$(foreach f,$($1_tex) $($1_sty),svn diff -r $(revision) $(diffopt) $f > $1_build/$(notdir $f).cbdiff
+	$(rm) $1$(build_dir)/$1.pdf $1.pdf
+	$(foreach f,$($1_tex) $($1_sty),svn diff -r $(revision) $(diffopt) $f > $1$(build_dir)/$(notdir $f).cbdiff
 	)
-	$(foreach f,$($1_tex) $($1_sty),$(diff2cb) -dirfile $f -cbdiff $1_build/$(notdir $f).cbdiff
+	$(foreach f,$($1_tex) $($1_sty),$(diff2cb) -dirfile $f -cbdiff $1$(build_dir)/$(notdir $f).cbdiff
 	)
 
 
 
 draft-$1: DRAFT = 1
-draft-$1: $1_build $1.pdf 
+draft-$1: $1$(build_dir) $1.pdf 
 
 # tex building
-$1.pdf : $1_build/$1.pdf
+$1.pdf : $1$(build_dir)/$1.pdf
 	$(cp) $$< $$@
-$1_build/$1.pdf : $($1_tex) $($1_sty) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_pdf) $($1_jpg) $($1_codetex)	\
+$1$(build_dir)/$1.pdf : $($1_tex) $($1_sty) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_pdf) $($1_jpg) $($1_codetex)	\
                     $(glossaryfile) $(shortcutfile) $(refdocfile) 
-	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
-	cd $1_build; $(makeindex)        $1
-	$(if $3,cd $1_build; $(makeglossaries)  $1)
-	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
-	$(if $4,cd $1_build; $(bibtex)           $(bibtexopt) $1)
-	$(if $3,cd $1_build; $(makeglossaries)  $1)
-	cd $1_build; $(makeindex)        $1
-	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
-	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	cd $1$(build_dir); $(makeindex)        $1
+	$(if $3,cd $1$(build_dir); $(makeglossaries)  $1)
+	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	$(if $4,cd $1$(build_dir); $(bibtex)           $(bibtexopt) $1)
+	$(if $3,cd $1$(build_dir); $(makeglossaries)  $1)
+	cd $1$(build_dir); $(makeindex)        $1
+	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
-quick-$1 : $1_build $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_codetex)
-	cd $1_build; $(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
+quick-$1 : $1$(build_dir) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_codetex)
+	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 
-$1_build/%.eps : $2/%.dia
+$1$(build_dir)/%.eps : $2/%.dia
 	$(dia) -t eps -e $$@ $$<
 
-$1_build/%.pdf : $1_build/%.eps
+$1$(build_dir)/%.pdf : $1$(build_dir)/%.eps
 	$(epstopdf) $$< --outfile=$$@
 
-$1_build/%.pdf : $(realpath $2)/%.eps
+$1$(build_dir)/%.pdf : $(realpath $2)/%.eps
 	$(epstopdf) $$< --outfile=$$@
 
-$1_build/%.pdf : $2/%.dot
+$1$(build_dir)/%.pdf : $2/%.dot
 	$(dot) $(dotopt) -Tpdf $$< -o $$@
 
-$1_build/%.pdf : $2/%.vsd
-	cd $1_build; $(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $$< $$(@F)
+$1$(build_dir)/%.pdf : $2/%.vsd
+	cd $1$(build_dir); $(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $$< $$(@F)
 
-$1_build :
+$1$(build_dir) :
 	$(mkdir) -p $$@
 
 $(eval $(call clean-rule,$1))
