@@ -10,29 +10,26 @@
 %%
 %%   specific packet setting
 %% ----------------------------------------
-\RequirePackage{CJK}
-\RequirePackage[pdfnewwindow,unicode,colorlinks,pdftex,hyperindex]{hyperref}
-\hypersetup{
-  bookmarksnumbered,
-  linkcolor = LinkColor,
-  citecolor = CiteColor,
-  urlcolor  = URLColor,
-  filecolor = FileColor,
-  bookmarksopen={false}, 
-  pdfstartview={FitH},
-  CJKbookmarks=true
-}
+%% \hypersetup{
+%%   bookmarksnumbered,
+%%   linkcolor = LinkColor,
+%%   citecolor = CiteColor,
+%%   urlcolor  = URLColor,
+%%   filecolor = FileColor,
+%%   bookmarksopen={false}, 
+%%   pdfstartview={FitH},
+%%   CJKbookmarks=true
+%% }
 
-\RequirePackage{amsfonts}
-\RequirePackage{amssymb}
-\RequirePackage[pdftex]{graphicx}
+%\RequirePackage{amsfonts}
+%\RequirePackage{amssymb}
 
+\RequirePackage[T1]{tipa}
 
 %% ----------------------------------------
 %%    Default font
 %% ----------------------------------------
-\renewcommand{\familydefault}{put}
-
+\RequirePackage[utopia]{mathdesign}
 
 %% ----------------------------------------
 %%   Layout adjustment
@@ -42,7 +39,8 @@
 \setlength{\headheight}{2.5cm}
 \setlength{\headsep}{.8cm}
 \setlength{\footskip}{1.3cm}
-\setlength{\oddsidemargin}{0in}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
 \setlength{\marginparwidth}{.8in}
 \setlength{\marginparsep}{.1in}
 \setlength{\textheight}{8.7in}
