@@ -143,7 +143,7 @@
 \captionsetup{font=ColorCaption}
 
 
-\RequirePackage{bytefield}
+\RequirePackage{bytefield}[2011/02/09]
 \newenvironment{regdef}
                {\setlength{\bitwidth}{.03125\textwidth}
                  \setlength{\byteheight}{1cm}
@@ -163,6 +163,7 @@
 
 
 \RequirePackage{ifthen}
+\RequirePackage{xifthen}
 \RequirePackage{amsmath}
 %\RequirePackage{amsfonts}
 %\RequirePackage{amssymb}
@@ -337,35 +338,75 @@
 \makeindex
 
 
-\newenvironment{portlist}
-               {\begin{list}{$\bullet$}{
+\newsavebox{\listingbox}
+\newlength{\piowidth}\setlength{\piowidth}{5ex}         %input, output, inout
+\newlength{\pbitswidth}\setlength{\pbitswidth}{8ex}     %[125:0]
+\newlength{\pnamewidth}\setlength{\pnamewidth}{20ex}    %port name
+\newlength{\plevelwidth}\setlength{\plevelwidth}{7.5em} %LVCOMS
+\newlength{\pfreqwidth}\setlength{\pfreqwidth}{4em}     %100MHz
+\newenvironment{portlist}[1][Port List]
+               {\footnotesize\belowpdfbookmark{#1}{#1}\begin{list}{$\bullet$}{
                      \setlength{\itemindent}{0ex}
-                     \setlength{\labelwidth}{16ex}
-                     \setlength{\labelsep}{1ex}
-                     \setlength{\leftmargin}{17ex}
+                     \setlength{\labelwidth}{0ex}
+                     \addtolength{\labelwidth}{\piowidth}
+                     \addtolength{\labelwidth}{\pbitswidth}
+                     \addtolength{\labelwidth}{\pnamewidth}
+                     \addtolength{\labelwidth}{\plevelwidth}
+                     \addtolength{\labelwidth}{\pfreqwidth}
+                     \setlength{\labelsep}{2ex}
+                     \setlength{\leftmargin}{\labelwidth}
+                     \addtolength{\leftmargin}{\labelsep}
                      \setlength{\rightmargin}{0cm}
                      \setlength{\listparindent}{0em}
-                     \setlength{\topsep}{.8ex}
+                     \setlength{\topsep}{2ex}
                      \setlength{\partopsep}{0mm}
-                     \setlength{\parskip}{.8ex}
-                     \setlength{\itemsep}{1ex}
+                     \setlength{\parskip}{0mm}
+                     \setlength{\itemsep}{0ex}
                      \setlength{\parsep}{0ex}%{0.5ex plus0.2ex minus0.2ex}
                      \renewcommand{\makelabel}[1]{##1\hfill}
                    }}
                {\end{list}}
 
-\newcommand{\primaryio}[7][X]{{\small
-    \begin{portlist}
-    \item[\mbox{\makebox[7ex][l]{#2}\makebox[9ex][c]{\ifthenelse{\equal{#1}{X}}{ }{[#1]}}}] 
-      \mhdl{#3}\hfill\makebox[4em][r]{#4}\makebox[7.5em][r]{#5}\makebox[9.5ex][r]{#6}\\
-           {\small #7}
-    \end{portlist}
-  }
+\newcommand{\primaryio}[6][X]{
+  \begin{portlist}
+  \sbox{\listingbox}{\mhdl{#3}}
+\item[\mbox{\makebox[\piowidth][l]{#2}%
+    \makebox[\pbitswidth][c]{\ifthenelse{\equal{#1}{X}}{}{[#1]}}%
+    \makebox[\pnamewidth][l]{\usebox{\listingbox}}%
+    \makebox[\plevelwidth][r]{#4}%
+    \makebox[\pfreqwidth][r]{#5}}] #6
+  \end{portlist}
 }
 
-\newcommand{\pinput}[6][X]{\primaryio[#1]{input}{#2}{#3}{#4}{#5}{#6}\index{Ports!\mhdl{#2}}}
-\newcommand{\poutput}[6][X]{\primaryio[#1]{output}{#2}{#3}{#4}{#5}{#6}\index{Ports!\mhdl{#2}}}
-\newcommand{\pinout}[6][X]{\primaryio[#1]{inout}{#2}{#3}{#4}{#5}{#6}\index{Ports!\mhdl{#2}}}
+\newcommand{\primaryioitem}[5][X]{
+  \sbox{\listingbox}{\mhdl{#3}}
+\item[\mbox{\makebox[\piowidth][r]{#2}%
+    \makebox[\pbitswidth][c]{\ifthenelse{\equal{#1}{X}}{}{[#1]}}%
+    \makebox[\pnamewidth][l]{\usebox{\listingbox}}%
+    \ifthenelse{\lengthtest{\plevelwidth = 0mm}}{}{\makebox[\plevelwidth][r]{#4}}%
+    \ifthenelse{\lengthtest{\pfreqwidth = 0mm}}{}{\makebox[\pfreqwidth][r]{#5}}}]
+}
+
+%% #1: port width
+%% #2: port name
+%% #3: frequency
+%% #4: level standard
+%% #5: pull up/down
+%% #6: description
+\newcommand{\pinput}[5][X]{\primaryio[#1]{input}{#2}{#3}{#4}{#5}\index{Ports!\mhdl{#2}}}
+\newcommand{\poutput}[5][X]{\primaryio[#1]{output}{#2}{#3}{#4}{#5}\index{Ports!\mhdl{#2}}}
+\newcommand{\pinout}[5][X]{\primaryio[#1]{inout}{#2}{#3}{#4}{#5}\index{Ports!\mhdl{#2}}}
+
+\newcommand{\pinputitem}[4][X]{\primaryioitem[#1]{input}{#2}{#3}{#4}\index{Ports!\mhdl{#2}}}
+\newcommand{\poutputitem}[4][X]{\primaryioitem[#1]{output}{#2}{#3}{#4}\index{Ports!\mhdl{#2}}}
+\newcommand{\pinoutitem}[4][X]{\primaryioitem[#1]{inout}{#2}{#3}{#4}\index{Ports!\mhdl{#2}}}
+
+
+
+
+
+
+
 
 %% \newcommand{\pinput}[6][X]{
 %%   {\small
@@ -455,7 +496,7 @@
 
 
 %% Glossaries
-\RequirePackage[xindy, toc, numberedsection=autolabel]{glossaries}
+\RequirePackage[toc, numberedsection=autolabel]{glossaries}
 \GlsSetXdyCodePage{utf8}
 \renewcommand{\glspostdescription}{}
 
@@ -587,6 +628,8 @@
 %% ----------------------------------------
 %%   Document property
 %% ----------------------------------------
+\newcommand{\fixme}[1]{\mnote{\textcolor{red}{\textbf{#1}}}}
+
 \newcommand{\DocTitle}{Document Title}
 \newcommand{\DocDescription}{Document Description}
 \newcommand{\DocAuthor}{xin.meng@exar.com}
