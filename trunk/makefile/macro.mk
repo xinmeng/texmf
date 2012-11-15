@@ -213,7 +213,7 @@ endef
 
 .phony : all texclean texclean-pdf texclean-all
 
-define build-pdf-cn
+define build-pdf-xetex
 $(eval $(call build-pdf,$1,$2,$3,$4,$5))
 
 $1 : latex=xelatex
