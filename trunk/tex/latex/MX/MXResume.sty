@@ -2,11 +2,12 @@
 \ProvidesPackage{MXResume}[2011/10/04 Resume package for Xin Meng]
 
 
-\RequirePackageWithOptions{MXNote}
+\RequirePackageWithOptions{MXCommon}
 
 
 \reversemarginpar
 
+\RequirePackage[utopia]{mathdesign}
 
 
 \setlength{\hoffset}{0cm}
@@ -75,10 +76,10 @@
 
 
 \newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}}
-\newcommand{\project}[1]{\large\textbf{#1}\refstepcounter{subsection}
+\newcommand{\project}[1]{\vspace{2em}\large\textbf{#1}\refstepcounter{subsection}
     \addcontentsline{toc}{subsection}{#1}\normalfont}
 
-\newcommand{\role}[1]{\hspace{7mm}\small\textbf{Role:~#1}\normalfont}
+\newcommand{\role}[1]{\vspace{1ex}\hspace{7mm}\small\textbf{Role:~#1}\normalfont}
 
 
 
