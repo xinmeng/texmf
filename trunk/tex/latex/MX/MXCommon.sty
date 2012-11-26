@@ -66,7 +66,11 @@
   \advance\@tempcntb\@tempcnta%
   \settowidth{\@tempcnta}{\usebox{\z@}}%
   \setlength{\@tempdima}{\unitlength}%
-  \count@=\z@\Gin@gridfalse\setkeys{Gin}{#1}% 
+\ifdefined\draftworkbook
+\ifthenelse{\equal{#1}{}}{\count@=\z@\Gin@gridfalse\setkeys{Gin}{#1,grid,tics=2}}{\count@=\z@\Gin@gridfalse\setkeys{Gin}{grid,tics=2}}% 
+\else
+\count@=\z@\Gin@gridfalse\setkeys{Gin}{#1}
+\fi
 %
   \OVP@calc%
 %  
@@ -89,26 +93,30 @@
 }% 
 
 
+%\newcommand{\overpicgrid}{,grid,tics=2}
 
-\ifdefined\draftworkbook
-  \newcommand{\pictext}[5][btph]{
-    \begin{figure}[#1]
-      \centering
-      \begin{mxoverpic}[width=\textwidth,grid,tics=2]{#3}
-        #5
-      \end{mxoverpic}
-      \caption{#2}\label{#4}
-  \end{figure}}
-\else
-  \newcommand{\pictext}[6][btph]{
-    \begin{figure}[#1]
-      \centering
-      \begin{mxoverpic}[width=\textwidth]{#3}
-        #5
-      \end{mxoverpic}
-      \caption{#2}\label{#4}
-  \end{figure}}
-\fi
+\newcommand{\pictext}[5][btph]{
+  \begin{figure}[#1]
+    \centering
+    \begin{mxoverpic}[width=\textwidth]{#3}
+      #5
+    \end{mxoverpic}
+    \caption{#2}\label{#4}
+\end{figure}}
+
+\newcommand{\pictextextra}[6][btph]{
+  \begin{figure}[#1]
+    \centering
+    \begin{mxoverpic}[width=\textwidth,#2]{#4}
+      #6
+    \end{mxoverpic}
+    \caption{#3}\label{#5}
+\end{figure}}
+
+
+
+
+
 
 %% \DeclareOption{draft}{
 %%   \renewcommand{\pictext}[6][btph]{
@@ -338,14 +346,41 @@
 \makeindex
 
 
+\newlength{\mmapaddrwidth}
+\setlength{\mmapaddrwidth}{.4\textwidth}
+\newenvironment{mmaplist}[1][X]
+               {\small\ifthenelse{\equal{#1}{X}}{}{\belowpdfbookmark{#1}{#1}\vspace{3ex}\noindent\textcolor{ThemeColor}{\textbf{#1}}\vspace{0ex}}\begin{list}{$\bullet$}{
+                     \setlength{\itemindent}{0ex}
+                     \setlength{\labelwidth}{\mmapaddrwidth}
+                     \setlength{\labelsep}{2ex}
+                     \setlength{\leftmargin}{0ex}
+                     \addtolength{\leftmargin}{\labelwidth}
+                     \addtolength{\leftmargin}{\labelsep}
+                     \setlength{\rightmargin}{0cm}
+                     \setlength{\listparindent}{0em}
+                     \setlength{\topsep}{0ex}
+                     \setlength{\partopsep}{0mm}
+                     \setlength{\parskip}{0mm}
+                     \setlength{\itemsep}{0ex}
+                     \setlength{\parsep}{0ex}%{0.5ex plus0.2ex minus0.2ex}
+                     \renewcommand{\makelabel}[1]{##1\hfill}
+               }}
+               {\end{list}}
+\newcommand{\mmapitem}[1]{
+  \item[\mbox{\makebox[\mmapaddrwidth][l]{#1}}]
+}
+
+
+
+
 \newsavebox{\listingbox}
-\newlength{\piowidth}\setlength{\piowidth}{5ex}         %input, output, inout
+\newlength{\piowidth}\setlength{\piowidth}{7ex}         %input, output, inout
 \newlength{\pbitswidth}\setlength{\pbitswidth}{8ex}     %[125:0]
 \newlength{\pnamewidth}\setlength{\pnamewidth}{20ex}    %port name
 \newlength{\plevelwidth}\setlength{\plevelwidth}{7.5em} %LVCOMS
 \newlength{\pfreqwidth}\setlength{\pfreqwidth}{4em}     %100MHz
-\newenvironment{portlist}[1][Port List]
-               {\footnotesize\belowpdfbookmark{#1}{#1}\begin{list}{$\bullet$}{
+\newenvironment{portlist}[1][X]
+               {\footnotesize\ifthenelse{\equal{#1}{X}}{}{\belowpdfbookmark{#1}{#1}\vspace{3ex}\noindent\textcolor{ThemeColor}{\textbf{#1}}\vspace{0ex}}\begin{list}{$\bullet$}{
                      \setlength{\itemindent}{0ex}
                      \setlength{\labelwidth}{0ex}
                      \addtolength{\labelwidth}{\piowidth}
@@ -354,11 +389,12 @@
                      \addtolength{\labelwidth}{\plevelwidth}
                      \addtolength{\labelwidth}{\pfreqwidth}
                      \setlength{\labelsep}{2ex}
-                     \setlength{\leftmargin}{\labelwidth}
+                     \setlength{\leftmargin}{0ex}
+                     \addtolength{\leftmargin}{\labelwidth}
                      \addtolength{\leftmargin}{\labelsep}
                      \setlength{\rightmargin}{0cm}
                      \setlength{\listparindent}{0em}
-                     \setlength{\topsep}{2ex}
+                     \setlength{\topsep}{0ex}
                      \setlength{\partopsep}{0mm}
                      \setlength{\parskip}{0mm}
                      \setlength{\itemsep}{0ex}
