@@ -1,15 +1,29 @@
-\newglossaryentry{test ctrl space}
-{
-  name={TCS, Test Control Space},
-  description={
-    A configuration space accessible via RS232 for \pii{}
-    interface testing. 
-  }
-}
-
 \newglossaryentry{debug station}
 {
   name={DBGS, Debug Station}, 
+  text={DBGS},
   description={A Windows7 based PC to control debug in 
     PST environment. \See{sec:debug station}}
+}
+
+\newglossaryentry{uart mark}
+{
+  name={mark},
+  description={The idle, no data state of UART TX/RX signal, 
+    it is high-voltage, or powered.}
+}
+
+\newglossaryentry{uart space}
+{
+  name={space},
+  description={The logical zero data state of UART TX/RX signal, 
+    it is low-voltage, or un-powered.}
+}
+
+\newglossaryentry{crm}
+{
+  name={CRM, Configuration Register Module},
+  text={CRM},
+  description={A module contains all control and status registers
+    for \pii{} PST. \See{sec:cfg reg}}
 }
