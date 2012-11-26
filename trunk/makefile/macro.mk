@@ -111,10 +111,16 @@ endif
 define register-doc
 $(if $(strip $(findstring $1,$(__latex_top__))),$(error LaTeX top '$1' has already been defined!))
 $(foreach s,$3,$(if $(strip $(findstring $s,$(__latex_top__))),,$(error Sub dependent LaTeX top '$s' is not defined!)))
-export TEXINPUTS = $(realpath $2):$(abspath $1$(build_dir)):$(TEXINPUTS)
 $(eval __latex_top__ := $(__latex_top__) $1)
 $(eval __latex_top_dir_$1__ := $(realpath $2))
 $(eval __latex_submod_$1__ := $3)
+endef
+
+# $1: LaTeX top
+define add-texinputs-dir
+$(eval export TEXINPUTS = $(abspath $(__latex_top_dir_$1__)):$1$(build_dir):$(TEXINPUTS))
+$(foreach s,$(call get-all-submod,$1),$(eval export TEXINPUTS = $(abspath $(__latex_top_dir_$s__)):$s$(build_dir):$(TEXINPUTS)))
+$(TEXINPUTS)
 endef
 
 
@@ -261,6 +267,13 @@ create-changebar-$1 :
 
 draft-$1: DRAFT = 1
 draft-$1: $1$(build_dir) $1.pdf 
+
+
+$$(if $$(or $$(and $$findstring($$(MAKECMDGOALS),$1),$$(findstring $1,$$(MAKECMDGOALS))),			\
+            $$(and $$findstring($$(MAKECMDGOALS),quick-$1),$$(findstring quick-$1,$$(MAKECMDGOALS))),		\
+            $$(and $$findstring($$(MAKECMDGOALS),changebar-$1),$$(findstring changebar-$1,$$(MAKECMDGOALS)))	\
+        ),													\
+      $$(info $$(strip $$(call add-texinputs-dir,$1))))
 
 # tex building
 $1.pdf : $1$(build_dir)/$1.pdf
