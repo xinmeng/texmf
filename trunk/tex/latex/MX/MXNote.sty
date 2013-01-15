@@ -3,37 +3,34 @@
 
 \RequirePackageWithOptions{MXCommon}
 
-%% ----------------------------------------
-%%    Font setting.
-%%
-%%    Tested on
-%%      - Windows 7 
-%% ----------------------------------------
-%\renewcommand{\familydefault}{put}
 
 
+
+
+\usepackage[utopia]{mathdesign}
+\usepackage{xunicode, xltxtra} % seems conflict with `tipa' package
+\usepackage[EU1]{fontenc}
+
+
+\setmainfont{mdput}
+%\setsansfont{Verdana} 
+%\setmonofont{Lucida Console}
 
 \usepackage[slantfont, boldfont, CJKnumber]{xeCJK}
-
-
 \setCJKmainfont[BoldFont={Adobe Heiti Std R}, 
   ItalicFont={Adobe Kaiti Std R}]{Adobe Song Std L}
 \setCJKmonofont{Adobe Fangsong Std R} 
 \setCJKsansfont[BoldFont={Adobe Heiti Std R}]{Adobe Kaiti Std R}
 \setCJKfamilyfont{fangsong}{Adobe Fangsong Std R}
-
-\usepackage[utopia]{mathdesign}
-
-\usepackage{tipa}
+\punctstyle{kaiming} 
 
 
-\usepackage{xunicode, xltxtra} % seems conflict with `tipa' package
+
+%\usepackage{tipa}
+
+
 \DeclareRobustCommand\nobreakspace{\leavevmode\nobreak\ }
 
-%\setmainfont{}
-%\setsansfont{Verdana} 
-%\setmonofont{Lucida Console}
-\punctstyle{kaiming} 
 
 %% ----------------------------------------
 %%    Paragraph space
