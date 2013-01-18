@@ -1,4 +1,0 @@
-mkdir /usr/share/fonts/otf
-cp Adobe*.otf /usr/share/otf # 全拷过去
-fc-cache -fv # 刷新字体缓存
-fc-list | grep Adobe  # 查看一下 
