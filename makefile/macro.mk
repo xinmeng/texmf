@@ -2,7 +2,6 @@ build_dir = -texbuild
 
 # OS dependent part
 ifeq (,$(findstring Windows,$(OS)))
-
 rm = rm -rf
 cp = cp
 
@@ -18,10 +17,9 @@ texclean-all-$1:
 endef
 
 else
-
+# Window platform
 rm = del /F /Q
-cp = copy
-
+cp = cp
 define clean-rule  # $1: LaTeX top
 texclean-$1: 
 	$(foreach d,$(dust),$(rm) $1$(build_dir)\$(d)
@@ -94,11 +92,16 @@ revision = BASE
 echo_var = 
 
 
+define new-line
+
+
+endef
+
 .phony : dummy-rule
 ifeq ($(echo_var),)
 dummy-rule:
 	@echo You can make following targets:
-	@echo " "$(foreach t,$(__latex_top__),$t : $(__latex_top_dir_$t__)"\n")
+	@echo "  "$(foreach t,$(__latex_top__),$t : $(__latex_top_dir_$t__)${new-line}@echo " ")
 else 
 dummy-rule :
 	@echo $($(echo_var))
