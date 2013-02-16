@@ -53,9 +53,32 @@
 {.5ex}
 
 
+\titleformat{\subsection}
+{\bf\large}
+{}
+{0mm}
+{}
+{\normalfont\normalsize}
+\titlespacing{\subsection}
+{0mm}
+{2em}
+{0mm}
+
+\titleformat{\subsubsection}
+{\bf}
+{}
+{0mm}
+{}
+{\normalfont\normalsize}
+\titlespacing{\subsubsection}
+{0mm}
+{1em}
+{0mm}
+
+
 
 \newenvironment{resumeitem}
-               {\begin{small}
+               {%\begin{small}
                    \begin{list}{$\bullet$}{
                        \setlength{\topsep}{0mm}
                        \setlength{\partopsep}{0mm}
@@ -71,15 +94,18 @@
                }
                {
                    \end{list}
-                 \end{small}
+                 %\end{small}
                }
 
 
-\newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}}
-\newcommand{\project}[1]{\vspace{2em}\large\textbf{#1}\refstepcounter{subsection}
-    \addcontentsline{toc}{subsection}{#1}\normalfont}
+\newcommand{\whenwhatwhere}[3]{\marginnote{\footnotesize\mbox{#1}\\\mbox{#2}\\\mbox{#3}}[-1.7em]}
+%% \newcommand{\project}[1]{\vspace{2em}\large\textbf{#1}\refstepcounter{subsection}
+%%     \addcontentsline{toc}{subsection}{#1}\normalfont}
+\newcommand{\project}[1]{\subsection{#1}}
 
-\newcommand{\role}[1]{\vspace{1ex}\hspace{7mm}\small\textbf{Role:~#1}\normalfont}
+
+%\newcommand{\role}[1]{\vspace{1ex}\hspace{7mm}\small\textbf{Role:~#1}\normalfont}
+\newcommand{\role}[1]{\subsubsection{Role:~#1}}
 
 
 
