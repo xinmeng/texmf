@@ -389,8 +389,9 @@
 \newlength{\pnamewidth}\setlength{\pnamewidth}{20ex}    %port name
 \newlength{\plevelwidth}\setlength{\plevelwidth}{7.5em} %LVCOMS
 \newlength{\pfreqwidth}\setlength{\pfreqwidth}{4em}     %100MHz
+\newcommand{\portlistfontsize}{\small}
 \newenvironment{portlist}[1][X]
-               {\footnotesize\ifthenelse{\equal{#1}{X}}{\vspace{3ex}}{\belowpdfbookmark{#1}{#1}\vspace{3ex}\noindent\textcolor{ThemeColor}{\textbf{#1}}\vspace{0ex}}\begin{list}{$\bullet$}{
+               {\portlistfontsize\ifthenelse{\equal{#1}{X}}{\vspace{3ex}}{\belowpdfbookmark{#1}{#1}\vspace{3ex}\noindent\textcolor{ThemeColor}{\textbf{#1}}\vspace{0ex}}\begin{list}{$\bullet$}{
                      \setlength{\itemindent}{0ex}
                      \setlength{\labelwidth}{0ex}
                      \addtolength{\labelwidth}{\piowidth}
@@ -556,7 +557,7 @@
 %% ----------------------------------------
 %%    My commands
 %% ----------------------------------------
-\newcommand{\note}{\textbf{NOTE}}
+\newcommand{\note}[1][ ]{\noindent\textbf{NOTE:~}{#1}}
 \newcommand{\See}[2][autoref]{\emph{See}
   \ifthenelse{\equal{#1}{autoref}} 
              {\autoref{#2}} 
