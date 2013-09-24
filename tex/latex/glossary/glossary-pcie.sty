@@ -2,7 +2,7 @@
                  {
                    name={PCIe},
                    text={PCIe},
-                   description={abbreviation of PCI Express Standard}
+                   description={Abbreviation of ``PCI Express'' Standard.}
                  }
 
 \newglossaryentry{vf}
@@ -330,3 +330,40 @@
                    text={\textsc{qw}},
                    description={Two \gls{dword}}
                  }
+
+\newglossaryentry{msi}
+{
+  name={MSI, Message Signaled Interrupt},
+  text={MSI},
+  description={Using \gls{mwr} to issue interrupt to guarantee ordering, 
+    \See[cite]{pcie-spec-3} and \See[cite]{pci-3}}
+}
+
+\newglossaryentry{bar}
+{
+  name={BAR, Base Address Register}, 
+  text={BAR},
+  description={Register for request memory mapped address from host
+    system. \See[cite]{pcie-3}}
+}
+
+\newglossaryentry{error ur}
+{
+  name={UR, Unsupported Request}, 
+  text={UR}, 
+  description={An Transaction Layer error type defined in \gls{pcie}}
+}
+
+\newglossaryentry{error cto}
+{
+  name={CTO, Completion Timeout}, 
+  text={CTO}, 
+  description={Timeout while requester waiting for \gls{cpl} or \gls{cpld}.}
+}
+
+\newglossaryentry{error ca}
+{
+  name={CA, Completer Abort}, 
+  text={CA}, 
+  description={Completer abort request for a Non-Posted request.}
+}
