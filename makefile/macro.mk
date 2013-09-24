@@ -115,7 +115,7 @@ define register-doc
 $(if $(strip $(findstring $1,$(__latex_top__))),$(error LaTeX top '$1' has already been defined!))
 $(foreach s,$3,$(if $(strip $(findstring $s,$(__latex_top__))),,$(error Sub dependent LaTeX top '$s' is not defined!)))
 $(eval __latex_top__ := $(__latex_top__) $1)
-$(eval __latex_top_dir_$1__ := $(realpath $2))
+$(eval __latex_top_dir_$1__ := $(abspath $2))
 $(eval __latex_submod_$1__ := $3)
 endef
 
@@ -170,9 +170,6 @@ $(eval $1_dotpdf = $(addprefix $1$(build_dir)/,$(subst .dot,.pdf,$(notdir $($1_d
 $(eval $1_dia = $(wildcard $2/*.dia))
 $(eval $1_diaeps = $(addprefix $1$(build_dir)/,$(subst .dia,.eps,$(notdir $($1_dia)))))
 
-$(eval $1_vsd = $(wildcard $2/*.vsd))
-$(eval $1_vsdpdf = $(addprefix $1$(build_dir)/,$(subst .vsd,.pdf,$(notdir $($1_vsd)))))
-
 $(eval $1_eps = $(wildcard $2/*.eps) $($1_diaeps))
 $(eval $1_epspdf = $(addprefix $1$(build_dir)/,$(subst .eps,.pdf,$(notdir $($1_eps)))))
 
@@ -185,6 +182,12 @@ $(eval $1_sty = $(wildcard $2/*.sty))
 
 $(eval $1_doc = $($1_tex) $($1_dot) $($1_vsd) $($1_eps) $($1_pdf) $($1_jpg) $($1_sty))
 endef
+## moved out from `set-variable', it still take
+## effects even when it is commented out. 
+## $(eval $1_vsd = $(wildcard $2/*.vsd))
+## $(eval $1_vsdpdf = $(addprefix $1$(build_dir)/,$(subst .vsd,.pdf,$(notdir $($1_vsd)))))
+
+
 
 
 # $1: LaTeX top
@@ -198,8 +201,8 @@ $(eval $1_dotpdf += $(foreach s,$2,$($s_dotpdf)))
 $(eval $1_dia += $(foreach s,$2,$($s_dia)))
 $(eval $1_diaeps += $(foreach s,$2,$($s_diaeps)))
 
-$(eval $1_vsd += $(foreach s,$2,$($s_vsd)))
-$(eval $1_vsdpdf += $(foreach s,$2,$($s_vsdpdf)))
+# $(eval $1_vsd += $(foreach s,$2,$($s_vsd)))
+# $(eval $1_vsdpdf += $(foreach s,$2,$($s_vsdpdf)))
 
 $(eval $1_eps += $(foreach s,$2,$($s_eps)))
 $(eval $1_epspdf += $(foreach s,$2,$($s_epspdf)))
