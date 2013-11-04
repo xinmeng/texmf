@@ -42,6 +42,7 @@ mkdir = mkdir
 latex      = pdflatex
 bibtex     = bibtex
 
+svgtopdf   = rsvg-convert
 epstopdf   = epstopdf
 makeindex  = makeindex
 powershell = powershell
@@ -173,6 +174,10 @@ $(eval $1_diaeps = $(addprefix $1$(build_dir)/,$(subst .dia,.eps,$(notdir $($1_d
 $(eval $1_eps = $(wildcard $2/*.eps) $($1_diaeps))
 $(eval $1_epspdf = $(addprefix $1$(build_dir)/,$(subst .eps,.pdf,$(notdir $($1_eps)))))
 
+$(eval $1_svg = $(wildcard $2/*.svg))
+$(eval $1_svgpdf = $(addprefix $1$(build_dir)/,$(subst .svg,.pdf,$(notdir $($1_svg)))))
+
+
 #$(eval $1_pdf = $(filter-out $1.pdf $($1_epspdf) $($1_dotpdf) $($1_vsdpdf),$(wildcard $2/*.pdf)))
 $(eval $1_pdf = $(wildcard $2/*.pdf))
 
@@ -180,7 +185,7 @@ $(eval $1_jpg = $(wildcard $2/*.jpg))
 
 $(eval $1_sty = $(wildcard $2/*.sty))
 
-$(eval $1_doc = $($1_tex) $($1_dot) $($1_vsd) $($1_eps) $($1_pdf) $($1_jpg) $($1_sty))
+$(eval $1_doc = $($1_tex) $($1_dot) $($1_vsd) $($1_eps) $($1_pdf) $($1_svg) $($1_jpg) $($1_sty))
 endef
 ## moved out from `set-variable', it still take
 ## effects even when it is commented out. 
@@ -284,7 +289,7 @@ $$(if $$(or $$(and $$findstring($$(MAKECMDGOALS),$1),$$(findstring $1,$$(MAKECMD
 # tex building
 $1.pdf : $1$(build_dir)/$1.pdf
 	$(cp) $$< $$@
-$1$(build_dir)/$1.pdf : $($1_tex) $($1_sty) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_pdf) $($1_jpg) $($1_codetex)	\
+$1$(build_dir)/$1.pdf : $($1_tex) $($1_sty) $($1_epspdf) $($1_dotpdf) $($1_vsdpdf) $($1_svgpdf) $($1_pdf) $($1_jpg) $($1_codetex)	\
                     $(glossaryfile) $(shortcutfile) $(refdocfile) 
 	cd $1$(build_dir); $$(latex) $(latexopt)  $$(if $$(DRAFT),"\def\draftworkbook{}\input{$1.tex}",$$(if $$(CHANGEBAR),"\def\changebarworkbook{}\newcommand{\DiffBaseVersion}{$$(shell $(getdiffbaseinfo) -r $(revision))}\input{$1.tex}",$1))
 	cd $1$(build_dir); $(makeindex)        $1
@@ -310,6 +315,9 @@ $1$(build_dir)/%.pdf : $(realpath $2)/%.eps
 
 $1$(build_dir)/%.pdf : $2/%.dot
 	$(dot) $(dotopt) -Tpdf $$< -o $$@
+
+$1$(build_dir)/%.pdf : $2/%.svg
+	$(svgtopdf) -f pdf -o $$@ $$<
 
 $1$(build_dir)/%.pdf : $2/%.vsd
 	cd $1$(build_dir); $(powershell) -ExecutionPolicy RemoteSigned -file $(vsd2pdf) $$< $$(@F)
