@@ -557,6 +557,7 @@
 %% ----------------------------------------
 %%    My commands
 %% ----------------------------------------
+\newcommand{\themecolortext}[1]{\textcolor{ThemeColor}{#1}}
 \newcommand{\note}[1][ ]{\noindent\textbf{NOTE:~}{#1}}
 \newcommand{\See}[2][autoref]{\emph{See}
   \ifthenelse{\equal{#1}{autoref}} 
@@ -668,6 +669,89 @@
     \textbf{#3}\hfill\mhdl{#1}\\
     {\small#4}
   \end{reglist}
+}
+
+\newglossaryentry{register-type-write-on-conf}
+{
+  name={WonC, Write On Configuration},
+  text={WonC}, 
+  description={
+    One of software register access type. 
+    Register is \gls{register-type-read-write} only when an external control signal is asserted, 
+    otherwise, register is \gls{register-type-read-only}.
+  }
+}
+\newcommand{\regwonc}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-write-on-conf}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+\newglossaryentry{register-type-clear-on-conf}
+{
+  name={ConC, Clear on Configuration},
+  text={ConC}, 
+  description={One of software register access type. 
+    register is \gls{register-type-read-write-1-clear} only when an external control signal 
+    is asserted, otherwise, register is \gls{register-type-read-clear}.}
+}
+\newcommand{\regconc}[4][0x0]{
+  \begin{reglist}
+  \item[\mbox{\makebox[3em][l]{\gls{register-type-clear-on-conf}}\makebox[5em][c]{[#2]}}] 
+    \textbf{#3}\hfill\mhdl{#1}\\
+    {\small#4}
+  \end{reglist}
+}
+
+\newglossaryentry{hw-register-type-ps}
+{
+  name={PS, Pulse to Set},
+  text={PS}, 
+  description={One of hardware register access type. 
+    Register is set to \mhdl{1'b1} when control signal asserts a single clock cycle.
+  }
+}
+\newglossaryentry{hw-register-type-pc}
+{
+  name={PC, Pulse to Clear},
+  text={PC}, 
+  description={One of hardware register access type. 
+    Register is cleared  when control signal asserts a single clock cycle.
+  }
+}
+\newglossaryentry{hw-register-type-pv}
+{
+  name={PV, Pulse to set Value},
+  text={PV}, 
+  description={One of hardware register access type. 
+    Register is set to a value when control signal asserts a single clock cycle.
+  }
+}
+\newglossaryentry{hw-register-type-pi}
+{
+  name={PI, Pulse to Increment},
+  text={PI}, 
+  description={One of hardware register access type. 
+    Register is incremented  when control signal asserts a single clock cycle.
+  }
+}
+\newglossaryentry{hw-register-type-pd}
+{
+  name={PD, Pulse to Decrement},
+  text={PD}, 
+  description={One of hardware register access type. 
+    Register is decremented when control signal asserts a single clock cycle.
+  }
+}
+\newglossaryentry{hw-register-type-rtv}
+{
+  name={RTV, Real Time Value},
+  text={RTV}, 
+  description={One of hardware register access type. 
+    Register is hardwared to hardware and refreshed every cycle.
+  }
 }
 
 
