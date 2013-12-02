@@ -509,7 +509,8 @@
 
 
 %% algorithm2e
-\RequirePackage[algochapter,noline,linesnumbered,commentsnumbered,longend,boxed]{algorithm2e}
+\RequirePackage[algochapter,linesnumbered,commentsnumbered,noend,noline,boxed]{algorithm2e}
+\SetInd{0.5em}{0.5em}
 \SetKw{Break}{break}
 \SetAlCapSkip{.5ex}
 
@@ -751,6 +752,26 @@
   text={RTV}, 
   description={One of hardware register access type. 
     Register is hardwared to hardware and refreshed every cycle.
+  }
+}
+
+\newglossaryentry{hw-register-type-ac}
+{
+  name={AC, Automatic Clear},
+  text={AC}, 
+  description={One of hardware register access type. 
+    Each bit of Register is automatically cleared by hardware unconditionally.
+    So the Assertion of the bit can only keep one cycle. 
+  }
+}
+
+\newglossaryentry{hw-register-type-as}
+{
+  name={AS, Automatic Set},
+  text={AS}, 
+  description={One of hardware register access type. 
+    Each bit of Register is automatically set by hardware unconditionally.
+    So the Deassertion of the bit can only keep one cycle. 
   }
 }
 
