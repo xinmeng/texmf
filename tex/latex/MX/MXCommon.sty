@@ -103,6 +103,36 @@
 }% 
 
 
+\newenvironment{revisiontable}{%
+  \tablefirsthead{%
+    \hline
+    \multicolumn{1}{|p{.1\textwidth}}{\tableheader{Revision}}&
+    \multicolumn{1}{p{.1\textwidth}}{\tableheader{Date}}&
+    \multicolumn{1}{p{.592\textwidth}}{\tableheader{Description}}&
+    \multicolumn{1}{p{.1\textwidth}|}{\tableheader{Author}}\\
+    \hline}
+
+  \tablehead{%
+    \hline
+    \multicolumn{4}{|l|}{\textsl{...Continued from previous page}}\\
+    \hline
+    \multicolumn{1}{|p{.1\textwidth}}{\tableheader{Revision}}&
+    \multicolumn{1}{p{.1\textwidth}}{\tableheader{Date}}&
+    \multicolumn{1}{p{.592\textwidth}}{\tableheader{Description}}&
+    \multicolumn{1}{p{.1\textwidth}|}{\tableheader{Author}}\\
+    \hline}
+  \tabletail{%
+    \hline
+    \multicolumn{4}{|l|}{\textsl{Continued on next page...}}\\
+    \hline}
+  \tablelasttail{\hline}
+
+  \begin{supertabular}{|p{.1\textwidth}|p{.1\textwidth}|p{.592\textwidth}|p{.1\textwidth}|}
+}{%
+  \end{supertabular}
+}
+
+
 %\newcommand{\overpicgrid}{,grid,tics=2}
 
 \newcommand{\pictext}[5][btph]{
@@ -239,7 +269,7 @@
     $left,$right, $low, $high, $increment, $size, $dimensions, $unpacked_dimensions}, %$
   keywordstyle={[2]\bfseries\color{darkred}},
   %MetaHDL keywords
-  morekeywords={[3]metahdl,nonport,ff,endff,fsm,endfsm,goto,rawcode,endrawcode},
+  morekeywords={[3]metahdl,nonport,ff,endff,fsm,fsm_nc,endfsm,goto,rawcode,endrawcode},
   keywordstyle={[3]\bfseries\color{purple}},
   %SV directives
   morekeywords={[4]`accelerate,`autoexpand_vectornets,`celldefine,`default_nettype,%
@@ -548,6 +578,12 @@
 \GlsSetXdyCodePage{utf8}
 \renewcommand{\glspostdescription}{}
 
+%% Remove auto-generated heading by printglossary
+\renewcommand{\glossarysection}[2][]{}
+
+
+
+
 %% For Math 
 \theoremstyle{definition}\newtheorem{definition}{Definition}
 
@@ -775,6 +811,29 @@
   }
 }
 
+
+%% ------------------------------
+%%  Remove automatic heading
+%%  before bibliorgraphy contents
+%% ------------------------------
+\renewenvironment{thebibliography}[1]{%
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
 
 
 %% ----------------------------------------
