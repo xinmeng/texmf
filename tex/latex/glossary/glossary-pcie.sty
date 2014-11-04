@@ -75,8 +75,7 @@
                      separate hierarchy domain. Each hierarchy domain
                      may be composed of a single Endpoint or a 
                      sub-hierarchy containing one or more Switch 
-                     components and Endpoints. There is a RC in \pii{}
-                     architecture for application extension}
+                     components and Endpoints.}
                  }
 
 \newglossaryentry{dpa}
@@ -366,4 +365,20 @@
   name={CA, Completer Abort}, 
   text={CA}, 
   description={Completer abort request for a Non-Posted request.}
+}
+
+\newglossaryentry{relaxed ordering}
+{
+  name={RO, Relaxed Ordering},
+  text={RO},
+  description={Ordering rule of PCIe to allow different types of
+    TLP to pass each other.}
+}
+
+\newglossaryentry{id based ordering}
+{
+  name={IDO, ID-Based Ordering},
+  text={IDO},
+  description={Ordering rule of PCIe to allow TLP belowing to different
+    stream to pass each other.}
 }
