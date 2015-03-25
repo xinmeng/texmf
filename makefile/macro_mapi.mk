@@ -71,19 +71,19 @@ dust = *.aux *.ilg *.ind *.idx *.toc		\
 define derive-variables
 $(foreach m,$(modules),																		\
    $(call add-dir,$m,$(sort $(dir $(foreach t,tex pdf jpeg sty gls bib,$(call shallow-get-$t,$m)))))								\
-   $(call add-codetex,$m,$(addprefix $(abspath $m)/,$(addsuffix .tex,$(notdir $(call shallow-get-code,$m)))))					\
+   $(call add-codetex,$m,$(addprefix $(abspath $m)/,$(addsuffix .tex,$(notdir $(call shallow-get-code,$m)))))							\
    $(foreach t,dia odg,$(call add-$(t)eps,$m,$(addprefix $(abspath $m)/,$(addsuffix .eps,$(basename $(notdir $(call shallow-get-$t,$m)))))))			\
    $(foreach t,svg eps dia dot odg,$(call add-$(t)pdf,$m,$(addprefix $(abspath $m)/,$(addsuffix .pdf,$(basename $(notdir $(call shallow-get-$t,$m))))))))
 endef
 
 
-.PHONY : $(texbuild)
-$(texbuild):
-	@echo You can make following targets:
-	@$(foreach m,$(modules),echo -n "  $(texbuild)/$m : $(call get-dir,$m)";echo;)
+define post-list-tex-actions
+$(call derive-variables)				\
+$(foreach m,$(modules),$(eval $(call build-pdf,$m)))
+endef
+
 
 .PHONY : $(texbuild)/clean $(texbuild)/clean-all
-
 define clean-rule
 .PHONY : $(texbuild)/clean-$1 $(texbuild)/clean-all-$1
 $(texbuild)/clean     : $(texbuild)/$1/clean
@@ -199,4 +199,9 @@ $(foreach f,$(call shallow-get-code,$1),$(call code-rule,$1,$f))
 
 $(call clean-rule,$1)
 endef
+
+
+.PHONY : $(texbuild)
+$(texbuild):
+	@$(foreach m,$(modules),echo "$(texbuild)/$m : $(call get-mod,$m)"; $(foreach d,$(sort $(call get-dir,$m)),echo "      $d";) echo;)
 
