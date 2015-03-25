@@ -24,17 +24,51 @@ GetOptions("-language=s"   => \$language,
 	   "-file=s"       => \$dir_file, 
 	   "-standalone"   => \$standalone);
 
-if ( ! defined $output_file ) {
-    $output_file = $dir_file . ".tex";
-}
-
 if ( ! defined $dir_file ) {
     exit 0;
 }
 
-if ( ! defined $language ) {
-    $language = "metahdl";
+if ( ! defined $output_file ) {
+    $output_file = $dir_file . ".tex";
 }
+
+my %language_ext = (
+    'pl'   => 'perl', 
+    'mk'   => 'makefile',
+    'mhdl' => 'metahdl', 
+    'v'    => 'metahdl', 
+    'vp'   => 'metahdl',
+    'sv'   => 'metahdl', 
+    'vh'   => 'metahdl', 
+    'tcl'  => 'tcl'
+    );
+
+my %language_cmt = (
+    'pl'   => '# *-', 
+    'mk'   => '# *-', 
+    'mhdl' => '// *-',
+    'v'    => '// *-',
+    'vp'   => '// *-',
+    'sv'   => '// *-',
+    'vh'   => '// *-',
+    'tcl'  => '# *-'
+    );
+
+my $extension;
+if ( ! defined $language ) {
+    if ( $dir_file =~ /.*\.([a-z]+)$/i ) {
+        $extension = $1;
+    }
+    else {
+        $extension = "mhdl";
+    }
+
+    $language = $language_ext{$extension};
+}
+
+my $commentstart;
+$commentstart = $language_cmt{$extension};
+
 
 my $topheading;
 for (my $i=0; $i <= $#heading; $i++) {
@@ -50,14 +84,6 @@ if ($standalone) {
 
 
 
-my $commentstart;
-
-if ( $language =~ /perl|makefile/i ) {
-    $commentstart = '# *-';
-}
-else {
-    $commentstart = '// *-';
-}
 
 
 
