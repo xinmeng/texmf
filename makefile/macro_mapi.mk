@@ -70,7 +70,7 @@ dust = *.aux *.ilg *.ind *.idx *.toc		\
 #   $2: type
 define derive-variables
 $(foreach m,$(modules),																		\
-   $(call add-dir,$m,$(sort $(dir $(foreach t,tex pdf jpeg sty gls bib,$(call shallow-get-$t,$m)))))								\
+   $(call add-dir,$m,$(sort $(dir $(foreach t,$(src_types),$(call shallow-get-$t,$m)))))									\
    $(call add-codetex,$m,$(addprefix $(abspath $m)/,$(addsuffix .tex,$(notdir $(call shallow-get-code,$m)))))							\
    $(foreach t,dia odg,$(call add-$(t)eps,$m,$(addprefix $(abspath $m)/,$(addsuffix .eps,$(basename $(notdir $(call shallow-get-$t,$m)))))))			\
    $(foreach t,svg eps dia dot odg,$(call add-$(t)pdf,$m,$(addprefix $(abspath $m)/,$(addsuffix .pdf,$(basename $(notdir $(call shallow-get-$t,$m))))))))
@@ -94,6 +94,11 @@ $(texbuild)/$1/clean :
 
 $(texbuild)/$1/clean-all: 
 	$(rm) $1 $1.pdf
+endef
+
+define empty-rule-receipe
+$1:;
+
 endef
 
 # --------------------------------------------------
@@ -190,6 +195,7 @@ $1 :
 	mkdir -p $$@
 
 
+$(foreach f,$(foreach t,$(src_types) svg eps dia dot odg code,$(call shallow-get-$t,$1)),$(call empty-rule-receipe,$f))
 $(foreach f,$(call shallow-get-svg,$1),$(call svg-rule,$1,$f))
 $(foreach f,$(call shallow-get-eps,$1),$(call eps-rule,$1,$f))
 $(foreach f,$(call shallow-get-dot,$1),$(call dot-rule,$1,$f))
