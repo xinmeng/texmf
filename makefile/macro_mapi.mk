@@ -195,7 +195,6 @@ $1 :
 	mkdir -p $$@
 
 
-$(foreach f,$(foreach t,$(src_types) svg eps dia dot odg code,$(call shallow-get-$t,$1)),$(call empty-rule-receipe,$f))
 $(foreach f,$(call shallow-get-svg,$1),$(call svg-rule,$1,$f))
 $(foreach f,$(call shallow-get-eps,$1),$(call eps-rule,$1,$f))
 $(foreach f,$(call shallow-get-dot,$1),$(call dot-rule,$1,$f))
@@ -205,6 +204,8 @@ $(foreach f,$(call shallow-get-code,$1),$(call code-rule,$1,$f))
 
 $(call clean-rule,$1)
 endef
+
+#$(foreach f,$(foreach t,$(src_types) svg eps dia dot odg code,$(call shallow-get-$t,$1)),$(call empty-rule-receipe,$f))
 
 
 .PHONY : $(texbuild)
