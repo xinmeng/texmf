@@ -1,4 +1,4 @@
-include pure_mapi.mk
+include $(HOME)/mxmf/projects/scripts/makefile/mapi.mk
 types = mod					\
         dir					\
         tex sty gls bib				\
@@ -14,7 +14,7 @@ $(call mapi-setup,$(types),mod)
 src_types = tex sty gls bib pdf jpeg 
 gen_types = svgpdf epspdf diapdf dotpdf odgpdf codetex
 
-texbuild = texbuild
+texbuild = tex
 
 rm = rm -rf
 cp = cp
@@ -202,6 +202,5 @@ endef
 
 
 .PHONY : $(texbuild)
-$(texbuild):
-	@$(foreach m,$(modules),echo "$(texbuild)/$m : $(call get-mod,$m)"; $(foreach d,$(sort $(call get-dir,$m)),echo "      $d";) echo;)
+$(texbuild): mapi/ls
 
