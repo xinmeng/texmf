@@ -9,7 +9,7 @@ types = mod					\
         dot dotpdf				\
         odg odgeps odgpdf			\
         code codetex
-$(call mapi-setup,$(types),mod)
+$(call mapi-setup,$(types))
 
 src_types = tex sty gls bib pdf jpeg 
 gen_types = svgpdf epspdf diapdf dotpdf odgpdf codetex
