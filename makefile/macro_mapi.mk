@@ -62,8 +62,7 @@ dust = *.aux *.ilg *.ind *.idx *.toc		\
        *.iolog  *.iogls  *.ioglo		\
        *.dslog  *.dsgls  *.dsglo		\
        *.cbdiff *.changebar			\
-       *~					\
-       src gen
+       *~
 
 
 # --------------------------------------------------
@@ -72,9 +71,9 @@ dust = *.aux *.ilg *.ind *.idx *.toc		\
 define derive-variables
 $(foreach m,$(modules),																		\
    $(call add-dir,$m,$(sort $(dir $(foreach t,$(src_types),$(call shallow-get-$t,$m)))))									\
-   $(call add-codetex,$m,$(addprefix $(abspath $m)/,$(addsuffix .tex,$(notdir $(call shallow-get-code,$m)))))							\
-   $(foreach t,dia odg,$(call add-$(t)eps,$m,$(addprefix $(abspath $m)/,$(addsuffix .eps,$(basename $(notdir $(call shallow-get-$t,$m)))))))			\
-   $(foreach t,svg eps dia dot odg,$(call add-$(t)pdf,$m,$(addprefix $(abspath $m)/,$(addsuffix .pdf,$(basename $(notdir $(call shallow-get-$t,$m))))))))
+   $(call add-codetex,$m,$(addprefix $(abspath $(texbuild)/$m)/,$(addsuffix .tex,$(notdir $(call shallow-get-code,$m)))))							\
+   $(foreach t,dia odg,$(call add-$(t)eps,$m,$(addprefix $(abspath $(texbuild)/$m)/,$(addsuffix .eps,$(basename $(notdir $(call shallow-get-$t,$m)))))))			\
+   $(foreach t,svg eps dia dot odg,$(call add-$(t)pdf,$m,$(addprefix $(abspath $(texbuild)/$m)/,$(addsuffix .pdf,$(basename $(notdir $(call shallow-get-$t,$m))))))))
 endef
 
 
@@ -91,10 +90,10 @@ $(texbuild)/clean     : $(texbuild)/$1/clean
 $(texbuild)/clean-all : $(texbuild)/$1/clean-all
 
 $(texbuild)/$1/clean :
-	$(rm) $(foreach d,$(dust),$1/$d) $1/$1.pdf 
+	$(rm) $(foreach d,$(dust),$(texbuild)/$1/$d) $(texbuild)/$1/$1.pdf 
 
 $(texbuild)/$1/clean-all: 
-	$(rm) $1 $1.pdf
+	$(rm) $(texbuild)/$1 $1.pdf
 endef
 
 define empty-rule-receipe
@@ -106,51 +105,51 @@ endef
 #  $1: module name
 #  $2: svg file
 define svg-rule
-$(abspath $1)/$(basename $(notdir $2)).pdf : $2
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).pdf : $2
 	$(svgtopdf) -f pdf -o $$@ $$<
 
 endef
 
 define eps-rule
-$(abspath $1)/$(basename $(notdir $2)).pdf : $2
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).pdf : $2
 	$(epstopdf) $$< --outfile=$$@
 
 endef
 
 define dot-rule
-$(abspath $1)/$(basename $(notdir $2)).pdf : $2
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).pdf : $2
 	$(dot) $(dotopt) -Tpdf $$< -o $$@
 
 endef
 
 define dia-rule
 $(mapi-debug-enter)
-$(abspath $1)/$(basename $(notdir $2)).pdf : $(abspath $1)/$(basename $(notdir $2)).eps
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).pdf : $(abspath $(texbuild)/$1)/$(basename $(notdir $2)).eps
 	$(epstopdf) $$< --outfile=$$@
-$(abspath $1)/$(basename $(notdir $2)).eps : $2
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).eps : $2
 	$(dia) -t eps -e $$@ $$<
 
 endef
 
 define odg-rule
-$(abspath $1)/$(basename $(notdir $2)).pdf : $(abspath $1)/$(basename $(notdir $2)).eps
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).pdf : $(abspath $(texbuild)/$1)/$(basename $(notdir $2)).eps
 	$(inkscape) -D -A $$@ $$<
-$(abspath $1)/$(basename $(notdir $2)).eps : $2
+$(abspath $(texbuild)/$1)/$(basename $(notdir $2)).eps : $2
 	$(soffice) --headless --convert-to eps --outdir $$(@D) $$<
 
 endef
 
 define code-rule
-$(abspath $1)/$(notdir $2).tex : $2
+$(abspath $(texbuild)/$1)/$(notdir $2).tex : $2
 	$(gencodetex) $(gencodetexopt) -f $$< -o $$@
 
 endef
 
 
 define add-texinputs-dir
-$(eval export TEXINPUTS := $(call replace-space,:,$(call get-dir,$1)):$(abspath $1):$(TEXINPUTS))
-$(foreach m,$(call get-mod,$1),											\
-            $(eval export TEXINPUTS := $(call replace-space,:,$(call get-dir,$m)):$(abspath $m):$(TEXINPUTS)))
+$(eval export TEXINPUTS := $(call replace-space,:,$(call get-dir,$1)):$(abspath $(texbuild)/$1):$(TEXINPUTS))			\
+$(foreach m,$(call get-mod,$1),													\
+            $(eval export TEXINPUTS := $(call replace-space,:,$(call get-dir,$m)):$(abspath $(texbuild)/$m):$(TEXINPUTS)))	\
 $(info $(TEXINPUTS))
 endef
 
@@ -170,26 +169,23 @@ $$(if $$(or $$(and $$findstring($$(MAKECMDGOALS),$1),			\
       $$(info $$(strip $$(call add-texinputs-dir,$1))))
 
 
-.PHONY : $(texbuild)/$1
-$(texbuild)/$1 : $1.pdf
-
-$1.pdf: $1/$1.pdf 
+$1.pdf: $(texbuild)/$1/$1.pdf 
 	cp $$< $$@
 
-$1/$1.pdf : $1 $(foreach m,$(call get-mod,$1),$m)			\
-            $(foreach t,$(src_types) $(gen_types),$(call get-$t,$1))
+$(texbuild)/$1/$1.pdf : $(texbuild)/$1 $(foreach m,$(call get-mod,$1),$(texbuild)/$m)		\
+                        $(foreach t,$(src_types) $(gen_types),$(call get-$t,$1))
 	env
-	cd $1; $$(latex) $(latexopt)  $1 
-	cd $1; $(makeindex)        $1
-	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries) $1)
-	cd $1; $$(latex) $(latexopt)  $1 
-	$$(if $$(strip $$(call get-bib,$1)),cd $1; $(bibtex) $(bibtexopt) $1)
-	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries) $1)
-	cd $1; $(makeindex)        $1
-	cd $1; $$(latex) $(latexopt)  $1 
-	cd $1; $$(latex) $(latexopt)  $1 
+	cd $$(@D); $$(latex) $(latexopt) $1 
+	cd $$(@D); $(makeindex) $1
+	$$(if $$(strip $$(call get-gls,$1)),cd $$(@D); $(makeglossaries) $1)
+	cd $$(@D); $$(latex) $(latexopt) $1 
+	$$(if $$(strip $$(call get-bib,$1)),cd $$(@D); $(bibtex) $(bibtexopt) $1)
+	$$(if $$(strip $$(call get-gls,$1)),cd $$(@D); $(makeglossaries) $1)
+	cd $$(@D); $(makeindex) $1
+	cd $$(@D); $$(latex) $(latexopt) $1 
+	cd $$(@D); $$(latex) $(latexopt) $1 
 
-$1 : 
+$(texbuild)/$1 : 
 	mkdir -p $$@
 
 
