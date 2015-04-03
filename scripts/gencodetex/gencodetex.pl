@@ -8,6 +8,7 @@ my $topheading_t = "chapter";
 my $dir_file;
 my $output_file;
 my $standalone;
+my $showfilename;
 my @heading = (
     '\part',
     '\chapter',
@@ -93,18 +94,16 @@ $filename =~ s/_/\\_/g;
 
 
 open SRC, "$dir_file" or die "Error:Cannot open $dir_file for read.\n";
-open TEX, ">$output_file" or die "Error:Cannot open $output_file for write.\n";
-
 my $lineno=1;
 my ($src_start, $src_end) = (0, 0);
 my $state = "doc";
 
-print TEX "$heading[$topheading]\{$filename\}\n" if !$standalone;
+my @tex_src;
 
 while ( <SRC> ) {
     if ($state eq "doc" ) {
 	if ( /^[ \t]*$commentstart(.*)/ ) {
-	    print TEX &extractdoc($1);
+	    push @tex_src, &extractdoc($1);
 	}
 	elsif ( /^\#!/ ) {
 	    # jumps over execution directive
@@ -115,22 +114,22 @@ while ( <SRC> ) {
 	else {
 	    $state = "src";
 	    $src_start = $lineno;
-	    print TEX "\\begin{lstlisting}[frame=none, language={$language}, firstnumber=$src_start, nolol]\n";
-	    print TEX $_;
+	    push @tex_src, "\\begin{lstlisting}[frame=none, language={$language}, firstnumber=$src_start, nolol]\n";
+	    push @tex_src, $_;
 	}
     }
     else {
 	if ( /^[ \t]*$commentstart(.*)/ ) {
-	    print TEX "\\end{lstlisting}\n\n";
+	    push @tex_src, "\\end{lstlisting}\n\n";
 # 	    $src_end = $lineno -1;
-# 	    print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$src_end}, nolol]{$dir_file}\n";
-	    print TEX &extractdoc($1);
+# 	    push @tex_src, "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$src_end}, nolol]{$dir_file}\n";
+	    push @tex_src, &extractdoc($1);
 	    $src_start = 0;
 	    $src_end = 0;
 	    $state = "doc";
 	}
 	else {
-	    print TEX $_;
+	    push @tex_src, $_;
 	}
     }
 
@@ -138,11 +137,16 @@ while ( <SRC> ) {
 }
 
 if ( $src_start ) {
-    # print TEX "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$lineno}, nolol]{$dir_file}\n";
-    print TEX "\\end{lstlisting}\n\n";
+    # push @tex_src, "\\lstinputlisting[frame=none, language={$language}, firstnumber=$src_start, linerange={$src_start-$lineno}, nolol]{$dir_file}\n";
+    push @tex_src, "\\end{lstlisting}\n\n";
 }
 
 close SRC;
+
+unshift @tex_src, "$heading[$topheading]\{$filename\}\n" if !$standalone;
+
+open TEX, ">$output_file" or die "Error:Cannot open $output_file for write.\n";
+print TEX @tex_src;
 close TEX;
 
 
@@ -152,7 +156,20 @@ sub extractdoc {
     my $doc = "";
     
     my $horizontal_line = '(=|-|\*){5,}';
-    if ( $raw =~ /$horizontal_line/ ) {
+    if ($raw =~ /gencodetex_override:(\w+)=(.*)/) {
+        if ($1 eq 'topheading') {
+            $topheading = $2;
+        }
+        elsif ($1 eq 'standalone') {
+            $standalone = $2;
+        }
+        else {
+            die("Error:Unknown variable name '$1' for gencodetex behavior override.\n");
+        }
+        $doc = "% $1=$2\n";
+        return $doc;
+    }
+    elsif ( $raw =~ /$horizontal_line/ ) {
 	return $doc;
     }
     else {
