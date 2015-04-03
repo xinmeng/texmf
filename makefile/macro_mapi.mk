@@ -62,7 +62,8 @@ dust = *.aux *.ilg *.ind *.idx *.toc		\
        *.iolog  *.iogls  *.ioglo		\
        *.dslog  *.dsgls  *.dsglo		\
        *.cbdiff *.changebar			\
-       *~
+       *~					\
+       src gen
 
 
 # --------------------------------------------------
@@ -175,21 +176,18 @@ $(texbuild)/$1 : $1.pdf
 $1.pdf: $1/$1.pdf 
 	cp $$< $$@
 
-.PHONY : $(texbuild)/$1/src $(texbuild)/$1/gen
-$1/$1.pdf : $(texbuild)/$1/src $(texbuild)/$1/gen $(foreach m,$(call get-mod,$1),$(texbuild)/$m/src $(texbuild)/$m/gen)
+$1/$1.pdf : $1 $(foreach m,$(call get-mod,$1),$m)			\
+            $(foreach t,$(src_types) $(gen_types),$(call get-$t,$1))
 	env
 	cd $1; $$(latex) $(latexopt)  $1 
 	cd $1; $(makeindex)        $1
-	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries)  $1)
+	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries) $1)
 	cd $1; $$(latex) $(latexopt)  $1 
 	$$(if $$(strip $$(call get-bib,$1)),cd $1; $(bibtex) $(bibtexopt) $1)
-	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries)  $1)
+	$$(if $$(strip $$(call get-gls,$1)),cd $1; $(makeglossaries) $1)
 	cd $1; $(makeindex)        $1
 	cd $1; $$(latex) $(latexopt)  $1 
 	cd $1; $$(latex) $(latexopt)  $1 
-
-$(texbuild)/$1/src : $(foreach t,$(src_types),$(call shallow-get-$t,$1))
-$(texbuild)/$1/gen : $1 $(foreach t,$(gen_types),$(call shallow-get-$t,$1))
 
 $1 : 
 	mkdir -p $$@
