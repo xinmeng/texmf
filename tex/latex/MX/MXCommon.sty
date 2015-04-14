@@ -278,6 +278,7 @@
   escapeinside={/*-}{-*/}%
 }
 
+
 \lstdefinelanguage{metahdl}
 {
   morekeywords={always,always_comb,always_ff,always_latch,and,assign,assume,automatic,before,begin,break,buf,bufif0,bufif1,case,casex,casez,cell,chandle,class,cmos,config,context,continue,cross,deassign,default,defparam,design,disable,dist,do,edge,else,end,endcase,endclass,endgroup,endinterface,endmodule,endpackage,endprimitive,endprogram,endspecify,endtask,expect,export,final,for,force,forever,highz0,highz1,if,iff,include,initial,inside,instance,interface,large,liblist,localparam,module,nand,negedge,net,nmos,nor,noshowcancelled,not,notif0,notif1,null,parameter,pmos,posedge,primitive,program,pull0,pull1,pulldown,pullup,pulsestyle_onevent,pulsestyle_ondetect,rcmos,realtime,release,return,rnmos,rpmos,rtran,rtranif0,rtranif1,scalared,shortint,shortreal,showcancelled,signed,small,solve,specify,specparam,strong0,strong1,supply0,supply1,task,timeprecision,timeunit,tran,tranif0,tranif1,tri,tri0,tri1,triand,trior,trireg,typedef,unsigned,use,var,vectored,virtual,void,wait,wait_order,wand,weak0,weak1,while,wor,xnor,xor,or},
@@ -314,8 +315,8 @@
 }
 \lstset{emphstyle=\textcolor{red}}
 
-\newcommand{\mhdl}[1]{\lstinline[basicstyle=\tt,language=metahdl]{#1}}
-\newcommand{\mhdls}[1]{\lstinline[basicstyle=\tt,language=metahdl]{$#1}} %$
+\newcommand{\mhdl}[1]{\small\lstinline[basicstyle=\tt,language=metahdl]{#1}}
+\newcommand{\mhdls}[1]{\small\lstinline[basicstyle=\tt,language=metahdl]{$#1}} %$
 \newcommand{\Mhdl}[1]{\mhdl{#1}}
 \newcommand{\Mhdls}[1]{\mhdls{#1}}
 
@@ -328,6 +329,7 @@
         {}
 
 \newcommand{\mhdlc}{\texttt{mhdlc}}
+\newcommand{\mhdlcomment}[1]{\textcolor{dark}{#1}}
 
 
 
@@ -520,7 +522,7 @@
       \usecounter{bitslsb}
       \setcounter{bitsmsb}{-1}
 %      \setlength{\itemindent}{2ex}
-      \setlength{\labelwidth}{18ex}
+      \setlength{\labelwidth}{20ex}
       \setlength{\labelsep}{2ex}
       \setlength{\leftmargin}{0ex}
 %      \addtolength{\leftmargin}{\itemindent}
@@ -540,9 +542,9 @@
 \setcounter{bitslsb}{\value{bitsmsb}+1}%
 \setcounter{bitsmsb}{\value{bitslsb}+ #1 -1}%
 \ifnum \value{bitsmsb}=\value{bitslsb} 
-\item[\mbox{\makebox[12ex][l]{[\hfill\arabic{bitsmsb}\hfill]}\hspace{2ex}\makebox[4ex][r]{#1}}]%
+\item[\mbox{\makebox[12ex][l]{[\hfill\arabic{bitsmsb}\hfill]}\hspace{2ex}\makebox[4ex][r]{#1}\makebox[2ex][c]{ }}]%
 \else 
-\item[\mbox{\makebox[12ex][l]{[\hfill\makebox[4ex][c]{\arabic{bitsmsb}}\hfill:\hfill\makebox[4ex][c]{\arabic{bitslsb}}\hfill]}\hspace{2ex}\makebox[4ex][r]{#1}}]
+\item[\mbox{\makebox[12ex][l]{[\hfill\makebox[4ex][c]{\arabic{bitsmsb}}\hfill:\hfill\makebox[4ex][c]{\arabic{bitslsb}}\hfill]}\hspace{2ex}\makebox[4ex][r]{#1}\makebox[2ex][c]{ }}]
 \fi}
 \newcommand{\bitsreserve}[1][1]{
 \bitsitem[#1] \textcolor{gray}{\textsl{Reserverd}}
@@ -646,8 +648,8 @@
       \usecounter{reglsb}
       \usecounter{regmsb}
       \setcounter{regmsb}{-1}
-      \setlength{\labelwidth}{37ex}
-      \setlength{\labelsep}{2ex}
+      \setlength{\labelwidth}{35ex}
+      \setlength{\labelsep}{1ex}
       \setlength{\itemindent}{0em}
       \setlength{\leftmargin}{0ex}
       \addtolength{\leftmargin}{\labelwidth}
@@ -666,13 +668,13 @@
   \setcounter{reglsb}{\value{regmsb}+1}%
   \setcounter{regmsb}{\value{reglsb}+#1-1}%
   \ifnum \value{regmsb}=\value{reglsb}
-\item[\mbox{\makebox[9ex][l]{[\hfill\arabic{regmsb}\hfill]}\hspace{1ex}\makebox[3ex][r]{#1}\hspace{1ex}\makebox[10ex][c]{#2}\hspace{1ex}\makebox[12ex][l]{\tt#3}}]%
+\item[\mbox{\makebox[9ex][l]{[\hfill\arabic{regmsb}\hfill]}\hspace{1ex}\makebox[3ex][r]{#1}\hspace{1ex}\makebox[10ex][c]{#2}\hspace{1ex}\makebox[10ex][l]{\footnotesize\tt#3}}]%
     \else
-    \item[\mbox{\makebox[9ex][l]{[\hfill\makebox[3ex][c]{\arabic{regmsb}}\hfill:\hfill\makebox[3ex][c]{\arabic{reglsb}}\hfill]}\hspace{1ex}\makebox[3ex][r]{#1}\hspace{1ex}\makebox[10ex][c]{#2}\hspace{1ex}\makebox[12ex][l]{\tt#3}}]
+    \item[\mbox{\makebox[9ex][l]{[\hfill\makebox[3ex][c]{\arabic{regmsb}}\hfill:\hfill\makebox[3ex][c]{\arabic{reglsb}}\hfill]}\hspace{1ex}\makebox[3ex][r]{#1}\hspace{1ex}\makebox[10ex][c]{#2}\hspace{1ex}\makebox[10ex][l]{\footnotesize\tt#3}}]
       \fi}
 
 \newcommand{\regreserve}[1][1]{
-  \regitem[#1]{}{} \textcolor{gray}{\textsl{Reserved}}
+  \regitem[#1]{\textcolor{gray}{\textsl{Reserved}}}{} \textcolor{gray}{\textsl{Reserved}}
 }
 
 \newglossaryentry{register-type-read-write}{

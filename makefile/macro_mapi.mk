@@ -85,14 +85,14 @@ endef
 
 .PHONY : $(texbuild)/clean $(texbuild)/clean-all
 define clean-rule
-.PHONY : $(texbuild)/clean-$1 $(texbuild)/clean-all-$1
-$(texbuild)/clean     : $(texbuild)/$1/clean
-$(texbuild)/clean-all : $(texbuild)/$1/clean-all
+.PHONY : $(texbuild)/clean/$1.pef $(texbuild)/clean-all/$1.pdf
+$(texbuild)/clean     : $(texbuild)/clean/$1.pdf
+$(texbuild)/clean-all : $(texbuild)/clean-all/$1.pdf
 
-$(texbuild)/$1/clean :
+$(texbuild)/clean/$1.pdf :
 	$(rm) $(foreach d,$(dust),$(texbuild)/$1/$d) $(texbuild)/$1/$1.pdf 
 
-$(texbuild)/$1/clean-all: 
+$(texbuild)/clean-all/$1.pdf:
 	$(rm) $(texbuild)/$1 $1.pdf
 endef
 
