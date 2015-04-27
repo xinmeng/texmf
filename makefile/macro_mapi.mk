@@ -85,15 +85,16 @@ endef
 
 .PHONY : $(texbuild)/clean $(texbuild)/clean-all
 define clean-rule
-.PHONY : $(texbuild)/clean/$1.pef $(texbuild)/clean-all/$1.pdf
-$(texbuild)/clean     : $(texbuild)/clean/$1.pdf
-$(texbuild)/clean-all : $(texbuild)/clean-all/$1.pdf
-
-$(texbuild)/clean/$1.pdf :
+.PHONY : $1.pdf/clean $1.pdf/clean-all
+$1.pdf/clean :
 	$(rm) $(foreach d,$(dust),$(texbuild)/$1/$d) $(texbuild)/$1/$1.pdf 
 
-$(texbuild)/clean-all/$1.pdf:
+$1.pdf/clean-all:
 	$(rm) $(texbuild)/$1 $1.pdf
+
+$(texbuild)/clean     : $1.pdf/clean
+$(texbuild)/clean-all : $1.pdf/clean-all
+
 endef
 
 define empty-rule-receipe
@@ -175,15 +176,15 @@ $1.pdf: $(texbuild)/$1/$1.pdf
 $(texbuild)/$1/$1.pdf : $(texbuild)/$1 $(foreach m,$(call get-mod,$1),$(texbuild)/$m)		\
                         $(foreach t,$(src_types) $(gen_types),$(call get-$t,$1))
 	env
-	cd $$(@D); $$(latex) $(latexopt) $1 
+	cd $$(@D); $$(latex) $(latexopt) $$(if $$(tex_draft),"\def\draftworkbook{}\input{$1.tex}",$1)
 	cd $$(@D); $(makeindex) $1
 	$$(if $$(strip $$(call get-gls,$1)),cd $$(@D); $(makeglossaries) $1)
-	cd $$(@D); $$(latex) $(latexopt) $1 
+	cd $$(@D); $$(latex) $(latexopt) $$(if $$(tex_draft),"\def\draftworkbook{}\input{$1.tex}",$1)
 	$$(if $$(strip $$(call get-bib,$1)),cd $$(@D); $(bibtex) $(bibtexopt) $1)
 	$$(if $$(strip $$(call get-gls,$1)),cd $$(@D); $(makeglossaries) $1)
 	cd $$(@D); $(makeindex) $1
-	cd $$(@D); $$(latex) $(latexopt) $1 
-	cd $$(@D); $$(latex) $(latexopt) $1 
+	cd $$(@D); $$(latex) $(latexopt) $$(if $$(tex_draft),"\def\draftworkbook{}\input{$1.tex}",$1)
+	cd $$(@D); $$(latex) $(latexopt) $$(if $$(tex_draft),"\def\draftworkbook{}\input{$1.tex}",$1)
 
 $(texbuild)/$1 : 
 	mkdir -p $$@

@@ -132,6 +132,7 @@
 \newenvironment{revisiontable}{%
   \tablefirsthead{%
     \hline
+    \rowcolor{ThemeColor}
     \multicolumn{1}{|p{.1\textwidth}}{\tableheader{Revision}}&
     \multicolumn{1}{p{.1\textwidth}}{\tableheader{Date}}&
     \multicolumn{1}{p{.592\textwidth}}{\tableheader{Description}}&
@@ -142,6 +143,7 @@
     \hline
     \multicolumn{4}{|l|}{\textsl{...Continued from previous page}}\\
     \hline
+    \rowcolor{ThemeColor}
     \multicolumn{1}{|p{.1\textwidth}}{\tableheader{Revision}}&
     \multicolumn{1}{p{.1\textwidth}}{\tableheader{Date}}&
     \multicolumn{1}{p{.592\textwidth}}{\tableheader{Description}}&
@@ -315,8 +317,8 @@
 }
 \lstset{emphstyle=\textcolor{red}}
 
-\newcommand{\mhdl}[1]{\small\lstinline[basicstyle=\tt,language=metahdl]{#1}}
-\newcommand{\mhdls}[1]{\small\lstinline[basicstyle=\tt,language=metahdl]{$#1}} %$
+\newcommand{\mhdl}[1]{\lstinline[basicstyle=\tt,language=metahdl]{#1}}
+\newcommand{\mhdls}[1]{\lstinline[basicstyle=\tt,language=metahdl]{$#1}} %$
 \newcommand{\Mhdl}[1]{\mhdl{#1}}
 \newcommand{\Mhdls}[1]{\mhdls{#1}}
 
@@ -349,7 +351,8 @@
 \newcommand{\vidx}[1]{\index{variable!#1@\texttt{#1}}}
 \newcommand{\pidx}[1]{\index{parameter!#1@\texttt{#1}}}
 \newcommand{\mycomment}[1]{\textcolor{blue}{\footnotesize{[Xin Meng] #1}}}
-\newcommand{\tableheader}[1]{{\cellcolor{ThemeColor}\color{white}\bfseries\small #1}}
+%\newcommand{\tableheader}[1]{{\cellcolor{ThemeColor}\color{white}\bfseries #1}}
+\newcommand{\tableheader}[1]{\textcolor{white}{\bfseries #1}}
 
 
 
